@@ -68,10 +68,6 @@ function Landing() {
     <div className="mx-auto max-w-7xl space-y-6 px-4 py-6 sm:space-y-8 sm:px-6 sm:py-10">
       {/* ===== Hero ===== */}
       <section className="relative overflow-hidden rounded-3xl bg-surface-container px-6 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -left-40 -top-40 h-72 w-72 rounded-full bg-primary opacity-[0.08] blur-3xl"
-        />
         <div className="relative grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center">
           <div className="space-y-7 lg:col-span-7">
             <span className="inline-flex items-center gap-2 rounded-full bg-primary-container px-4 py-1.5 text-xs font-medium text-on-primary-container">
