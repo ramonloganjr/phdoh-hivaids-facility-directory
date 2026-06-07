@@ -3,8 +3,9 @@ import logoFooter from "@/assets/logo-footer.svg.asset.json";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-16 w-full bg-surface-container">
-      <div className="mx-auto max-w-7xl px-6 py-12 sm:px-10 sm:py-14">
+    <footer className="mt-6 w-full bg-surface-container">
+      <div className="mx-auto max-w-7xl px-6 py-8 sm:px-10 sm:py-10">
+
         <div className="grid grid-cols-1 gap-10 md:grid-cols-[1.3fr_1fr] md:items-start">
           <div className="flex gap-5">
             <img
