@@ -158,11 +158,11 @@
     font-family: var(--font-sans);
   }
 
-  /* Smooth theme transition (color/background/border only — no transforms) */
+  /* Smooth theme transition (color/background/border/shadow only — no transforms) */
   body, body * {
-    transition-property: background-color, color, border-color, fill, stroke;
-    transition-duration: 200ms;
-    transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+    transition-property: background-color, color, border-color, fill, stroke, box-shadow, outline-color;
+    transition-duration: 320ms;
+    transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
   }
   /* but never on interactive transforms */
   body *[data-no-color-transition] { transition: none; }
