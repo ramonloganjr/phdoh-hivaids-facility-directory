@@ -10,6 +10,8 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { registerPWA } from "@/lib/pwa-register";
+import { InstallPrompt } from "@/components/install-prompt";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import faviconAsset from "@/assets/favicon.png.asset.json";
@@ -100,6 +102,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#FF2E51" },
       { name: "color-scheme", content: "light dark" },
       { name: "format-detection", content: "telephone=yes" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
+      { name: "apple-mobile-web-app-title", content: "HIV Care PH" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "application-name", content: "HIV Care PH" },
       { title: "Philippine HIV Care Directory — DOH-Designated Facilities" },
       {
         name: "description",
@@ -195,6 +202,10 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  useEffect(() => {
+    registerPWA();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-dvh flex-col">
@@ -209,6 +220,7 @@ function RootComponent() {
           <Outlet />
         </main>
         <SiteFooter />
+        <InstallPrompt />
       </div>
     </QueryClientProvider>
   );
