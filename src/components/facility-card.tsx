@@ -7,18 +7,26 @@ import { cn } from "@/lib/utils";
 export function FacilityCard({ facility }: { facility: Facility }) {
   const isHub = facility.serviceType === "Treatment Hub";
   const Icon = isHub ? Hospital : Stethoscope;
-  const phoneCount = facility.mobiles.length + facility.landlines.length;
-  const hasEmail = facility.emails.length > 0;
-  const hasFacebook = facility.facebook.length > 0;
+  const phones = [...facility.mobiles, ...facility.landlines];
+  const primaryPhone = phones[0];
+  const primaryEmail = facility.emails[0];
+  const primaryFacebook = facility.facebook[0];
   const leadContact = facility.contacts[0];
+  const extraPhones = Math.max(0, phones.length - 1);
+
+  const telHref = (n: string) => `tel:${n.replace(/[^\d+]/g, "")}`;
+  const fbHref = (f: string) =>
+    f.startsWith("http") ? f : `https://facebook.com/${f.replace(/^@/, "")}`;
 
   return (
-    <Link
-      to="/facilities/$id"
-      params={{ id: facility.id }}
-      className="state-layer group block rounded-3xl border border-outline-variant bg-card p-5 elev-1 hover:elev-2"
-    >
-      <div className="flex items-start gap-4">
+    <article className="state-layer group relative block rounded-3xl border border-outline-variant bg-card p-5 elev-1 hover:elev-2">
+      <Link
+        to="/facilities/$id"
+        params={{ id: facility.id }}
+        aria-label={`Open ${facility.name}`}
+        className="absolute inset-0 rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      />
+      <div className="relative flex items-start gap-4">
         <span
           className={cn(
             "mt-0.5 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl",
@@ -72,30 +80,50 @@ export function FacilityCard({ facility }: { facility: Facility }) {
               <span className="font-medium text-on-surface">{leadContact.name}</span>
             </p>
           )}
-          {(phoneCount > 0 || hasEmail || hasFacebook) && (
-            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] font-medium text-on-surface-muted">
-              {phoneCount > 0 && (
-                <span className="inline-flex items-center gap-1">
+          {(primaryPhone || primaryEmail || primaryFacebook) && (
+            <div className="relative z-10 mt-3 flex flex-wrap items-center gap-1.5 text-[11px] font-medium">
+              {primaryPhone && (
+                <a
+                  href={telHref(primaryPhone)}
+                  onClick={(e) => e.stopPropagation()}
+                  className="state-layer press inline-flex items-center gap-1.5 rounded-full bg-primary-container px-2.5 py-1 text-on-primary-container"
+                  aria-label={`Call ${facility.name} at ${primaryPhone}`}
+                >
                   <Phone className="h-3 w-3" aria-hidden="true" />
-                  {phoneCount} {phoneCount === 1 ? "number" : "numbers"}
-                </span>
+                  <span className="tabular-nums">{primaryPhone}</span>
+                  {extraPhones > 0 && (
+                    <span className="opacity-70">+{extraPhones}</span>
+                  )}
+                </a>
               )}
-              {hasEmail && (
-                <span className="inline-flex items-center gap-1">
-                  <Mail className="h-3 w-3" aria-hidden="true" />
-                  Email
-                </span>
+              {primaryEmail && (
+                <a
+                  href={`mailto:${primaryEmail}`}
+                  onClick={(e) => e.stopPropagation()}
+                  className="state-layer press inline-flex max-w-[14rem] items-center gap-1.5 rounded-full bg-surface-container-high px-2.5 py-1 text-on-surface"
+                  aria-label={`Email ${facility.name}`}
+                >
+                  <Mail className="h-3 w-3 shrink-0" aria-hidden="true" />
+                  <span className="truncate">{primaryEmail}</span>
+                </a>
               )}
-              {hasFacebook && (
-                <span className="inline-flex items-center gap-1">
+              {primaryFacebook && (
+                <a
+                  href={fbHref(primaryFacebook)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="state-layer press inline-flex items-center gap-1.5 rounded-full bg-surface-container-high px-2.5 py-1 text-on-surface"
+                  aria-label={`Open ${facility.name} on Facebook`}
+                >
                   <Facebook className="h-3 w-3" aria-hidden="true" />
-                  Facebook
-                </span>
+                  <span>Facebook</span>
+                </a>
               )}
             </div>
           )}
         </div>
       </div>
-    </Link>
+    </article>
   );
 }
