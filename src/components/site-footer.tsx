@@ -25,6 +25,8 @@ export function SiteFooter() {
               <FooterLink to="/insights">Insights</FooterLink>
               <FooterLink to="/faq">FAQ</FooterLink>
               <FooterLink to="/about">About</FooterLink>
+              <FooterLink to="/terms">Terms</FooterLink>
+              <FooterLink to="/privacy">Privacy</FooterLink>
               <a
                 href="https://doh.gov.ph"
                 target="_blank"
