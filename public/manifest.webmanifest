@@ -1,0 +1,27 @@
+{
+  "name": "Philippine HIV Care Directory",
+  "short_name": "HIV Care PH",
+  "description": "Search all 338 DOH-designated HIV treatment hubs and primary care facilities in the Philippines.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b0b0f",
+  "theme_color": "#FF2E51",
+  "categories": ["health", "medical", "government"],
+  "lang": "en-PH",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
