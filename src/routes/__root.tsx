@@ -202,6 +202,10 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  useEffect(() => {
+    registerPWA();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-dvh flex-col">
@@ -216,6 +220,7 @@ function RootComponent() {
           <Outlet />
         </main>
         <SiteFooter />
+        <InstallPrompt />
       </div>
     </QueryClientProvider>
   );
