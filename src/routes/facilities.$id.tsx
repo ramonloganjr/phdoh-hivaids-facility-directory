@@ -82,7 +82,7 @@ export const Route = createFileRoute("/facilities/$id")({
 });
 
 function FacilityDetail() {
-  const { facility: f } = Route.useLoaderData();
+  const { facility: f } = Route.useLoaderData() as { facility: Facility };
   const isHub = f.serviceType === "Treatment Hub";
   const Icon = isHub ? Hospital : Stethoscope;
 
