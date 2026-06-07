@@ -78,6 +78,62 @@ function AboutPage() {
           </p>
         </Block>
 
+        <Block icon={Code2} title="About the developer">
+          <p>
+            <a
+              href="https://www.ramonloganjr.com/"
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-primary hover:underline"
+            >
+              Ramon Logan Jr.
+              <ExternalLink className="ml-0.5 inline h-3 w-3" aria-hidden="true" />
+            </a>{" "}
+            is the developer behind{" "}
+            <a
+              href="https://abakada.org"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium text-primary hover:underline"
+            >
+              Abakada.org
+            </a>{" "}
+            and{" "}
+            <a
+              href="https://bettersolano.org"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium text-primary hover:underline"
+            >
+              BetterSolano.org
+            </a>
+            . Based in the United Arab Emirates, he works in IT and practices full-stack
+            development.
+          </p>
+          <p className="mt-3">
+            He also started{" "}
+            <a
+              href="https://hellopinas.com"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium text-primary hover:underline"
+            >
+              HelloPinas.com
+            </a>{" "}
+            and contributes to{" "}
+            <a
+              href="https://bettergov.ph"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium text-primary hover:underline"
+            >
+              BetterGov.ph
+            </a>
+            , a volunteer-driven civic-tech effort focused on improving access to local
+            government information in the Philippines.
+          </p>
+        </Block>
+
         <div className="rounded-3xl border border-outline-variant bg-surface-container p-6">
           <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-on-surface-muted">
             Disclaimer
