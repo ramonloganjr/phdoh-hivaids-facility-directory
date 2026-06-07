@@ -1,19 +1,21 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;8..144,400;8..144,500;8..144,600;8..144,700&family=Google+Sans+Text:wght@400;500;700&display=swap");
 
 @custom-variant dark (&:is(.dark *));
 
-
 /*
- * Material You / Android 14 inspired tokens.
- * All colors use oklch. Light + dark tonal surfaces, single brand hue (260°).
+ * Material You / Android 14 inspired design system.
+ * Seed color: #FF2E51 — drives tonal containers across the palette.
+ * Tokens follow Material 3: surface tiers, on-* pairings, outline-variant,
+ * primary / primary-container, rounded "expressive" radii, real elevations,
+ * and the standard easing curve.
  */
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 6px);
-  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 12px);
+  --radius-md: calc(var(--radius) - 6px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 8px);
   --radius-2xl: calc(var(--radius) + 16px);
@@ -58,96 +60,100 @@
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
 
-  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Roboto Flex", "Google Sans Text", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Google Sans Text", "Roboto Flex", ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Material standard easing + duration */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.3, 0, 0, 1);
+  --motion-short: 200ms;
+  --motion-medium: 350ms;
+  --motion-long: 500ms;
 }
 
 :root {
-  --radius: 0rem;
+  --radius: 1.25rem; /* Material You "extra large" rounding */
 
-  /* Paper-white tonal surfaces, ink-black foreground, hairline outlines */
-  --background: oklch(0.99 0 0);
-  --foreground: oklch(0.12 0 0);
-  --surface: oklch(1 0 0);
-  --surface-container: oklch(0.985 0 0);
-  --surface-container-high: oklch(0.965 0 0);
-  --surface-container-highest: oklch(0.94 0 0);
-  --on-surface: oklch(0.12 0 0);
-  --on-surface-muted: oklch(0.45 0 0);
-  --outline: oklch(0.12 0 0);
-  --outline-variant: oklch(0.88 0 0);
+  /* Light scheme — Material You tonal surfaces seeded from #FF2E51 (hue ~17 in oklch) */
+  --background: oklch(0.985 0.005 17);
+  --foreground: oklch(0.16 0.02 17);
+  --surface: oklch(0.985 0.005 17);
+  --surface-container: oklch(0.96 0.008 17);
+  --surface-container-high: oklch(0.94 0.012 17);
+  --surface-container-highest: oklch(0.92 0.015 17);
+  --on-surface: oklch(0.16 0.02 17);
+  --on-surface-muted: oklch(0.48 0.02 17);
+  --outline: oklch(0.55 0.02 17);
+  --outline-variant: oklch(0.86 0.01 17);
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.12 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.12 0 0);
+  --card: oklch(0.96 0.008 17);
+  --card-foreground: oklch(0.16 0.02 17);
+  --popover: oklch(0.98 0.005 17);
+  --popover-foreground: oklch(0.16 0.02 17);
 
+  /* Primary = #FF2E51 */
   --primary: oklch(0.645 0.245 17);
   --primary-foreground: oklch(1 0 0);
-  --primary-container: oklch(0.96 0.04 17);
-  --on-primary-container: oklch(0.32 0.16 17);
+  --primary-container: oklch(0.93 0.06 17);
+  --on-primary-container: oklch(0.30 0.16 17);
 
-  --secondary: oklch(0.96 0 0);
-  --secondary-foreground: oklch(0.12 0 0);
-  --muted: oklch(0.96 0 0);
-  --muted-foreground: oklch(0.45 0 0);
-  --accent: oklch(0.96 0.04 17);
-  --accent-foreground: oklch(0.32 0.16 17);
+  --secondary: oklch(0.92 0.015 17);
+  --secondary-foreground: oklch(0.18 0.02 17);
+  --muted: oklch(0.94 0.012 17);
+  --muted-foreground: oklch(0.48 0.02 17);
+  --accent: oklch(0.93 0.06 17);
+  --accent-foreground: oklch(0.30 0.16 17);
 
-
-  --tertiary: oklch(0.62 0.16 195);
+  --tertiary: oklch(0.62 0.13 215);
   --tertiary-foreground: oklch(0.99 0.005 270);
 
   --destructive: oklch(0.58 0.22 27);
   --destructive-foreground: oklch(0.99 0.005 270);
 
-  --border: oklch(0.88 0 0);
-  --input: oklch(0.88 0 0);
+  --border: oklch(0.86 0.01 17);
+  --input: oklch(0.86 0.01 17);
   --ring: oklch(0.645 0.245 17);
-
 }
 
 .dark {
-  --background: oklch(0.10 0 0);
-  --foreground: oklch(0.97 0 0);
-  --surface: oklch(0.10 0 0);
-  --surface-container: oklch(0.14 0 0);
-  --surface-container-high: oklch(0.18 0 0);
-  --surface-container-highest: oklch(0.22 0 0);
-  --on-surface: oklch(0.97 0 0);
-  --on-surface-muted: oklch(0.65 0 0);
-  --outline: oklch(0.97 0 0);
-  --outline-variant: oklch(0.26 0 0);
+  --background: oklch(0.16 0.012 17);
+  --foreground: oklch(0.96 0.005 17);
+  --surface: oklch(0.16 0.012 17);
+  --surface-container: oklch(0.20 0.015 17);
+  --surface-container-high: oklch(0.24 0.018 17);
+  --surface-container-highest: oklch(0.28 0.02 17);
+  --on-surface: oklch(0.96 0.005 17);
+  --on-surface-muted: oklch(0.70 0.012 17);
+  --outline: oklch(0.62 0.015 17);
+  --outline-variant: oklch(0.32 0.015 17);
 
-  --card: oklch(0.14 0 0);
-  --card-foreground: oklch(0.97 0 0);
-  --popover: oklch(0.14 0 0);
-  --popover-foreground: oklch(0.97 0 0);
+  --card: oklch(0.20 0.015 17);
+  --card-foreground: oklch(0.96 0.005 17);
+  --popover: oklch(0.22 0.015 17);
+  --popover-foreground: oklch(0.96 0.005 17);
 
-  --primary: oklch(0.70 0.22 17);
-  --primary-foreground: oklch(0.10 0 0);
-  --primary-container: oklch(0.32 0.14 17);
-  --on-primary-container: oklch(0.96 0.04 17);
+  --primary: oklch(0.74 0.20 17);
+  --primary-foreground: oklch(0.18 0.04 17);
+  --primary-container: oklch(0.36 0.14 17);
+  --on-primary-container: oklch(0.94 0.06 17);
 
-  --secondary: oklch(0.22 0 0);
-  --secondary-foreground: oklch(0.97 0 0);
-  --muted: oklch(0.18 0 0);
-  --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.32 0.14 17);
-  --accent-foreground: oklch(0.96 0.04 17);
+  --secondary: oklch(0.26 0.015 17);
+  --secondary-foreground: oklch(0.96 0.005 17);
+  --muted: oklch(0.22 0.015 17);
+  --muted-foreground: oklch(0.70 0.012 17);
+  --accent: oklch(0.36 0.14 17);
+  --accent-foreground: oklch(0.94 0.06 17);
 
-
-  --tertiary: oklch(0.78 0.12 195);
-  --tertiary-foreground: oklch(0.10 0 0);
+  --tertiary: oklch(0.78 0.10 215);
+  --tertiary-foreground: oklch(0.16 0.012 17);
 
   --destructive: oklch(0.68 0.20 22);
   --destructive-foreground: oklch(0.99 0.005 270);
 
-  --border: oklch(0.26 0 0);
-  --input: oklch(0.26 0 0);
-  --ring: oklch(0.70 0.22 17);
-
+  --border: oklch(0.32 0.015 17);
+  --input: oklch(0.32 0.015 17);
+  --ring: oklch(0.74 0.20 17);
 }
 
 @layer base {
@@ -159,21 +165,19 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
   }
 
   h1, h2, h3, h4, h5, h6, .font-display {
     font-family: var(--font-display);
-    font-feature-settings: "ss01", "ss02";
-    letter-spacing: -0.015em;
+    font-variation-settings: "opsz" 80, "wght" 500;
+    letter-spacing: -0.01em;
   }
-
-  /*
-   * Theme switching is handled by the View Transitions API (see bottom of file).
-   */
 
   :focus-visible {
     outline: 2px solid var(--color-ring);
-    outline-offset: 2px;
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 
   ::selection {
@@ -183,8 +187,8 @@
 }
 
 @layer utilities {
-  /* Android-style state layer */
-  .state-layer { position: relative; isolation: isolate; }
+  /* Material state layer — overlay that brightens/darkens on hover/press */
+  .state-layer { position: relative; isolation: isolate; overflow: hidden; }
   .state-layer::after {
     content: "";
     position: absolute; inset: 0;
@@ -192,38 +196,52 @@
     opacity: 0;
     border-radius: inherit;
     pointer-events: none;
-    transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+    transition: opacity var(--motion-short) var(--ease-standard);
   }
-  .state-layer:hover::after { opacity: 0.06; }
-  .state-layer:active::after { opacity: 0.12; }
+  .state-layer:hover::after { opacity: 0.08; }
+  .state-layer:focus-visible::after { opacity: 0.12; }
+  .state-layer:active::after { opacity: 0.16; }
 
-  .elev-1 { box-shadow: none; }
-  .elev-2 { box-shadow: none; }
-  .elev-3 { box-shadow: none; }
+  /* Material elevation tiers — soft, layered shadows */
+  .elev-1 {
+    box-shadow:
+      0 1px 2px 0 color-mix(in oklab, var(--color-foreground) 8%, transparent),
+      0 1px 3px 1px color-mix(in oklab, var(--color-foreground) 5%, transparent);
+  }
+  .elev-2 {
+    box-shadow:
+      0 1px 2px 0 color-mix(in oklab, var(--color-foreground) 10%, transparent),
+      0 2px 6px 2px color-mix(in oklab, var(--color-foreground) 8%, transparent);
+  }
+  .elev-3 {
+    box-shadow:
+      0 4px 8px 3px color-mix(in oklab, var(--color-foreground) 10%, transparent),
+      0 1px 3px 0 color-mix(in oklab, var(--color-foreground) 12%, transparent);
+  }
 
-  /* Hairline ruled border — used as the page's organizing grid */
-  .rule { border: 1px solid var(--color-outline); }
-  .rule-y > * + * { border-top: 1px solid var(--color-outline); }
-  .rule-x > * + * { border-left: 1px solid var(--color-outline); }
-
-  /* Eyebrow label */
   .eyebrow {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     font-family: var(--font-sans);
   }
 
   .scrollbar-none::-webkit-scrollbar { display: none; }
   .scrollbar-none { scrollbar-width: none; }
+
+  /* Material You "ripple-lite" press scale */
+  .press {
+    transition: transform var(--motion-short) var(--ease-standard);
+  }
+  .press:active { transform: scale(0.97); }
 }
 
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.animate-fade-up { animation: fade-up 0.4s cubic-bezier(0.2, 0, 0, 1) both; }
+.animate-fade-up { animation: fade-up var(--motion-medium) var(--ease-emphasized) both; }
 
 /* View Transitions API — smooth GPU cross-fade on theme switch */
 ::view-transition-old(root),
@@ -231,7 +249,6 @@
   animation-duration: 380ms;
   animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
   mix-blend-mode: normal;
-  /* Promote to its own compositor layer for buttery-smooth blending */
   will-change: opacity;
 }
 ::view-transition-old(root) { animation-name: theme-fade-out; }
@@ -243,4 +260,5 @@
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),
   ::view-transition-new(root) { animation: none; }
+  .animate-fade-up { animation: none; }
 }
