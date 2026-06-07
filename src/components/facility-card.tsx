@@ -1,10 +1,12 @@
+import { memo } from "react";
 import { Link } from "@tanstack/react-router";
 import { Hospital, Stethoscope, MapPin, ArrowUpRight, Phone, Mail, Facebook } from "lucide-react";
 import type { Facility } from "@/data/facilities.types";
 import { REGION_LABELS } from "@/data/facilities";
 import { cn } from "@/lib/utils";
 
-export function FacilityCard({ facility }: { facility: Facility }) {
+export const FacilityCard = memo(function FacilityCard({ facility }: { facility: Facility }) {
+
   const isHub = facility.serviceType === "Treatment Hub";
   const Icon = isHub ? Hospital : Stethoscope;
   const phones = [...facility.mobiles, ...facility.landlines];
@@ -126,4 +128,5 @@ export function FacilityCard({ facility }: { facility: Facility }) {
       </div>
     </article>
   );
-}
+});
+
