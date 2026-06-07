@@ -14,6 +14,7 @@ import { FACILITIES, REGION_LABELS } from "@/data/facilities";
 import type { Facility } from "@/data/facilities.types";
 import { findFacility, telHref, fbHref } from "@/lib/facilities-helpers";
 import { cn } from "@/lib/utils";
+import { ShareBar } from "@/components/share-bar";
 
 export const Route = createFileRoute("/facilities/$id")({
   loader: ({ params }) => {
@@ -21,7 +22,7 @@ export const Route = createFileRoute("/facilities/$id")({
     if (!f) throw notFound();
     return { facility: f };
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     const f = loaderData?.facility;
     const title = f
       ? `${f.name} — ${REGION_LABELS[f.region]} | PH HIV Care Directory`
@@ -29,6 +30,9 @@ export const Route = createFileRoute("/facilities/$id")({
     const desc = f
       ? `${f.serviceType} in ${REGION_LABELS[f.region]}. ${f.address}`
       : "DOH-designated HIV facility details.";
+    const ogImage = f
+      ? `/api/og?eyebrow=${encodeURIComponent(REGION_LABELS[f.region])}&title=${encodeURIComponent(f.name)}&subtitle=${encodeURIComponent(`${f.serviceType} · ${f.address}`)}`
+      : `/api/og?title=${encodeURIComponent(title)}`;
     return {
       meta: [
         { title },
@@ -36,6 +40,11 @@ export const Route = createFileRoute("/facilities/$id")({
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "article" },
+        { property: "og:image", content: ogImage },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+        { property: "og:image:type", content: "image/svg+xml" },
+        { name: "twitter:image", content: ogImage },
         ...(f ? [{ property: "og:url", content: `/facilities/${f.id}` }] : []),
       ],
       links: f ? [{ rel: "canonical", href: `/facilities/${f.id}` }] : [],
@@ -45,13 +54,44 @@ export const Route = createFileRoute("/facilities/$id")({
               type: "application/ld+json",
               children: JSON.stringify({
                 "@context": "https://schema.org",
-                "@type": "MedicalOrganization",
-                name: f.name,
-                address: f.address,
-                telephone: f.mobiles[0] ?? f.landlines[0],
-                email: f.emails[0],
-                medicalSpecialty: "Infectious Disease",
-                areaServed: REGION_LABELS[f.region],
+                "@graph": [
+                  {
+                    "@type": "MedicalClinic",
+                    "@id": `#facility-${f.id}`,
+                    name: f.name,
+                    description: `${f.serviceType} designated by the Philippine Department of Health.`,
+                    address: {
+                      "@type": "PostalAddress",
+                      streetAddress: f.address,
+                      addressRegion: REGION_LABELS[f.region],
+                      addressCountry: "PH",
+                    },
+                    telephone: f.mobiles[0] ?? f.landlines[0],
+                    email: f.emails[0],
+                    medicalSpecialty: "InfectiousDisease",
+                    areaServed: {
+                      "@type": "AdministrativeArea",
+                      name: REGION_LABELS[f.region],
+                    },
+                    availableService: [
+                      { "@type": "MedicalTherapy", name: "Antiretroviral Therapy" },
+                      { "@type": "MedicalTest", name: "HIV Testing" },
+                    ],
+                  },
+                  {
+                    "@type": "BreadcrumbList",
+                    itemListElement: [
+                      { "@type": "ListItem", position: 1, name: "Home", item: "/" },
+                      { "@type": "ListItem", position: 2, name: "Facilities", item: "/facilities" },
+                      {
+                        "@type": "ListItem",
+                        position: 3,
+                        name: f.name,
+                        item: `/facilities/${params.id}`,
+                      },
+                    ],
+                  },
+                ],
               }),
             },
           ]
@@ -236,6 +276,16 @@ function FacilityDetail() {
           </div>
         )}
       </article>
+
+      {/* Share */}
+      <section className="mt-6 rounded-3xl bg-surface-container p-5 sm:p-6">
+        <ShareBar
+          url={`/facilities/${f.id}`}
+          title={`${f.name} — DOH-designated ${f.serviceType}`}
+          text={`${f.serviceType} in ${REGION_LABELS[f.region]}. ${f.address}`}
+          label="Share this facility"
+        />
+      </section>
 
       {/* Other in region */}
       {otherInRegion.length > 0 && (

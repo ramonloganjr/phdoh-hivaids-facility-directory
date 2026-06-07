@@ -1,0 +1,48 @@
+# Philippine HIV Care Directory
+# Public mirror of DOH Department Circular No. 2026-0065.
+# Operated by Ramon Logan Jr. — see /terms and /privacy.
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Explicit allow for AI / answer-engine crawlers (AEO / GEO).
+# These bots respect robots.txt; explicit Allow is documentation as much as policy.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /

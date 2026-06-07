@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -17,10 +18,16 @@ import { Route as FacilitiesRouteImport } from './routes/facilities'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FacilitiesIdRouteImport } from './routes/facilities.$id'
+import { Route as ApiOgRouteImport } from './routes/api.og'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -58,6 +65,11 @@ const FacilitiesIdRoute = FacilitiesIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => FacilitiesRoute,
 } as any)
+const ApiOgRoute = ApiOgRouteImport.update({
+  id: '/api/og',
+  path: '/api/og',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -66,7 +78,9 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/insights': typeof InsightsRoute
   '/privacy': typeof PrivacyRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
 }
 export interface FileRoutesByTo {
@@ -76,7 +90,9 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/insights': typeof InsightsRoute
   '/privacy': typeof PrivacyRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
 }
 export interface FileRoutesById {
@@ -87,7 +103,9 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/insights': typeof InsightsRoute
   '/privacy': typeof PrivacyRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
 }
 export interface FileRouteTypes {
@@ -99,7 +117,9 @@ export interface FileRouteTypes {
     | '/faq'
     | '/insights'
     | '/privacy'
+    | '/sitemap.xml'
     | '/terms'
+    | '/api/og'
     | '/facilities/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -109,7 +129,9 @@ export interface FileRouteTypes {
     | '/faq'
     | '/insights'
     | '/privacy'
+    | '/sitemap.xml'
     | '/terms'
+    | '/api/og'
     | '/facilities/$id'
   id:
     | '__root__'
@@ -119,7 +141,9 @@ export interface FileRouteTypes {
     | '/faq'
     | '/insights'
     | '/privacy'
+    | '/sitemap.xml'
     | '/terms'
+    | '/api/og'
     | '/facilities/$id'
   fileRoutesById: FileRoutesById
 }
@@ -130,7 +154,9 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   InsightsRoute: typeof InsightsRoute
   PrivacyRoute: typeof PrivacyRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
+  ApiOgRoute: typeof ApiOgRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -140,6 +166,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -191,6 +224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FacilitiesIdRouteImport
       parentRoute: typeof FacilitiesRoute
     }
+    '/api/og': {
+      id: '/api/og'
+      path: '/api/og'
+      fullPath: '/api/og'
+      preLoaderRoute: typeof ApiOgRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -213,7 +253,9 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   InsightsRoute: InsightsRoute,
   PrivacyRoute: PrivacyRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
+  ApiOgRoute: ApiOgRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
