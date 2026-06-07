@@ -55,7 +55,7 @@ const SERVICE_MAP: Record<"hub" | "primary", ServiceType> = {
 };
 
 function FacilitiesPage() {
-  const search = Route.useSearch();
+  const search = Route.useSearch() as Search;
   const navigate = useNavigate({ from: "/facilities" });
 
   const [localQ, setLocalQ] = useState(search.q ?? "");
@@ -63,14 +63,13 @@ function FacilitiesPage() {
 
   const setSearch = (patch: Partial<Search>) => {
     navigate({
-      search: (prev) => {
-        const next = { ...prev, ...patch };
-        // strip empty values
+      search: ((prev: Search) => {
+        const next: Search = { ...prev, ...patch };
         for (const k of Object.keys(next) as (keyof Search)[]) {
           if (!next[k]) delete next[k];
         }
         return next;
-      },
+      }) as never,
       replace: true,
     });
   };
