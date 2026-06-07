@@ -197,9 +197,23 @@
   .state-layer:hover::after { opacity: 0.06; }
   .state-layer:active::after { opacity: 0.12; }
 
-  .elev-1 { box-shadow: 0 1px 2px 0 oklch(0 0 0 / 0.06), 0 1px 3px 0 oklch(0 0 0 / 0.04); }
-  .elev-2 { box-shadow: 0 1px 2px 0 oklch(0 0 0 / 0.06), 0 4px 12px -2px oklch(0 0 0 / 0.08); }
-  .elev-3 { box-shadow: 0 4px 8px -2px oklch(0 0 0 / 0.08), 0 12px 24px -6px oklch(0 0 0 / 0.10); }
+  .elev-1 { box-shadow: none; }
+  .elev-2 { box-shadow: none; }
+  .elev-3 { box-shadow: none; }
+
+  /* Hairline ruled border — used as the page's organizing grid */
+  .rule { border: 1px solid var(--color-outline); }
+  .rule-y > * + * { border-top: 1px solid var(--color-outline); }
+  .rule-x > * + * { border-left: 1px solid var(--color-outline); }
+
+  /* Eyebrow label */
+  .eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-family: var(--font-sans);
+  }
 
   .scrollbar-none::-webkit-scrollbar { display: none; }
   .scrollbar-none { scrollbar-width: none; }
