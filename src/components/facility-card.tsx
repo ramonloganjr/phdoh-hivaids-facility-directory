@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Hospital, Stethoscope, MapPin, ArrowUpRight } from "lucide-react";
+import { Hospital, Stethoscope, MapPin, ArrowUpRight, Phone, Mail, Facebook } from "lucide-react";
 import type { Facility } from "@/data/facilities.types";
 import { REGION_LABELS } from "@/data/facilities";
 import { cn } from "@/lib/utils";
@@ -7,6 +7,10 @@ import { cn } from "@/lib/utils";
 export function FacilityCard({ facility }: { facility: Facility }) {
   const isHub = facility.serviceType === "Treatment Hub";
   const Icon = isHub ? Hospital : Stethoscope;
+  const phoneCount = facility.mobiles.length + facility.landlines.length;
+  const hasEmail = facility.emails.length > 0;
+  const hasFacebook = facility.facebook.length > 0;
+  const leadContact = facility.contacts[0];
 
   return (
     <Link
@@ -60,6 +64,36 @@ export function FacilityCard({ facility }: { facility: Facility }) {
             <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             <span className="line-clamp-2">{facility.address}</span>
           </p>
+          {leadContact?.name && (
+            <p className="mt-2 truncate text-xs text-on-surface-muted">
+              {leadContact.role ? (
+                <span className="text-on-surface-muted/70">{leadContact.role}: </span>
+              ) : null}
+              <span className="font-medium text-on-surface">{leadContact.name}</span>
+            </p>
+          )}
+          {(phoneCount > 0 || hasEmail || hasFacebook) && (
+            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] font-medium text-on-surface-muted">
+              {phoneCount > 0 && (
+                <span className="inline-flex items-center gap-1">
+                  <Phone className="h-3 w-3" aria-hidden="true" />
+                  {phoneCount} {phoneCount === 1 ? "number" : "numbers"}
+                </span>
+              )}
+              {hasEmail && (
+                <span className="inline-flex items-center gap-1">
+                  <Mail className="h-3 w-3" aria-hidden="true" />
+                  Email
+                </span>
+              )}
+              {hasFacebook && (
+                <span className="inline-flex items-center gap-1">
+                  <Facebook className="h-3 w-3" aria-hidden="true" />
+                  Facebook
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </Link>

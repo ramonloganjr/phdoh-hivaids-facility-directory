@@ -181,10 +181,12 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "0965-7235561\nemail: h4@fnlghtc.doh.gov.ph"
+      "0965-7235561"
     ],
     "landlines": [],
-    "emails": [],
+    "emails": [
+      "h4@fnlghtc.doh.gov.ph"
+    ],
     "facebook": [
       "Comfort Zone Treatment Hub-fnlghtc"
     ],
@@ -210,10 +212,12 @@ export const FACILITIES: Facility[] = [
     ],
     "mobiles": [
       "0998-5663421",
-      "0907-025-5874\nemail: beghkandilihub@gmail.com"
+      "0907-025-5874"
     ],
     "landlines": [],
-    "emails": [],
+    "emails": [
+      "beghkandilihub@gmail.com"
+    ],
     "facebook": [],
     "extra": []
   },
@@ -430,8 +434,7 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "0915",
-      "-9063375",
+      "0915/-9063375",
       "0932-7089406"
     ],
     "landlines": [],
@@ -556,7 +559,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "santiago-city-health-office-santiago-city-health-office-hiv-aids-action-team-sch",
+    "id": "santiago-city-health-office-santiago-city-health-office-hiv-aids-action-team-scho-hat",
     "num": 20,
     "name": "Santiago City Health Office - Santiago City Health Office HIV/AIDS Action Team (SCHO-HAT)",
     "region": "R2",
@@ -1074,7 +1077,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "usbong-ng-bulakenyo-incorporated-republika-community-center-and-primary-hiv-care",
+    "id": "usbong-ng-bulakenyo-incorporated-republika-community-center-and-primary-hiv-care-clinic",
     "num": 38,
     "name": "Usbong ng Bulakenyo, Incorporated (Republika Community Center and Primary HIV Care Clinic)",
     "region": "R3",
@@ -1350,7 +1353,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "family-planning-organization-of-the-philippines-pampanga-chapter-ycap-community-",
+    "id": "family-planning-organization-of-the-philippines-pampanga-chapter-ycap-community-center-and-primary-hiv-care-clinic",
     "num": 48,
     "name": "Family Planning Organization of the Philippines-Pampanga Chapter (YCAP Community Center and Primary HIV Care Clinic)",
     "region": "R3",
@@ -1398,7 +1401,7 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "09568266750"
+      "No: 09568266750"
     ],
     "landlines": [],
     "emails": [
@@ -1436,7 +1439,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "mabalacat-city-rhu-ii-reproductive-health-and-wellness-center-and-primary-hiv-ca",
+    "id": "mabalacat-city-rhu-ii-reproductive-health-and-wellness-center-and-primary-hiv-care-clinic-amlat-mabalacat",
     "num": 51,
     "name": "Mabalacat City RHU II Reproductive Health and Wellness Center and Primary HIV Care Clinic (Amlat Mabalacat)",
     "region": "R3",
@@ -1467,7 +1470,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "regional-tb-hiv-support-network-incorporated-lakan-community-center-and-primary-",
+    "id": "regional-tb-hiv-support-network-incorporated-lakan-community-center-and-primary-hiv-care-clinic",
     "num": 52,
     "name": "Regional TB-HIV Support Network, Incorporated (Lakan Community Center and Primary HIV Care Clinic)",
     "region": "R3",
@@ -1511,10 +1514,10 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "0998-5100842"
+      "No.: 0998-5100842"
     ],
     "landlines": [
-      "(045) 598-4000 loc. 80192"
+      "No.: (045) 598-4000 loc. 80192"
     ],
     "emails": [
       "tmccireacthub@gmail.com"
@@ -1523,7 +1526,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "angeles-city-primary-hiv-care-clinic-bale-angele-o",
+    "id": "angeles-city-primary-hiv-care-clinic-bale-angeleño",
     "num": 54,
     "name": "Angeles City Primary HIV Care Clinic (Bale Angeleño)",
     "region": "R3",
@@ -1610,7 +1613,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "myrna-s-cafe-health-service-cooperative-kanlahi-community-center-and-primary-hiv",
+    "id": "myrna-s-cafe-health-service-cooperative-kanlahi-community-center-and-primary-hiv-care-clinic",
     "num": 57,
     "name": "Myrna's Cafe Health Service Cooperative (Kanlahi Community Center and Primary HIV Care Clinic)",
     "region": "R3",
@@ -1662,8 +1665,7 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "0995-190-7946",
-      "0910-708-0130"
+      "0995-190-7946/ 0910-708-0130"
     ],
     "landlines": [],
     "emails": [],
@@ -1703,7 +1705,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "cds-reproductive-health-care-clinic-2",
+    "id": "cds-reproductive-health-care-clinic",
     "num": 60,
     "name": "CDS Reproductive Health Care Clinic",
     "region": "R3",
@@ -1723,7 +1725,9 @@ export const FACILITIES: Facility[] = [
     "emails": [
       "cdsreproductivehealthclinic@gmail.com"
     ],
-    "facebook": [],
+    "facebook": [
+      "CDS-Reproductive Health Care Clinic"
+    ],
     "extra": []
   },
   {
@@ -1934,7 +1938,7 @@ export const FACILITIES: Facility[] = [
     "region": "R4A",
     "serviceType": "Primary HIV Care Facility",
     "inpatient": false,
-    "address": "HACT Physician: Dr. Carlo Paulo Mendiola\nHACT Nurse: Mitos Mendiola",
+    "address": "HACT Physician: Dr. Carlo Paulo Mendiola HACT Nurse: Mitos Mendiola",
     "contacts": [
       {
         "role": "Mobile",
@@ -2569,7 +2573,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "ospital-ng-bi-an",
+    "id": "ospital-ng-biñan",
     "num": 91,
     "name": "Ospital ng Biñan",
     "region": "R4A",
@@ -2650,7 +2654,9 @@ export const FACILITIES: Facility[] = [
     "emails": [
       "sailcalamba@ship.ph"
     ],
-    "facebook": [],
+    "facebook": [
+      "Sail Clinic Calamba"
+    ],
     "extra": []
   },
   {
@@ -2701,9 +2707,11 @@ export const FACILITIES: Facility[] = [
     ],
     "mobiles": [],
     "landlines": [
-      "(049) 530-0015 loc. 5309\nemail: santarosasocialwellnessclinic@gmail.com"
+      "(049) 530-0015 loc. 5309"
     ],
-    "emails": [],
+    "emails": [
+      "santarosasocialwellnessclinic@gmail.com"
+    ],
     "facebook": [],
     "extra": []
   },
@@ -2837,7 +2845,9 @@ export const FACILITIES: Facility[] = [
         "name": "Angelo Gabriel Valdeavilla"
       }
     ],
-    "mobiles": [],
+    "mobiles": [
+      ":"
+    ],
     "landlines": [],
     "emails": [
       "agnv.saghi.ph@gmail.com"
@@ -2926,7 +2936,9 @@ export const FACILITIES: Facility[] = [
     "emails": [
       "caintashc@yahoo.com"
     ],
-    "facebook": [],
+    "facebook": [
+      "Cainta Reproductive Wellness and Social Hygiene Clinic"
+    ],
     "extra": []
   },
   {
@@ -3034,9 +3046,11 @@ export const FACILITIES: Facility[] = [
     ],
     "mobiles": [],
     "landlines": [
-      "(049) 654-2609\nemail: tanay.shc@gmail.com"
+      "(049) 654-2609"
     ],
-    "emails": [],
+    "emails": [
+      "tanay.shc@gmail.com"
+    ],
     "facebook": [],
     "extra": []
   },
@@ -3206,8 +3220,7 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "0930-0734842",
-      "0995-1860496"
+      "0930-0734842/0995-1860496"
     ],
     "landlines": [],
     "emails": [
@@ -3235,8 +3248,7 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "0969-524-2206",
-      "09695242202"
+      "0969-524-2206/09695242202"
     ],
     "landlines": [],
     "emails": [
@@ -3402,7 +3414,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "family-planning-organization-of-the-philippines-masbate-fpop-masbad-support-have",
+    "id": "family-planning-organization-of-the-philippines-masbate-fpop-masbad-support-haven",
     "num": 120,
     "name": "Family Planning Organization of the Philippines - Masbate (FPOP MASBAD Support Haven)",
     "region": "R5",
@@ -3531,14 +3543,16 @@ export const FACILITIES: Facility[] = [
     ],
     "mobiles": [
       "0920-9566161",
-      "0939-4109160\nFB: Hantop Wellness Center - Aklan"
+      "0939-4109160"
     ],
     "landlines": [
       "(036) 268 6299"
     ],
     "emails": [],
     "facebook": [],
-    "extra": []
+    "extra": [
+      "FB: Hantop Wellness Center - Aklan"
+    ]
   },
   {
     "id": "balay-pagtatap-western-visayas-sanitarium-and-general-hospital",
@@ -3601,7 +3615,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "rise-clinic-of-rep-pedro-g-trono-memorial-hospital-rpgtmh-integrated-services-fo",
+    "id": "rise-clinic-of-rep-pedro-g-trono-memorial-hospital-rpgtmh-integrated-services-for-epidemic-hiv-and-aids",
     "num": 127,
     "name": "Rise Clinic of Rep. Pedro G. Trono Memorial Hospital (RPGTMH Integrated Services for Epidemic HIV and AIDS)",
     "region": "R6",
@@ -3753,7 +3767,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "we-care-clinic-of-roxas-memorial-provincial-hospital-capiz-capiz-advocacy-and-re",
+    "id": "we-care-clinic-of-roxas-memorial-provincial-hospital-capiz-capiz-advocacy-and-reassuring-engagement-for-hiv-aids-prevention-and-control",
     "num": 132,
     "name": "We CARE Clinic of Roxas Memorial Provincial Hospital, Capiz (Capiz Advocacy and Reassuring Engagement for HIV/AIDS Prevention and Control)",
     "region": "R6",
@@ -3781,7 +3795,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "lilahc-leon-initiate-local-assistance-to-hiv-aids-clients-leon-hiv-primary-care-",
+    "id": "lilahc-leon-initiate-local-assistance-to-hiv-aids-clients-leon-hiv-primary-care-clinic",
     "num": 133,
     "name": "LILAHC (Leon Initiate Local Assistance to HIV/AIDS CLIENTS) - Leon HIV Primary Care Clinic",
     "region": "R6",
@@ -3815,7 +3829,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "iwag-clinic-iph-welfare-awareness-and-guidance-hub-for-hiv-aids-clients-iloilo-p",
+    "id": "iwag-clinic-iph-welfare-awareness-and-guidance-hub-for-hiv-aids-clients-iloilo-provincial-hospital",
     "num": 134,
     "name": "IWAG Clinic (IPH Welfare Awareness and Guidance) Hub for HIV/AIDS Clients - Iloilo Provincial Hospital",
     "region": "R6",
@@ -3842,7 +3856,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "just-clinic-jmcdh-unified-services-and-testing-for-hiv-aids-jesus-m-colmenares-d",
+    "id": "just-clinic-jmcdh-unified-services-and-testing-for-hiv-aids-jesus-m-colmenares-district-hospital",
     "num": 135,
     "name": "JUST Clinic (JMCDH Unified Services and Testing for HIV/AIDS - Jesus M. Colmenares District Hospital",
     "region": "R6",
@@ -3983,7 +3997,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "hope-clinic-helping-others-with-positive-empowerment-don-jose-s-monfort-medical-",
+    "id": "hope-clinic-helping-others-with-positive-empowerment-don-jose-s-monfort-medical-center",
     "num": 140,
     "name": "HOPE Clinic ( Helping Others with Positive Empowerment) Don Jose S. Monfort Medical Center",
     "region": "R6",
@@ -4484,13 +4498,15 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "0998-9872117\nFB page: Social Hygiene Clinic - Minglanilla"
+      "0998-9872117"
     ],
     "landlines": [
       "(032) 239-4431"
     ],
     "emails": [],
-    "facebook": [],
+    "facebook": [
+      "Social Hygiene Clinic - Minglanilla"
+    ],
     "extra": []
   },
   {
@@ -4721,7 +4737,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "chat-room-cadiz-district-hospital-hiv-and-aids-treatment-room-cadiz-district-hos",
+    "id": "chat-room-cadiz-district-hospital-hiv-and-aids-treatment-room-cadiz-district-hospital",
     "num": 167,
     "name": "CHAT – Room (Cadiz District Hospital HIV and AIDS Treatment – Room) - Cadiz District Hospital",
     "region": "NIR",
@@ -4751,7 +4767,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "haplos-center-hiv-and-aids-program-of-lifetime-opportunities-and-services-lorenz",
+    "id": "haplos-center-hiv-and-aids-program-of-lifetime-opportunities-and-services-lorenzo-d-zayco-district-hospital",
     "num": 168,
     "name": "HAPLOS – Center (HIV and AIDS Program of Lifetime Opportunities and Services) - Lorenzo D Zayco District Hospital",
     "region": "NIR",
@@ -4877,14 +4893,14 @@ export const FACILITIES: Facility[] = [
       "0917-3816617",
       "0916-1953881"
     ],
-    "landlines": [],
+    "landlines": [
+      "Ladline: (035) 226-4066"
+    ],
     "emails": [],
     "facebook": [
       "TB Dots Noph"
     ],
-    "extra": [
-      "Ladline: (035) 226-4066"
-    ]
+    "extra": []
   },
   {
     "id": "bagani-community-center-by-loveyourself",
@@ -4970,7 +4986,9 @@ export const FACILITIES: Facility[] = [
     "emails": [
       "islasafeshore@gmail.com"
     ],
-    "facebook": [],
+    "facebook": [
+      "Isla Safe Shore"
+    ],
     "extra": []
   },
   {
@@ -5287,10 +5305,12 @@ export const FACILITIES: Facility[] = [
     ],
     "mobiles": [
       "0917-7089773",
-      "0915-0736643\nemail: sphhact2020@gmail.com"
+      "0915-0736643"
     ],
     "landlines": [],
-    "emails": [],
+    "emails": [
+      "sphhact2020@gmail.com"
+    ],
     "facebook": [],
     "extra": []
   },
@@ -5397,7 +5417,7 @@ export const FACILITIES: Facility[] = [
   {
     "id": "governor-benjamin-t-romualdez-general-hospital-hospital-schistosomiasis-center",
     "num": 192,
-    "name": "Governor Benjamin T. Romualdez General Hospital  Hospital & Schistosomiasis Center",
+    "name": "Governor Benjamin T. Romualdez General Hospital Hospital & Schistosomiasis Center",
     "region": "R8",
     "serviceType": "Treatment Hub",
     "inpatient": true,
@@ -5509,7 +5529,7 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "0917-5610391"
+      ".: 0917-5610391"
     ],
     "landlines": [],
     "emails": [
@@ -5764,7 +5784,7 @@ export const FACILITIES: Facility[] = [
     "region": "R9",
     "serviceType": "Treatment Hub",
     "inpatient": true,
-    "address": "Provincial Gov't Complex, Bgy. Dao,\nPagadian City, Zamboanga del Sur",
+    "address": "Provincial Gov't Complex, Bgy. Dao, Pagadian City, Zamboanga del Sur",
     "contacts": [
       {
         "role": "HACT Chair",
@@ -5776,7 +5796,6 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "0929-1384112",
       "0929-1384112",
       "0956-2200-404"
     ],
@@ -5794,7 +5813,7 @@ export const FACILITIES: Facility[] = [
     "region": "R9",
     "serviceType": "Treatment Hub",
     "inpatient": true,
-    "address": "Poblacion, Municipality of RT Lim,\nZamboanga Sibugay",
+    "address": "Poblacion, Municipality of RT Lim, Zamboanga Sibugay",
     "contacts": [
       {
         "role": "HACT Chair",
@@ -5823,7 +5842,7 @@ export const FACILITIES: Facility[] = [
     "region": "R9",
     "serviceType": "Primary HIV Care Facility",
     "inpatient": false,
-    "address": "Poblacion, Municipality of Diplahan,\nZamboanga Sibugay",
+    "address": "Poblacion, Municipality of Diplahan, Zamboanga Sibugay",
     "contacts": [
       {
         "role": "HACT Physician",
@@ -5852,7 +5871,7 @@ export const FACILITIES: Facility[] = [
     "region": "R9",
     "serviceType": "Primary HIV Care Facility",
     "inpatient": false,
-    "address": "Poblacion, Municipality of Imelda,\nZamboanga Sibugay",
+    "address": "Poblacion, Municipality of Imelda, Zamboanga Sibugay",
     "contacts": [
       {
         "role": "HACT Chair",
@@ -6018,7 +6037,7 @@ export const FACILITIES: Facility[] = [
     "region": "R10",
     "serviceType": "Treatment Hub",
     "inpatient": true,
-    "address": "Andres Bonifacio Avenue, San Miguel ,\nIligan City",
+    "address": "Andres Bonifacio Avenue, San Miguel , Iligan City",
     "contacts": [
       {
         "role": "HACT Chair",
@@ -6201,12 +6220,14 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "0905-4407272\nemail: nmmctreatmenthub@gmail.com"
+      "0905-4407272"
     ],
     "landlines": [
       "(082) 8564147 Loc. 361"
     ],
-    "emails": [],
+    "emails": [
+      "nmmctreatmenthub@gmail.com"
+    ],
     "facebook": [],
     "extra": []
   },
@@ -6370,10 +6391,12 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "0926-1495580\nemail: icareclinic.cgh@gmail.com"
+      "0926-1495580"
     ],
     "landlines": [],
-    "emails": [],
+    "emails": [
+      "icareclinic.cgh@gmail.com"
+    ],
     "facebook": [],
     "extra": []
   },
@@ -6509,7 +6532,7 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "0956-2568079"
+      "Number: 0956-2568079"
     ],
     "landlines": [],
     "emails": [
@@ -6929,12 +6952,14 @@ export const FACILITIES: Facility[] = [
     ],
     "mobiles": [
       "0955-149-0557",
-      "0963-542-1010\nE-mail : shcgensan@gmail.com"
+      "0963-542-1010"
     ],
     "landlines": [
-      "(083) 825-1014"
+      ".: (083) 825-1014"
     ],
-    "emails": [],
+    "emails": [
+      "shcgensan@gmail.com"
+    ],
     "facebook": [],
     "extra": []
   },
@@ -6957,12 +6982,14 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "09171152090\nE-mail : kalamansigrhu@gmail.com"
+      "09171152090"
     ],
     "landlines": [
       "064-204-6113"
     ],
-    "emails": [],
+    "emails": [
+      "kalamansigrhu@gmail.com"
+    ],
     "facebook": [],
     "extra": []
   },
@@ -7013,12 +7040,14 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "09670682573\nE-mail : Primehubkoronadal2025@gmail.com"
+      "09670682573"
     ],
     "landlines": [
       "083 500 0406"
     ],
-    "emails": [],
+    "emails": [
+      "Primehubkoronadal2025@gmail.com"
+    ],
     "facebook": [],
     "extra": []
   },
@@ -7153,10 +7182,12 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "9484052696\nE-mail : sph.redribbon@gmail.com"
+      "9484052696"
     ],
     "landlines": [],
-    "emails": [],
+    "emails": [
+      "sph.redribbon@gmail.com"
+    ],
     "facebook": [],
     "extra": []
   },
@@ -7179,10 +7210,12 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "09369997023\nE-mail : SKPHh4Clinic@gmail.com"
+      "09369997023"
     ],
     "landlines": [],
-    "emails": [],
+    "emails": [
+      "SKPHh4Clinic@gmail.com"
+    ],
     "facebook": [],
     "extra": []
   },
@@ -7205,10 +7238,12 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "9516304354\nE-mail : slh.horizonfour@gmail.com"
+      "9516304354"
     ],
     "landlines": [],
-    "emails": [],
+    "emails": [
+      "slh.horizonfour@gmail.com"
+    ],
     "facebook": [],
     "extra": []
   },
@@ -7231,10 +7266,12 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "0917-646-1406\nemail: redribbonfacility2024@gmail.com"
+      "0917-646-1406"
     ],
     "landlines": [],
-    "emails": [],
+    "emails": [
+      "redribbonfacility2024@gmail.com"
+    ],
     "facebook": [],
     "extra": []
   },
@@ -7462,7 +7499,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "san-francisco-rhu-primary-care-facility-gugma-care-hub-guidance-understanding-an",
+    "id": "san-francisco-rhu-primary-care-facility-gugma-care-hub-guidance-understanding-and-growth-for-meaningful-access-to-care-hub",
     "num": 267,
     "name": "San Francisco RHU/ Primary Care Facility (GUGMA Care Hub - Guidance, Understanding and Growth for Meaningful Access to Care Hub)",
     "region": "R13",
@@ -7938,9 +7975,11 @@ export const FACILITIES: Facility[] = [
       "0985-1183101"
     ],
     "landlines": [
-      "(02) 8570-6273 Loc. 137\nemail: rizalmedopdannex@gmail.com"
+      "(02) 8570-6273 Loc. 137"
     ],
-    "emails": [],
+    "emails": [
+      "rizalmedopdannex@gmail.com"
+    ],
     "facebook": [],
     "extra": []
   },
@@ -8155,7 +8194,7 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "0927-3276056"
+      "Number: 0927-3276056"
     ],
     "landlines": [
       "(02) 8988-1000 loc. 6765"
@@ -8219,8 +8258,7 @@ export const FACILITIES: Facility[] = [
       "0960-2473622"
     ],
     "landlines": [
-      "(02) 8246-2111 loc. 6555",
-      "6349"
+      "(02) 8246-2111 loc. 6555 or 6349"
     ],
     "emails": [
       "afptreatmenthub@gmail.com"
@@ -8284,7 +8322,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "chinese-general-hospital-and-medical-center-cghmc-center-for-holistic-access-to-",
+    "id": "chinese-general-hospital-and-medical-center-cghmc-center-for-holistic-access-to-nurturing-care-and-support-chances",
     "num": 296,
     "name": "Chinese General Hospital and Medical Center (CGHMC) - Center for Holistic Access to Nurturing Care and Support (CHANCES)",
     "region": "NCR",
@@ -8484,7 +8522,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "las-pi-as-social-hygiene-clinic",
+    "id": "las-piñas-social-hygiene-clinic",
     "num": 303,
     "name": "Las Piñas Social Hygiene Clinic",
     "region": "NCR",
@@ -8564,10 +8602,12 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "0968-8573424\nemail: mandaluyongshc@gmail.com"
+      "0968-8573424"
     ],
     "landlines": [],
-    "emails": [],
+    "emails": [
+      "mandaluyongshc@gmail.com"
+    ],
     "facebook": [
       "Mandaluyong Social Hygiene Clinic"
     ],
@@ -8694,7 +8734,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "para-aque-social-hygiene-clinic-and-wellness-center",
+    "id": "parañaque-social-hygiene-clinic-and-wellness-center",
     "num": 310,
     "name": "Parañaque Social Hygiene Clinic and Wellness Center",
     "region": "NCR",
@@ -8732,10 +8772,6 @@ export const FACILITIES: Facility[] = [
     "contacts": [
       {
         "role": "",
-        "name": "HACT Physician:"
-      },
-      {
-        "role": "",
         "name": "Dr. Felicidad Clare Martinez- Mendoza"
       },
       {
@@ -8750,7 +8786,9 @@ export const FACILITIES: Facility[] = [
     "emails": [
       "pasayshc@yahoo.com"
     ],
-    "facebook": [],
+    "facebook": [
+      "pasay social hygiene clinic"
+    ],
     "extra": []
   },
   {
@@ -8893,11 +8931,15 @@ export const FACILITIES: Facility[] = [
     ],
     "mobiles": [
       "0917-6217224",
-      "0917 312 6893\nemail: sailmakati@ship.ph\nFB page: SailClinicMakati"
+      "0917 312 6893"
     ],
     "landlines": [],
-    "emails": [],
-    "facebook": [],
+    "emails": [
+      "sailmakati@ship.ph"
+    ],
+    "facebook": [
+      "SailClinicMakati"
+    ],
     "extra": []
   },
   {
@@ -9156,8 +9198,7 @@ export const FACILITIES: Facility[] = [
       }
     ],
     "mobiles": [
-      "09474406305",
-      "09159261711"
+      "09474406305/ 09159261711"
     ],
     "landlines": [],
     "emails": [
