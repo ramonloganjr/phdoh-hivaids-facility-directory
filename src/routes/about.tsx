@@ -67,10 +67,11 @@ function AboutPage() {
         <Block icon={Database} title="Data integrity">
           <p>
             All 338 records (192 treatment hubs + 146 primary HIV care facilities) were
-            extracted directly from the official PDF. No entries were added, removed, or
-            edited. Phone numbers are reformatted only for tap-to-call links; the original
-            text is preserved on every facility page.
+            sourced directly from the Department of Health of the Philippines. No entries
+            were added, removed, or edited. Phone numbers are reformatted only for
+            tap-to-call links; the original text is preserved on every facility page.
           </p>
+
           <p className="mt-3">
             For the most current information — especially regarding service hours,
             availability, or staff changes — always contact the facility directly or refer
