@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Search, Hospital, Stethoscope, ShieldCheck, MapPin } from "lucide-react";
+import { ArrowRight, Search, Hospital, Stethoscope, ShieldCheck, MapPin, TrendingUp, Activity, Users, BarChart3 } from "lucide-react";
 import {
   FACILITIES,
   REGION_LABELS,
@@ -8,6 +8,14 @@ import {
   TREATMENT_HUB_COUNT,
   PRIMARY_CARE_COUNT,
 } from "@/data/facilities";
+import {
+  nationalCascade,
+  quarterSnapshot,
+  monthlyAvgByYear,
+  ageDistribution,
+  transmissionMode,
+  reportMeta,
+} from "@/data/surveillance";
 
 export const Route = createFileRoute("/")({
   head: () => ({
