@@ -161,20 +161,24 @@
     font-family: var(--font-sans);
   }
 
+  h1, h2, h3, h4, h5, h6, .font-display {
+    font-family: var(--font-display);
+    font-feature-settings: "ss01", "ss02";
+    letter-spacing: -0.015em;
+  }
+
   /*
    * Theme switching is handled by the View Transitions API (see bottom of file).
-   * The browser snapshots old/new states and GPU-cross-fades them — no per-element
-   * transitions needed, which avoids layout thrash, paint storms, and jank.
    */
 
   :focus-visible {
     outline: 2px solid var(--color-ring);
     outline-offset: 2px;
-    border-radius: 4px;
   }
 
   ::selection {
-    background: color-mix(in oklab, var(--color-primary) 30%, transparent);
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
   }
 }
 
