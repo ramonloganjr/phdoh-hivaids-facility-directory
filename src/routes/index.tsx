@@ -70,11 +70,7 @@ function Landing() {
       <section className="relative overflow-hidden rounded-3xl bg-surface-container px-6 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-primary opacity-20 blur-3xl"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-32 -left-32 h-80 w-80 rounded-full bg-primary opacity-10 blur-3xl"
+          className="pointer-events-none absolute -left-40 -top-40 h-72 w-72 rounded-full bg-primary opacity-[0.08] blur-3xl"
         />
         <div className="relative grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center">
           <div className="space-y-7 lg:col-span-7">
