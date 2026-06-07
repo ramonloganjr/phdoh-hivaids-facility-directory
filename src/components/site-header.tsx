@@ -7,23 +7,23 @@ import logoDark from "@/assets/logo-dark.svg.asset.json";
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-xl supports-[backdrop-filter]:bg-background/70">
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-8">
+      <div className="mx-auto flex h-20 max-w-7xl items-center gap-3 px-4 sm:px-8">
         <Link
           to="/"
           className="state-layer flex items-center gap-2.5 rounded-full px-2 py-1.5 text-on-surface"
           aria-label="HIV Care Directory — home"
         >
-          <span className="relative inline-block h-8 w-auto sm:h-9" aria-hidden="true">
+          <span className="relative inline-block h-12 w-auto sm:h-14" aria-hidden="true">
             <img
               src={logoLight.url}
               alt=""
-              className="block h-8 w-auto sm:h-9 dark:hidden"
+              className="block h-12 w-auto sm:h-14 dark:hidden"
               draggable={false}
             />
             <img
               src={logoDark.url}
               alt=""
-              className="hidden h-8 w-auto sm:h-9 dark:block"
+              className="hidden h-12 w-auto sm:h-14 dark:block"
               draggable={false}
             />
           </span>

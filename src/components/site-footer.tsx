@@ -49,7 +49,8 @@ export function SiteFooter() {
                 className="font-semibold text-on-surface hover:text-primary"
               >
                 Ramon Logan Jr.
-              </a>
+              </a>{" "}
+              and dedicated to all people living with HIV/AIDS in the Philippines.
             </p>
           </div>
         </div>
