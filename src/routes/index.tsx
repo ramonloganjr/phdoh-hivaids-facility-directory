@@ -227,7 +227,10 @@ function Landing() {
                 const height = (a.pct / topAge.pct) * 100;
                 return (
                   <div key={a.group} className="rounded-xl bg-surface-container p-3">
-                    <div className="relative flex h-28 items-end sm:h-36">
+                    <p className="font-display text-base font-medium leading-none text-on-surface sm:text-lg">
+                      {a.pct}%
+                    </p>
+                    <div className="mt-3 flex h-24 items-end sm:h-32">
                       <div
                         className={
                           isPeak
@@ -236,9 +239,6 @@ function Landing() {
                         }
                         style={{ height: `${height}%` }}
                       />
-                      <span className="absolute -top-1 left-0 font-display text-base font-medium text-on-surface sm:text-lg">
-                        {a.pct}%
-                      </span>
                     </div>
                     <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.12em] text-on-surface-muted">
                       {a.group}
