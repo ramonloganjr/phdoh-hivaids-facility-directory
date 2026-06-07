@@ -93,7 +93,7 @@ function Landing() {
                 mobile-first for people who need answers fast.
               </p>
 
-              <div className="mt-2 flex flex-wrap gap-px bg-outline">
+              <div className="mt-2 flex flex-wrap gap-2">
                 <Link
                   to="/facilities"
                   className="group inline-flex items-center gap-3 bg-primary px-6 py-4 text-xs font-bold uppercase tracking-[0.18em] text-primary-foreground transition-colors hover:bg-on-surface hover:text-background"
