@@ -96,17 +96,28 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { name: "theme-color", content: "#FF2E51" },
+      { name: "color-scheme", content: "light dark" },
+      { name: "format-detection", content: "telephone=yes" },
       { title: "Philippine HIV Care Directory — DOH-Designated Facilities" },
       {
         name: "description",
         content:
           "Search all 338 DOH-designated HIV treatment hubs and primary care facilities in the Philippines. Mirrored from Department Circular No. 2026-0065.",
       },
+      { name: "keywords", content: "HIV Philippines, AIDS Philippines, DOH treatment hub, HIV primary care, ART, PrEP, PEP, HIV testing Philippines, HIV facilities directory" },
+      { name: "author", content: "Ramon Logan Jr." },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
+      { name: "googlebot", content: "index, follow" },
+      // Open Graph
       { property: "og:site_name", content: "PH HIV Care Directory" },
       { property: "og:type", content: "website" },
+      { property: "og:locale", content: "en_PH" },
+      // Twitter
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@ramonloganjr" },
+      { name: "twitter:creator", content: "@ramonloganjr" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -119,6 +130,45 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "#org",
+              name: "Philippine HIV Care Directory",
+              alternateName: "PH HIV Care Directory",
+              description:
+                "Independent public-information mirror of DOH-designated HIV treatment hubs and primary care facilities in the Philippines.",
+              founder: {
+                "@type": "Person",
+                name: "Ramon Logan Jr.",
+                url: "https://www.ramonloganjr.com/",
+              },
+              areaServed: { "@type": "Country", name: "Philippines" },
+            },
+            {
+              "@type": "WebSite",
+              "@id": "#website",
+              name: "Philippine HIV Care Directory",
+              inLanguage: "en-PH",
+              publisher: { "@id": "#org" },
+              potentialAction: {
+                "@type": "SearchAction",
+                target: {
+                  "@type": "EntryPoint",
+                  urlTemplate: "/facilities?q={search_term_string}",
+                },
+                "query-input": "required name=search_term_string",
+              },
+            },
+          ],
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,
