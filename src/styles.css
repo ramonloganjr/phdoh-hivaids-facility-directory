@@ -204,24 +204,22 @@
 }
 .animate-fade-up { animation: fade-up 0.4s cubic-bezier(0.2, 0, 0, 1) both; }
 
-/* View Transitions API — premium cross-fade on theme switch */
-@media (prefers-reduced-motion: no-preference) {
+/* View Transitions API — smooth GPU cross-fade on theme switch */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 380ms;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  mix-blend-mode: normal;
+  /* Promote to its own compositor layer for buttery-smooth blending */
+  will-change: opacity;
+}
+::view-transition-old(root) { animation-name: theme-fade-out; }
+::view-transition-new(root) { animation-name: theme-fade-in; }
+
+@keyframes theme-fade-out { to { opacity: 0; } }
+@keyframes theme-fade-in  { from { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation-duration: 450ms;
-    animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
-    mix-blend-mode: normal;
-  }
-  ::view-transition-old(root) {
-    animation-name: theme-fade-out;
-  }
-  ::view-transition-new(root) {
-    animation-name: theme-fade-in;
-  }
-}
-@keyframes theme-fade-out {
-  to { opacity: 0; }
-}
-@keyframes theme-fade-in {
-  from { opacity: 0; }
+  ::view-transition-new(root) { animation: none; }
 }
