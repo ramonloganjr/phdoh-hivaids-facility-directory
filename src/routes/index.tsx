@@ -132,7 +132,7 @@ function Landing() {
             <li key={r.code}>
               <Link
                 to="/facilities"
-                search={{ region: r.code, service: undefined, q: undefined }}
+                search={{ region: r.code }}
                 className="state-layer group flex items-center justify-between rounded-2xl border border-outline-variant bg-surface-container p-4 elev-1 hover:elev-2"
               >
                 <span className="flex items-center gap-3">
