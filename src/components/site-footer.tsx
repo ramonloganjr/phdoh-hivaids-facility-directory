@@ -20,6 +20,12 @@ export function SiteFooter() {
             <Link to="/facilities" className="text-on-surface-muted hover:text-on-surface">
               All facilities
             </Link>
+            <Link to="/insights" className="text-on-surface-muted hover:text-on-surface">
+              Surveillance insights
+            </Link>
+            <Link to="/faq" className="text-on-surface-muted hover:text-on-surface">
+              FAQ
+            </Link>
             <Link to="/about" className="text-on-surface-muted hover:text-on-surface">
               About & legal basis
             </Link>
