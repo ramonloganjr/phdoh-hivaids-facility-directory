@@ -102,6 +102,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#FF2E51" },
       { name: "color-scheme", content: "light dark" },
       { name: "format-detection", content: "telephone=yes" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
+      { name: "apple-mobile-web-app-title", content: "HIV Care PH" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "application-name", content: "HIV Care PH" },
       { title: "Philippine HIV Care Directory — DOH-Designated Facilities" },
       {
         name: "description",
