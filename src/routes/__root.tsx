@@ -60,8 +60,7 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {
-  }, [error]);
+
 
   return (
     <div className="flex min-h-[70dvh] items-center justify-center px-4">

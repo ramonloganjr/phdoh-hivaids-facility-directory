@@ -1,17 +1,7 @@
 // Guarded service-worker registration wrapper.
-// Never register in dev, inside iframes, or on preview hosts.
-// Visit ?sw=off to forcibly unregister.
+// Never registers in dev or inside iframes. Visit ?sw=off to forcibly unregister.
 
 const SW_URL = "/sw.js";
-
-function isBlockedHost(): boolean {
-  if (typeof window === "undefined") return true;
-  const h = window.location.hostname;
-  return (
-    h.startsWith("id-preview--") ||
-    h.startsWith("preview--")
-  );
-}
 
 function inIframe(): boolean {
   try {
@@ -38,7 +28,7 @@ export async function registerPWA(): Promise<void> {
   const off = new URL(window.location.href).searchParams.get("sw") === "off";
   const prod = import.meta.env.PROD;
 
-  if (!prod || inIframe() || isBlockedHost() || off) {
+  if (!prod || inIframe() || off) {
     await unregisterMatching();
     return;
   }
