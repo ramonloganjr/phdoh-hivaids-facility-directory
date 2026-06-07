@@ -32,6 +32,8 @@ export function SiteHeader() {
 
         <nav className="ml-auto flex items-center gap-1" aria-label="Primary">
           <HeaderLink to="/facilities">Facilities</HeaderLink>
+          <HeaderLink to="/insights">Insights</HeaderLink>
+          <HeaderLink to="/faq">FAQ</HeaderLink>
           <HeaderLink to="/about">About</HeaderLink>
           <div className="mx-1 hidden h-6 w-px bg-outline-variant sm:block" aria-hidden="true" />
           <ThemeToggle />
@@ -41,7 +43,13 @@ export function SiteHeader() {
   );
 }
 
-function HeaderLink({ to, children }: { to: "/facilities" | "/about"; children: React.ReactNode }) {
+function HeaderLink({
+  to,
+  children,
+}: {
+  to: "/facilities" | "/insights" | "/faq" | "/about";
+  children: React.ReactNode;
+}) {
   return (
     <Link
       to={to}
