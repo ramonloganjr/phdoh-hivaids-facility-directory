@@ -172,7 +172,7 @@ function FacilitiesPage() {
       </div>
 
       {/* Sticky filter bar — stays reachable while browsing long lists */}
-      <div className="sticky top-0 z-30 -mx-4 mt-6 bg-background/85 px-4 pb-3 pt-3 backdrop-blur-md sm:-mx-6 sm:px-6">
+      <div className="sticky top-20 z-30 -mx-4 mt-6 bg-background/90 px-4 pb-3 pt-3 backdrop-blur-md sm:-mx-6 sm:px-6">
         <div className="flex flex-col gap-3">
           <label className="relative block">
             <span className="sr-only">Search facilities</span>
