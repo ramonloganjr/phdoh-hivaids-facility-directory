@@ -277,6 +277,16 @@ function FacilityDetail() {
         )}
       </article>
 
+      {/* Share */}
+      <section className="mt-6 rounded-3xl bg-surface-container p-5 sm:p-6">
+        <ShareBar
+          url={`/facilities/${f.id}`}
+          title={`${f.name} — DOH-designated ${f.serviceType}`}
+          text={`${f.serviceType} in ${REGION_LABELS[f.region]}. ${f.address}`}
+          label="Share this facility"
+        />
+      </section>
+
       {/* Other in region */}
       {otherInRegion.length > 0 && (
         <section className="mt-12">
