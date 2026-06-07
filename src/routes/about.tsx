@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ShieldCheck, FileText, Database, ExternalLink } from "lucide-react";
+import { ShieldCheck, FileText, Database, ExternalLink, Code2 } from "lucide-react";
 import { FACILITY_COUNT, TREATMENT_HUB_COUNT, PRIMARY_CARE_COUNT } from "@/data/facilities";
 
 export const Route = createFileRoute("/about")({
