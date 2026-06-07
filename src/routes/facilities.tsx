@@ -251,31 +251,29 @@ function FacilitiesPage() {
           </div>
 
           {/* Region filter rail */}
-          <div className="-mx-4 overflow-x-auto px-4 scrollbar-none sm:mx-0 sm:px-0">
-            <div className="flex items-center gap-2 whitespace-nowrap">
-              <SlidersHorizontal
-                className="h-4 w-4 shrink-0 text-on-surface-muted"
-                aria-hidden="true"
-              />
+          <div className="flex flex-wrap items-center gap-2">
+            <SlidersHorizontal
+              className="h-4 w-4 shrink-0 text-on-surface-muted"
+              aria-hidden="true"
+            />
+            <RegionChip
+              active={!search.region}
+              onClick={() => setSearch({ region: undefined })}
+            >
+              All regions
+            </RegionChip>
+            {REGION_ORDER.map((r) => (
               <RegionChip
-                active={!search.region}
-                onClick={() => setSearch({ region: undefined })}
+                key={r}
+                active={search.region === r}
+                onClick={() =>
+                  setSearch({ region: search.region === r ? undefined : r })
+                }
+                count={globalCounts.region[r]}
               >
-                All regions
+                {REGION_LABELS[r]}
               </RegionChip>
-              {REGION_ORDER.map((r) => (
-                <RegionChip
-                  key={r}
-                  active={search.region === r}
-                  onClick={() =>
-                    setSearch({ region: search.region === r ? undefined : r })
-                  }
-                  count={globalCounts.region[r]}
-                >
-                  {REGION_LABELS[r]}
-                </RegionChip>
-              ))}
-            </div>
+            ))}
           </div>
         </div>
       </div>
