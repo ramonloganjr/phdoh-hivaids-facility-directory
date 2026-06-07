@@ -31,6 +31,7 @@ export function SiteHeader() {
         </Link>
 
         <nav className="ml-auto flex items-center gap-1" aria-label="Primary">
+          <HeaderLink to="/" exact>Home</HeaderLink>
           <HeaderLink to="/facilities">Facilities</HeaderLink>
           <HeaderLink to="/insights">Insights</HeaderLink>
           <HeaderLink to="/faq">FAQ</HeaderLink>
@@ -45,14 +46,17 @@ export function SiteHeader() {
 
 function HeaderLink({
   to,
+  exact,
   children,
 }: {
-  to: "/facilities" | "/insights" | "/faq" | "/about";
+  to: "/" | "/facilities" | "/insights" | "/faq" | "/about";
+  exact?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <Link
       to={to}
+      activeOptions={exact ? { exact: true } : undefined}
       activeProps={{ className: "bg-primary-container text-on-primary-container" }}
       className={cn(
         "state-layer hidden rounded-full px-4 py-2 text-sm font-medium text-on-surface-muted transition-colors hover:text-on-surface sm:inline-flex",
