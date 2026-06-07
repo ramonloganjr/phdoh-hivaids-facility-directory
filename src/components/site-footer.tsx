@@ -65,7 +65,7 @@ function FooterLink({
   to,
   children,
 }: {
-  to: "/facilities" | "/insights" | "/faq" | "/about";
+  to: "/facilities" | "/insights" | "/faq" | "/about" | "/terms" | "/privacy";
   children: React.ReactNode;
 }) {
   return (
