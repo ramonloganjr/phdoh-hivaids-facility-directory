@@ -158,14 +158,11 @@
     font-family: var(--font-sans);
   }
 
-  /* Smooth theme transition (color/background/border/shadow only — no transforms) */
-  body, body * {
-    transition-property: background-color, color, border-color, fill, stroke, box-shadow, outline-color;
-    transition-duration: 320ms;
-    transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
-  }
-  /* but never on interactive transforms */
-  body *[data-no-color-transition] { transition: none; }
+  /*
+   * Theme switching is handled by the View Transitions API (see bottom of file).
+   * The browser snapshots old/new states and GPU-cross-fades them — no per-element
+   * transitions needed, which avoids layout thrash, paint storms, and jank.
+   */
 
   :focus-visible {
     outline: 2px solid var(--color-ring);
