@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as FacilitiesRouteImport } from './routes/facilities'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FacilitiesIdRouteImport } from './routes/facilities.$id'
 
+const InsightsRoute = InsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FacilitiesRoute = FacilitiesRouteImport.update({
   id: '/facilities',
   path: '/facilities',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/facilities': typeof FacilitiesRouteWithChildren
+  '/insights': typeof InsightsRoute
   '/facilities/$id': typeof FacilitiesIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/facilities': typeof FacilitiesRouteWithChildren
+  '/insights': typeof InsightsRoute
   '/facilities/$id': typeof FacilitiesIdRoute
 }
 export interface FileRoutesById {
@@ -52,24 +60,39 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/facilities': typeof FacilitiesRouteWithChildren
+  '/insights': typeof InsightsRoute
   '/facilities/$id': typeof FacilitiesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/facilities' | '/facilities/$id'
+  fullPaths: '/' | '/about' | '/facilities' | '/insights' | '/facilities/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/facilities' | '/facilities/$id'
-  id: '__root__' | '/' | '/about' | '/facilities' | '/facilities/$id'
+  to: '/' | '/about' | '/facilities' | '/insights' | '/facilities/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/facilities'
+    | '/insights'
+    | '/facilities/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   FacilitiesRoute: typeof FacilitiesRouteWithChildren
+  InsightsRoute: typeof InsightsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/insights': {
+      id: '/insights'
+      path: '/insights'
+      fullPath: '/insights'
+      preLoaderRoute: typeof InsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/facilities': {
       id: '/facilities'
       path: '/facilities'
@@ -117,7 +140,18 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   FacilitiesRoute: FacilitiesRouteWithChildren,
+  InsightsRoute: InsightsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
