@@ -158,11 +158,11 @@
     font-family: var(--font-sans);
   }
 
-  /* Smooth theme transition (color/background/border only — no transforms) */
+  /* Smooth theme transition (color/background/border/shadow only — no transforms) */
   body, body * {
-    transition-property: background-color, color, border-color, fill, stroke;
-    transition-duration: 200ms;
-    transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+    transition-property: background-color, color, border-color, fill, stroke, box-shadow, outline-color;
+    transition-duration: 320ms;
+    transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
   }
   /* but never on interactive transforms */
   body *[data-no-color-transition] { transition: none; }
@@ -206,3 +206,25 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 .animate-fade-up { animation: fade-up 0.4s cubic-bezier(0.2, 0, 0, 1) both; }
+
+/* View Transitions API — premium cross-fade on theme switch */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 450ms;
+    animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+    mix-blend-mode: normal;
+  }
+  ::view-transition-old(root) {
+    animation-name: theme-fade-out;
+  }
+  ::view-transition-new(root) {
+    animation-name: theme-fade-in;
+  }
+}
+@keyframes theme-fade-out {
+  to { opacity: 0; }
+}
+@keyframes theme-fade-in {
+  from { opacity: 0; }
+}

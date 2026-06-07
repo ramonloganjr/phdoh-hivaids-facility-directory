@@ -4,14 +4,30 @@ export type Theme = "light" | "dark" | "system";
 
 const STORAGE_KEY = "doh-hiv-theme";
 
+function computeDark(theme: Theme): boolean {
+  if (theme === "dark") return true;
+  if (theme === "light") return false;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches;
+}
+
 function applyTheme(theme: Theme) {
   if (typeof document === "undefined") return;
+  const isDark = computeDark(theme);
   const root = document.documentElement;
-  const isDark =
-    theme === "dark" ||
-    (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-  root.classList.toggle("dark", isDark);
-  root.style.colorScheme = isDark ? "dark" : "light";
+  const commit = () => {
+    root.classList.toggle("dark", isDark);
+    root.style.colorScheme = isDark ? "dark" : "light";
+  };
+
+  // Smooth, native cross-fade via the View Transitions API where supported.
+  const doc = document as Document & {
+    startViewTransition?: (cb: () => void) => { ready: Promise<void> };
+  };
+  if (typeof doc.startViewTransition === "function" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    doc.startViewTransition(commit);
+  } else {
+    commit();
+  }
 }
 
 export function useTheme() {

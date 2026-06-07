@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { Activity } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 import { cn } from "@/lib/utils";
+import logoLight from "@/assets/logo-light.svg.asset.json";
+import logoDark from "@/assets/logo-dark.svg.asset.json";
 
 export function SiteHeader() {
   return (
@@ -10,21 +11,23 @@ export function SiteHeader() {
         <Link
           to="/"
           className="state-layer flex items-center gap-2.5 rounded-full px-2 py-1.5 text-on-surface"
-          aria-label="DOH HIV Directory home"
+          aria-label="HIV Care Directory — home"
         >
-          <span
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground elev-1"
-            aria-hidden="true"
-          >
-            <Activity className="h-4.5 w-4.5" strokeWidth={2.5} />
+          <span className="relative inline-block h-7 w-auto" aria-hidden="true">
+            <img
+              src={logoLight.url}
+              alt=""
+              className="block h-7 w-auto dark:hidden"
+              draggable={false}
+            />
+            <img
+              src={logoDark.url}
+              alt=""
+              className="hidden h-7 w-auto dark:block"
+              draggable={false}
+            />
           </span>
-          <span className="hidden flex-col leading-tight sm:flex">
-            <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-on-surface-muted">
-              DOH Philippines
-            </span>
-            <span className="text-sm font-semibold tracking-tight">HIV Care Directory</span>
-          </span>
-          <span className="text-sm font-semibold tracking-tight sm:hidden">HIV Directory</span>
+          <span className="sr-only">HIV Care Directory</span>
         </Link>
 
         <nav className="ml-auto flex items-center gap-1" aria-label="Primary">
