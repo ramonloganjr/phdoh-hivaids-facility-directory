@@ -120,7 +120,8 @@ function Landing() {
       <InsightsShowcase />
 
       {/* REGIONS */}
-      <section className="mx-auto max-w-6xl px-4 pb-8 sm:px-6">
+      <section className="mx-auto mt-16 max-w-6xl px-4 pb-8 sm:mt-24 sm:px-6">
+
         <div className="mb-5 flex items-end justify-between gap-3">
           <div>
             <h2 className="text-2xl font-semibold tracking-tight text-on-surface sm:text-3xl">
