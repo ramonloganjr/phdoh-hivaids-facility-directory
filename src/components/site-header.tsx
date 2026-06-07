@@ -13,17 +13,17 @@ export function SiteHeader() {
           className="state-layer flex items-center gap-2.5 rounded-full px-2 py-1.5 text-on-surface"
           aria-label="HIV Care Directory — home"
         >
-          <span className="relative inline-block h-7 w-auto" aria-hidden="true">
+          <span className="relative inline-block h-10 w-auto sm:h-11" aria-hidden="true">
             <img
               src={logoLight.url}
               alt=""
-              className="block h-7 w-auto dark:hidden"
+              className="block h-10 w-auto sm:h-11 dark:hidden"
               draggable={false}
             />
             <img
               src={logoDark.url}
               alt=""
-              className="hidden h-7 w-auto dark:block"
+              className="hidden h-10 w-auto sm:h-11 dark:block"
               draggable={false}
             />
           </span>
