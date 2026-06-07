@@ -1705,7 +1705,7 @@ export const FACILITIES: Facility[] = [
     "extra": []
   },
   {
-    "id": "cds-reproductive-health-care-clinic",
+    "id": "cds-reproductive-health-care-clinic-phcf",
     "num": 60,
     "name": "CDS Reproductive Health Care Clinic",
     "region": "R3",
