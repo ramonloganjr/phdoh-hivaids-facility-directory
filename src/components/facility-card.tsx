@@ -113,11 +113,11 @@ export function FacilityCard({ facility }: { facility: Facility }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="state-layer press inline-flex items-center gap-1.5 rounded-full bg-surface-container-high px-2.5 py-1 text-on-surface"
+                  className="state-layer press inline-flex h-7 w-7 items-center justify-center rounded-full bg-surface-container-high text-on-surface"
                   aria-label={`Open ${facility.name} on Facebook`}
+                  title="Facebook"
                 >
-                  <Facebook className="h-3 w-3" aria-hidden="true" />
-                  <span>Facebook</span>
+                  <Facebook className="h-3.5 w-3.5" aria-hidden="true" />
                 </a>
               )}
             </div>
