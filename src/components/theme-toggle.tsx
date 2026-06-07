@@ -21,7 +21,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       aria-label="Theme"
       data-no-color-transition
       className={cn(
-        "relative inline-flex items-center rounded-full bg-surface-container p-1 elev-1",
+        "relative inline-flex items-center gap-1 rounded-full bg-surface-container p-1 elev-1",
         className,
       )}
     >
@@ -30,7 +30,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         aria-hidden="true"
         data-no-color-transition
         className="pointer-events-none absolute top-1 left-1 h-9 w-9 rounded-full bg-primary shadow-[0_4px_14px_-2px_color-mix(in_oklab,var(--color-primary)_55%,transparent)] transition-[transform,background-color] duration-[450ms] ease-[cubic-bezier(0.32,0.72,0,1)]"
-        style={{ transform: `translateX(${activeIndex * 36}px)` }}
+        style={{ transform: `translateX(${activeIndex * 40}px)` }}
       />
       {options.map(({ value, icon: Icon, label }) => {
         const active = theme === value;
