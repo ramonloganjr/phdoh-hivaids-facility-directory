@@ -1,17 +1,56 @@
 import { defineConfig } from "vite";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import viteReact from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import tsConfigPaths from "vite-tsconfig-paths";
+import { nitro } from "nitro/vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
-  tanstackStart: {
-    server: { entry: "server" },
+  server: {
+    host: "::",
+    port: 8080,
+  },
+  resolve: {
+    alias: {
+      "@": `${process.cwd()}/src`,
+    },
+    dedupe: [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react/jsx-dev-runtime",
+      "@tanstack/react-query",
+      "@tanstack/query-core",
+    ],
   },
   plugins: [
+    tailwindcss(),
+    tsConfigPaths({ projects: ["./tsconfig.json"] }),
+    tanstackStart({
+      server: { entry: "server" },
+      importProtection: {
+        behavior: "error",
+        client: {
+          files: ["**/server/**"],
+          specifiers: ["server-only"],
+        },
+      },
+    }),
+    nitro({
+      preset: process.env.NITRO_PRESET ?? "node-server",
+      output: {
+        dir: "dist",
+        serverDir: "dist/server",
+        publicDir: "dist/client",
+      },
+    }),
+    viteReact(),
     VitePWA({
       registerType: "autoUpdate",
       injectRegister: null,
       strategies: "generateSW",
       filename: "sw.js",
-      // Keep our hand-authored public/manifest.webmanifest as the source of truth.
       manifest: false,
       devOptions: { enabled: false },
       workbox: {
@@ -28,7 +67,6 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,ico,png,svg,webp,woff2}"],
         runtimeCaching: [
           {
-            // HTML navigations: always try network first so updates show up fast.
             urlPattern: ({ request }) => request.mode === "navigate",
             handler: "NetworkFirst",
             options: {
