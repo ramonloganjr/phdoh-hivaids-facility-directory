@@ -43,17 +43,18 @@ export function ThemeToggle({ className }: { className?: string }) {
             onClick={() => setTheme(value)}
             data-no-color-transition
             className={cn(
-              "state-layer relative z-10 inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-300",
+              "state-layer relative z-10 inline-flex h-9 w-9 items-center justify-center rounded-full",
               active ? "text-primary-foreground" : "text-on-surface-muted hover:text-on-surface",
             )}
           >
             <Icon
               className={cn(
-                "h-4 w-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]",
+                "h-4 w-4 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]",
                 active ? "scale-110 rotate-0" : "scale-100 -rotate-12 opacity-80",
               )}
               aria-hidden="true"
             />
+
           </button>
         );
       })}
