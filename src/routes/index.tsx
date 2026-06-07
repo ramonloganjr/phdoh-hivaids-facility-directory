@@ -18,36 +18,32 @@ import {
 } from "@/data/surveillance";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Philippine HIV Care Directory — DOH-Designated Facilities" },
-      {
-        name: "description",
-        content:
-          "All 338 DOH-designated HIV treatment hubs and primary care facilities in the Philippines, in one searchable directory.",
-      },
-      { property: "og:title", content: "Philippine HIV Care Directory" },
-      {
-        property: "og:description",
-        content:
-          "Find DOH-designated HIV treatment hubs and primary care facilities across the Philippines.",
-      },
-      { property: "og:url", content: "/" },
-    ],
-    links: [{ rel: "canonical", href: "/" }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: "Philippine HIV Care Directory",
-          description:
-            "Mirror of DOH Department Circular No. 2026-0065 — designated HIV treatment hubs and primary care facilities.",
-        }),
-      },
-    ],
-  }),
+  head: () => {
+    const ogImage = `/api/og?eyebrow=${encodeURIComponent("DOH PHILIPPINES")}&title=${encodeURIComponent("Philippine HIV Care Directory")}&subtitle=${encodeURIComponent("All 338 DOH-designated treatment hubs and primary care facilities, in one searchable directory.")}`;
+    return {
+      meta: [
+        { title: "Philippine HIV Care Directory — DOH-Designated Facilities" },
+        {
+          name: "description",
+          content:
+            "All 338 DOH-designated HIV treatment hubs and primary care facilities in the Philippines, in one searchable directory.",
+        },
+        { property: "og:title", content: "Philippine HIV Care Directory" },
+        {
+          property: "og:description",
+          content:
+            "Find DOH-designated HIV treatment hubs and primary care facilities across the Philippines.",
+        },
+        { property: "og:url", content: "/" },
+        { property: "og:image", content: ogImage },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+        { property: "og:image:type", content: "image/svg+xml" },
+        { name: "twitter:image", content: ogImage },
+      ],
+      links: [{ rel: "canonical", href: "/" }],
+    };
+  },
   component: Landing,
 });
 
