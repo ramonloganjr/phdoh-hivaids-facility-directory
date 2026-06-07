@@ -15,6 +15,7 @@ import { InstallPrompt } from "@/components/install-prompt";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import faviconAsset from "@/assets/favicon.png.asset.json";
+import ogImageAsset from "@/assets/open-graph.png.asset.json";
 
 const THEME_INIT_SCRIPT = `
 (function(){try{
@@ -120,6 +121,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "PH HIV Care Directory" },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "en_PH" },
+      { property: "og:image", content: ogImageAsset.url },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:type", content: "image/png" },
+      { name: "twitter:image", content: ogImageAsset.url },
       // Twitter
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@ramonloganjr" },
