@@ -116,6 +116,9 @@ function Landing() {
         </div>
       </section>
 
+      {/* INSIGHTS — interactive summary layer */}
+      <InsightsShowcase />
+
       {/* REGIONS */}
       <section className="mx-auto max-w-6xl px-4 pb-8 sm:px-6">
         <div className="mb-5 flex items-end justify-between gap-3">
