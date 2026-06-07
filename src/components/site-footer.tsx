@@ -36,14 +36,7 @@ export function SiteFooter() {
             <FooterLink to="/about">About</FooterLink>
             <FooterLink to="/terms">Terms</FooterLink>
             <FooterLink to="/privacy">Privacy</FooterLink>
-            <a
-              href="https://doh.gov.ph"
-              target="_blank"
-              rel="noreferrer"
-              className="px-3.5 py-2 font-medium text-on-surface-muted hover:text-on-surface"
-            >
-              doh.gov.ph ↗
-            </a>
+
           </nav>
         </div>
         <div className="mt-10 flex flex-col gap-2 border-t border-outline-variant pt-6 text-xs text-on-surface-muted sm:flex-row sm:items-center sm:justify-between">
