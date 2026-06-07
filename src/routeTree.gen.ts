@@ -9,6 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as FacilitiesRouteImport } from './routes/facilities'
@@ -16,6 +18,16 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FacilitiesIdRouteImport } from './routes/facilities.$id'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InsightsRoute = InsightsRouteImport.update({
   id: '/insights',
   path: '/insights',
@@ -53,6 +65,8 @@ export interface FileRoutesByFullPath {
   '/facilities': typeof FacilitiesRouteWithChildren
   '/faq': typeof FaqRoute
   '/insights': typeof InsightsRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/facilities/$id': typeof FacilitiesIdRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +75,8 @@ export interface FileRoutesByTo {
   '/facilities': typeof FacilitiesRouteWithChildren
   '/faq': typeof FaqRoute
   '/insights': typeof InsightsRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/facilities/$id': typeof FacilitiesIdRoute
 }
 export interface FileRoutesById {
@@ -70,6 +86,8 @@ export interface FileRoutesById {
   '/facilities': typeof FacilitiesRouteWithChildren
   '/faq': typeof FaqRoute
   '/insights': typeof InsightsRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/facilities/$id': typeof FacilitiesIdRoute
 }
 export interface FileRouteTypes {
@@ -80,9 +98,19 @@ export interface FileRouteTypes {
     | '/facilities'
     | '/faq'
     | '/insights'
+    | '/privacy'
+    | '/terms'
     | '/facilities/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/facilities' | '/faq' | '/insights' | '/facilities/$id'
+  to:
+    | '/'
+    | '/about'
+    | '/facilities'
+    | '/faq'
+    | '/insights'
+    | '/privacy'
+    | '/terms'
+    | '/facilities/$id'
   id:
     | '__root__'
     | '/'
@@ -90,6 +118,8 @@ export interface FileRouteTypes {
     | '/facilities'
     | '/faq'
     | '/insights'
+    | '/privacy'
+    | '/terms'
     | '/facilities/$id'
   fileRoutesById: FileRoutesById
 }
@@ -99,10 +129,26 @@ export interface RootRouteChildren {
   FacilitiesRoute: typeof FacilitiesRouteWithChildren
   FaqRoute: typeof FaqRoute
   InsightsRoute: typeof InsightsRoute
+  PrivacyRoute: typeof PrivacyRoute
+  TermsRoute: typeof TermsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/insights': {
       id: '/insights'
       path: '/insights'
@@ -166,6 +212,8 @@ const rootRouteChildren: RootRouteChildren = {
   FacilitiesRoute: FacilitiesRouteWithChildren,
   FaqRoute: FaqRoute,
   InsightsRoute: InsightsRoute,
+  PrivacyRoute: PrivacyRoute,
+  TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
