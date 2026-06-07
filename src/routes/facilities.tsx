@@ -250,30 +250,38 @@ function FacilitiesPage() {
             )}
           </div>
 
-          {/* Region filter rail */}
+          {/* Region filter — compact dropdown */}
           <div className="flex flex-wrap items-center gap-2">
             <SlidersHorizontal
               className="h-4 w-4 shrink-0 text-on-surface-muted"
               aria-hidden="true"
             />
-            <RegionChip
-              active={!search.region}
-              onClick={() => setSearch({ region: undefined })}
-            >
-              All regions
-            </RegionChip>
-            {REGION_ORDER.map((r) => (
-              <RegionChip
-                key={r}
-                active={search.region === r}
-                onClick={() =>
-                  setSearch({ region: search.region === r ? undefined : r })
+            <label htmlFor="region-select" className="text-xs font-medium text-on-surface-muted">
+              Region
+            </label>
+            <div className="relative">
+              <select
+                id="region-select"
+                value={search.region ?? ""}
+                onChange={(e) =>
+                  setSearch({ region: (e.target.value || undefined) as RegionCode | undefined })
                 }
-                count={globalCounts.region[r]}
+                className={cn(
+                  "state-layer appearance-none rounded-full py-1.5 pl-4 pr-9 text-sm font-medium transition-colors",
+                  search.region
+                    ? "bg-primary-container text-on-primary-container"
+                    : "bg-surface-container-high text-on-surface"
+                )}
               >
-                {REGION_LABELS[r]}
-              </RegionChip>
-            ))}
+                <option value="">All regions ({FACILITIES.length})</option>
+                {REGION_ORDER.map((r) => (
+                  <option key={r} value={r}>
+                    {REGION_LABELS[r]} ({globalCounts.region[r] ?? 0})
+                  </option>
+                ))}
+              </select>
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-muted">▾</span>
+            </div>
           </div>
         </div>
       </div>
