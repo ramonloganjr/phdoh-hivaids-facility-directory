@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight, Hospital, Stethoscope, ShieldCheck } from "lucide-react";
 import {
-  FACILITIES,
   REGION_LABELS,
   REGION_ORDER,
+  REGION_COUNTS,
   FACILITY_COUNT,
   TREATMENT_HUB_COUNT,
   PRIMARY_CARE_COUNT,
-} from "@/data/facilities";
+} from "@/data/facility-meta";
 import {
   nationalCascade,
   quarterSnapshot,
@@ -51,7 +51,7 @@ function Landing() {
   const regionCounts = REGION_ORDER.map((code) => ({
     code,
     label: REGION_LABELS[code],
-    count: FACILITIES.filter((f) => f.region === code).length,
+    count: REGION_COUNTS[code],
   })).filter((r) => r.count > 0);
 
   const totalTransmission = transmissionMode.reduce((s, t) => s + t.count, 0);
