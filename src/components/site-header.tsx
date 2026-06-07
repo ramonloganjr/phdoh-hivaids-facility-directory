@@ -88,11 +88,11 @@ export function SiteHeader() {
           id="mobile-nav-panel"
           aria-label="Mobile primary"
           className={cn(
-            "relative mx-4 mt-2 overflow-hidden rounded-3xl bg-surface-container-high elev-3 transition-all duration-300",
+            "relative mx-4 mt-2 overflow-hidden rounded-xl bg-surface-container-high elev-3 transition-all duration-300",
             open ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0",
           )}
         >
-          <ul className="flex flex-col p-2">
+          <ul className="flex flex-col gap-1.5 p-2">
             {NAV_ITEMS.map((item) => (
               <li key={item.to}>
                 <Link
@@ -102,10 +102,11 @@ export function SiteHeader() {
                     className: "bg-primary-container text-on-primary-container",
                   }}
                   onClick={() => setOpen(false)}
-                  className="state-layer flex items-center rounded-2xl px-4 py-3.5 text-base font-medium text-on-surface"
+                  className="state-layer flex items-center rounded-lg px-4 py-3.5 text-base font-medium text-on-surface"
                 >
                   {item.label}
                 </Link>
+
               </li>
             ))}
           </ul>
