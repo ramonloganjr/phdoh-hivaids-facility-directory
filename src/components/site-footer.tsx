@@ -35,7 +35,15 @@ export function SiteFooter() {
         </div>
         <p className="mt-8 text-[11px] text-on-surface-muted">
           This is a public information mirror. Not affiliated with the Department of
-          Health. © {new Date().getFullYear()}
+          Health. © {new Date().getFullYear()} · Built by{" "}
+          <a
+            href="https://www.ramonloganjr.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium text-on-surface hover:underline"
+          >
+            Ramon Logan Jr.
+          </a>
         </p>
       </div>
     </footer>
