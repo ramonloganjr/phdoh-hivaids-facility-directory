@@ -199,24 +199,7 @@ function NearMePage() {
         )}
       </p>
 
-      {/* Status strip — coverage transparency */}
-      <p className="mt-4 text-xs text-on-surface-muted">
-        Geocoded coverage:{" "}
-        <span className="font-medium text-on-surface tabular-nums">
-          {result.mapped.toLocaleString()} of {result.total.toLocaleString()}
-        </span>{" "}
-        facilities ({Math.round((result.mapped / result.total) * 100)}%).
-        {result.unmapped > 0 && (
-          <>
-            {" "}
-            {result.unmapped} facilities are still being mapped — they appear in the{" "}
-            <Link to="/facilities" className="font-medium text-primary underline-offset-2 hover:underline">
-              full directory
-            </Link>
-            .
-          </>
-        )}
-      </p>
+
 
       {geo.status === "ready" && (
         <>
