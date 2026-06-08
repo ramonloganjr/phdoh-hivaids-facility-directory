@@ -36,19 +36,22 @@ export function SiteFooter() {
             <FooterLink to="/impact">Impact</FooterLink>
             <FooterLink to="/faq">FAQ</FooterLink>
             <FooterLink to="/about">About</FooterLink>
+            <FooterLink to="/sitemap">Sitemap</FooterLink>
             <FooterLink to="/terms">Terms</FooterLink>
             <FooterLink to="/privacy">Privacy</FooterLink>
-
-
           </nav>
         </div>
-        <div className="mt-10 flex flex-col gap-2 border-t border-outline-variant pt-6 text-xs text-on-surface-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>
+        <div className="mt-10 flex flex-col items-start gap-5 border-t border-outline-variant pt-6 text-xs leading-relaxed text-on-surface-muted md:gap-6">
+          <p className="max-w-3xl">
             An independent public-information mirror. Not affiliated with the Department of Health,
             and not a substitute for medical advice. ©{" "}
-            {new Date().getFullYear()}
+            <span className="tabular-nums">{new Date().getFullYear()}</span>
           </p>
-          <p>
+          <div
+            aria-hidden="true"
+            className="h-px w-12 rounded-full bg-outline-variant"
+          />
+          <p className="max-w-3xl">
             Built with care by{" "}
             <a
               href="https://www.ramonloganjr.com/"
@@ -70,7 +73,15 @@ function FooterLink({
   to,
   children,
 }: {
-  to: "/facilities" | "/insights" | "/impact" | "/faq" | "/about" | "/terms" | "/privacy";
+  to:
+    | "/facilities"
+    | "/insights"
+    | "/impact"
+    | "/faq"
+    | "/about"
+    | "/sitemap"
+    | "/terms"
+    | "/privacy";
   children: React.ReactNode;
 }) {
   return (

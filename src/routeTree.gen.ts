@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SitemapRouteImport } from './routes/sitemap'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NearMeRouteImport } from './routes/near-me'
 import { Route as InsightsRouteImport } from './routes/insights'
@@ -35,6 +36,11 @@ const TermsRoute = TermsRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapRoute = SitemapRouteImport.update({
+  id: '/sitemap',
+  path: '/sitemap',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -124,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/insights': typeof InsightsRoute
   '/near-me': typeof NearMeRoute
   '/privacy': typeof PrivacyRoute
+  '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
@@ -142,6 +149,7 @@ export interface FileRoutesByTo {
   '/insights': typeof InsightsRoute
   '/near-me': typeof NearMeRoute
   '/privacy': typeof PrivacyRoute
+  '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
@@ -162,6 +170,7 @@ export interface FileRoutesById {
   '/insights': typeof InsightsRoute
   '/near-me': typeof NearMeRoute
   '/privacy': typeof PrivacyRoute
+  '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
@@ -182,6 +191,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/near-me'
     | '/privacy'
+    | '/sitemap'
     | '/sitemap.xml'
     | '/terms'
     | '/api/og'
@@ -200,6 +210,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/near-me'
     | '/privacy'
+    | '/sitemap'
     | '/sitemap.xml'
     | '/terms'
     | '/api/og'
@@ -219,6 +230,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/near-me'
     | '/privacy'
+    | '/sitemap'
     | '/sitemap.xml'
     | '/terms'
     | '/api/og'
@@ -239,6 +251,7 @@ export interface RootRouteChildren {
   InsightsRoute: typeof InsightsRoute
   NearMeRoute: typeof NearMeRoute
   PrivacyRoute: typeof PrivacyRoute
+  SitemapRoute: typeof SitemapRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   ApiOgRoute: typeof ApiOgRoute
@@ -259,6 +272,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap': {
+      id: '/sitemap'
+      path: '/sitemap'
+      fullPath: '/sitemap'
+      preLoaderRoute: typeof SitemapRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -405,6 +425,7 @@ const rootRouteChildren: RootRouteChildren = {
   InsightsRoute: InsightsRoute,
   NearMeRoute: NearMeRoute,
   PrivacyRoute: PrivacyRoute,
+  SitemapRoute: SitemapRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   ApiOgRoute: ApiOgRoute,
