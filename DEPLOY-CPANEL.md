@@ -109,4 +109,3 @@ If you build locally instead, just re-upload `dist/` and click **Restart**.
 - **Service worker errors** → must be served over HTTPS. Turn on AutoSSL.
 - **Native module errors during NPM install** → set Node to 20.x (not 18.x).
 
-<!-- sync-test: GitHub auto-sync verified -->
