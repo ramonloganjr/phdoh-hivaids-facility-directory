@@ -42,11 +42,12 @@ export function SiteFooter() {
         </div>
         <div className="mt-10 flex flex-col gap-2 border-t border-outline-variant pt-6 text-xs text-on-surface-muted sm:flex-row sm:items-center sm:justify-between">
           <p>
-            Public information mirror. Not affiliated with the Department of Health. ©{" "}
+            An independent public-information mirror. Not affiliated with the Department of Health,
+            and not a substitute for medical advice. ©{" "}
             {new Date().getFullYear()}
           </p>
           <p>
-            Built by{" "}
+            Built with care by{" "}
             <a
               href="https://www.ramonloganjr.com/"
               target="_blank"
@@ -55,7 +56,7 @@ export function SiteFooter() {
             >
               Ramon Logan Jr.
             </a>{" "}
-            and dedicated to all people living with HIV/AIDS in the Philippines.
+            for people living with HIV in the Philippines, and everyone who loves them.
           </p>
         </div>
       </div>
