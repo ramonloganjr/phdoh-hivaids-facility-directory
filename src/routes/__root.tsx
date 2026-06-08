@@ -15,7 +15,7 @@ import { InstallPrompt } from "@/components/install-prompt";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { NotFound } from "@/components/not-found";
-import faviconAsset from "@/assets/favicon.png.asset.json";
+
 import ogImageAsset from "@/assets/open-graph.png.asset.json";
 import { getRequestOrigin } from "@/lib/origin.functions";
 
