@@ -6,6 +6,9 @@ import tsConfigPaths from "vite-tsconfig-paths";
 import { nitro } from "nitro/vite";
 import { VitePWA } from "vite-plugin-pwa";
 
+const nitroPreset = process.env.NITRO_PRESET ?? (process.env.VERCEL ? "vercel" : "node-server");
+const usesVercelBuildOutput = nitroPreset === "vercel" || nitroPreset === "vercel-static";
+
 export default defineConfig({
   server: {
     host: "::",
@@ -38,12 +41,14 @@ export default defineConfig({
       },
     }),
     nitro({
-      preset: process.env.NITRO_PRESET ?? (process.env.VERCEL ? "vercel" : "node-server"),
-      output: {
-        dir: "dist",
-        serverDir: "dist/server",
-        publicDir: "dist/client",
-      },
+      preset: nitroPreset,
+      output: usesVercelBuildOutput
+        ? undefined
+        : {
+            dir: "dist",
+            serverDir: "dist/server",
+            publicDir: "dist/client",
+          },
     }),
     viteReact(),
     VitePWA({
