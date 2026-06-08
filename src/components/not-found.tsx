@@ -11,26 +11,26 @@ type QuickLink = {
 const QUICK_LINKS: QuickLink[] = [
   {
     to: "/facilities",
-    label: "Browse facilities",
-    description: "All 338 DOH-designated hubs and primary care sites.",
+    label: "Browse all facilities",
+    description: "Every DOH-designated treatment hub and primary care site, in one place.",
     icon: MapPin,
   },
   {
     to: "/insights",
-    label: "Insights",
-    description: "Surveillance data and trends at a glance.",
+    label: "See the bigger picture",
+    description: "Surveillance data and trends, explained simply.",
     icon: Compass,
   },
   {
     to: "/faq",
-    label: "FAQ",
-    description: "Common questions about HIV care in the Philippines.",
+    label: "Common questions",
+    description: "Plain-language answers about HIV care in the Philippines.",
     icon: HelpCircle,
   },
   {
     to: "/about",
     label: "About this directory",
-    description: "Who maintains it and how it stays current.",
+    description: "Who maintains it, where the data comes from, and how it stays current.",
     icon: Search,
   },
 ];
@@ -54,7 +54,7 @@ export function NotFound() {
             className="inline-block h-1.5 w-1.5 rounded-full bg-primary"
             aria-hidden="true"
           />
-          Error 404
+          Page not found
         </span>
 
         {/* Hero numeral */}
@@ -67,11 +67,11 @@ export function NotFound() {
         </h1>
 
         <h2 className="mt-4 max-w-2xl text-balance text-3xl font-semibold tracking-tight text-on-surface sm:text-4xl">
-          We can't find that page
+          We couldn't find that page
         </h2>
         <p className="mt-3 max-w-xl text-pretty text-base text-on-surface-muted sm:text-lg">
-          The link may be outdated, mistyped, or the facility record has moved.
-          The full directory is always one tap away.
+          The link may be outdated or mistyped, or the facility record may have moved. The full
+          directory is one tap away — let's get you back on track.
         </p>
 
         {/* Primary CTAs */}
@@ -96,7 +96,7 @@ export function NotFound() {
       {/* Quick links grid */}
       <div className="mt-14 w-full">
         <p className="eyebrow mb-4 text-center text-on-surface-muted">
-          Or jump to a section
+          Where would you like to go?
         </p>
         <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {QUICK_LINKS.map(({ to, label, description, icon: Icon }) => (

@@ -39,12 +39,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 
   return (
     <div className="flex min-h-[70dvh] items-center justify-center px-4">
-      <div className="max-w-md text-center">
+      <div className="max-w-md text-center" role="alert">
         <h1 className="text-xl font-semibold tracking-tight text-on-surface">
-          This page didn't load
+          This page didn't finish loading
         </h1>
         <p className="mt-2 text-sm text-on-surface-muted">
-          Something went wrong. Try again, or head back home.
+          Your connection may have dropped, or the data took too long to arrive. Try again, or head
+          back home — your place in the directory is safe.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
@@ -60,7 +61,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
             href="/"
             className="state-layer inline-flex items-center justify-center rounded-full border border-outline px-5 py-2.5 text-sm font-medium text-on-surface"
           >
-            Go home
+            Back to home
           </a>
         </div>
       </div>

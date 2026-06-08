@@ -64,10 +64,10 @@ function FaqPage() {
           Knowledge base
         </p>
         <h1 className="mt-3 text-3xl font-semibold tracking-tight text-on-surface sm:text-4xl">
-          Frequently asked questions about HIV &amp; AIDS
+          Your questions about HIV &amp; AIDS, answered
         </h1>
         <p className="mt-3 text-sm leading-relaxed text-on-surface-muted">
-          Plain-language answers distilled from{" "}
+          Clear, judgment-free answers in plain language, drawn from{" "}
           <a
             href="https://www.unaids.org/en/frequently-asked-questions-about-hiv-and-aids"
             target="_blank"
@@ -76,7 +76,8 @@ function FaqPage() {
           >
             UNAIDS
           </a>{" "}
-          guidance. For personal medical advice, please consult a healthcare provider.
+          guidance. This is general information, not medical advice — for anything personal, talk
+          with a healthcare provider you trust.
         </p>
       </header>
 
@@ -136,7 +137,7 @@ function FaqPage() {
       <div className="mt-4 space-y-2">
         {visible.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-outline-variant bg-surface p-8 text-center text-sm text-on-surface-muted">
-            No questions match your search. Try a different term or category.
+            Nothing matches that search yet. Try a different word, or pick another category above.
           </div>
         ) : (
           visible.map((f, i) => <FaqRow key={f.id} item={f} index={i} />)

@@ -81,10 +81,11 @@ export const FacilityCard = memo(function FacilityCard({
             {typeof distanceKm === "number" && (
               <span
                 className="inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-0.5 text-[11px] font-semibold text-primary-foreground tabular-nums"
-                title={`Approximately ${driveMinutes(distanceKm)} min drive`}
+                title={`About ${driveMinutes(distanceKm)} min by car from you`}
+                aria-label={`${formatKm(distanceKm)} away, about ${driveMinutes(distanceKm)} minutes by car`}
               >
                 <Compass className="h-3 w-3" aria-hidden="true" />
-                {formatKm(distanceKm)}
+                {formatKm(distanceKm)} away
               </span>
             )}
           </div>
@@ -112,10 +113,10 @@ export const FacilityCard = memo(function FacilityCard({
               }}
               className="state-layer press inline-flex min-h-[2rem] items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-primary-foreground"
               aria-label={`Get directions to ${facility.name}`}
-              title="Open directions in your maps app"
+              title="Opens in your maps app"
             >
               <Navigation className="h-3 w-3" aria-hidden="true" />
-              <span>Directions</span>
+              <span>Get directions</span>
             </a>
               {primaryPhone && (
                 <a
