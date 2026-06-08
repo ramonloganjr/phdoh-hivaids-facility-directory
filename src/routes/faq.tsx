@@ -64,10 +64,10 @@ function FaqPage() {
           Knowledge base
         </p>
         <h1 className="mt-3 text-3xl font-semibold tracking-tight text-on-surface sm:text-4xl">
-          Frequently asked questions about HIV &amp; AIDS
+          Your questions about HIV &amp; AIDS, answered
         </h1>
         <p className="mt-3 text-sm leading-relaxed text-on-surface-muted">
-          Plain-language answers distilled from{" "}
+          Clear, judgment-free answers in plain language, drawn from{" "}
           <a
             href="https://www.unaids.org/en/frequently-asked-questions-about-hiv-and-aids"
             target="_blank"
@@ -76,7 +76,8 @@ function FaqPage() {
           >
             UNAIDS
           </a>{" "}
-          guidance. For personal medical advice, please consult a healthcare provider.
+          guidance. This is general information, not medical advice — for anything personal, talk
+          with a healthcare provider you trust.
         </p>
       </header>
 
