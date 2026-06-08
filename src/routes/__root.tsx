@@ -17,6 +17,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { NotFound } from "@/components/not-found";
 import faviconAsset from "@/assets/favicon.png.asset.json";
 import ogImageAsset from "@/assets/open-graph.png.asset.json";
+import { getRequestOrigin } from "@/lib/origin.functions";
 
 const THEME_INIT_SCRIPT = `
 (function(){try{
@@ -68,7 +69,18 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
+  loader: async () => {
+    try {
+      const origin = await getRequestOrigin();
+      return { origin };
+    } catch {
+      return { origin: "" };
+    }
+  },
+  head: ({ loaderData }) => {
+    const origin = loaderData?.origin ?? "";
+    const ogImageUrl = origin ? `${origin}${ogImageAsset.url}` : ogImageAsset.url;
+    return ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
@@ -94,11 +106,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "PH HIV Care Directory" },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "en_PH" },
-      { property: "og:image", content: ogImageAsset.url },
+      { property: "og:image", content: ogImageUrl },
+      { property: "og:image:secure_url", content: ogImageUrl },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:image:type", content: "image/png" },
-      { name: "twitter:image", content: ogImageAsset.url },
+      { property: "og:image:alt", content: "Philippine HIV Care Directory — DOH-designated facilities" },
+      { name: "twitter:image", content: ogImageUrl },
       // Twitter
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@ramonloganjr" },
@@ -155,7 +169,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         }),
       },
     ],
-  }),
+  });
+  },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
