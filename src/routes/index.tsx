@@ -81,30 +81,30 @@ function Landing() {
               DOH DC 2026-0065 · Verified 31 Dec 2025
             </span>
             <h1 className="text-balance font-display text-4xl font-medium leading-[1.05] tracking-tight text-on-surface sm:text-5xl lg:text-6xl">
-              Every DOH-designated{" "}
-              <span className="text-primary">HIV facility</span> in the Philippines.
+              Find{" "}
+              <span className="text-primary">HIV care</span> across the Philippines.
             </h1>
             <p className="max-w-xl text-pretty text-base leading-relaxed text-on-surface-muted sm:text-lg">
-              Search {FACILITY_COUNT} treatment hubs and primary care clinics by name,
-              region, or service. Tap to call, message, or open directions — built
-              mobile-first for people who need answers fast.
+              Every {FACILITY_COUNT} DOH-designated treatment hub and primary care clinic in one
+              place. Search by name, region, or service — then tap to call, message, or get
+              directions. Built mobile-first for moments when you need answers fast.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link
                 to="/facilities"
                 className="state-layer press group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground elev-1 transition-shadow hover:elev-2"
               >
-                Search the directory
+                Browse the directory
                 <ArrowRight
                   className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
                   aria-hidden="true"
                 />
               </Link>
               <Link
-                to="/about"
+                to="/near-me"
                 className="state-layer press inline-flex items-center gap-2 rounded-full bg-surface-container-high px-6 py-3.5 text-sm font-semibold text-on-surface"
               >
-                About the data
+                Find care near me
               </Link>
             </div>
           </div>
