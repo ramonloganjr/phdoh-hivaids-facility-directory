@@ -12,7 +12,8 @@
     "start:cpanel": "NODE_ENV=production node dist/server/index.mjs",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "verify:meta": "bun run scripts/verify-meta.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
