@@ -265,17 +265,17 @@ function Landing() {
               Geography
             </p>
             <h2 className="font-display text-3xl font-medium tracking-tight text-on-surface sm:text-4xl">
-              Browse by region
+              Find care in your region
             </h2>
             <p className="text-sm text-on-surface-muted">
-              {regionCounts.length} regions, from Batanes to Tawi-Tawi.
+              {regionCounts.length} regions, from Batanes to Tawi-Tawi — pick yours to narrow the list.
             </p>
           </div>
           <Link
             to="/facilities"
             className="state-layer press group inline-flex items-center gap-1.5 rounded-full bg-surface px-4 py-2 text-xs font-semibold text-on-surface"
           >
-            See all regions
+            See every region
             <ArrowRight
               className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
               aria-hidden="true"
