@@ -135,7 +135,7 @@ export const FacilityCard = memo(function FacilityCard({ facility }: { facility:
                 </a>
               )}
             </div>
-          )}
+
         </div>
       </div>
     </article>
