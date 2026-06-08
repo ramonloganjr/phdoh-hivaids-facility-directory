@@ -16,6 +16,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NearMeRouteImport } from './routes/near-me'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as ImpactRouteImport } from './routes/impact'
+import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as FacilitiesRouteImport } from './routes/facilities'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -62,6 +63,11 @@ const InsightsRoute = InsightsRouteImport.update({
 const ImpactRoute = ImpactRouteImport.update({
   id: '/impact',
   path: '/impact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeedbackRoute = FeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -132,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/facilities': typeof FacilitiesRouteWithChildren
   '/faq': typeof FaqRoute
+  '/feedback': typeof FeedbackRoute
   '/impact': typeof ImpactRoute
   '/insights': typeof InsightsRoute
   '/near-me': typeof NearMeRoute
@@ -152,6 +159,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/facilities': typeof FacilitiesRouteWithChildren
   '/faq': typeof FaqRoute
+  '/feedback': typeof FeedbackRoute
   '/impact': typeof ImpactRoute
   '/insights': typeof InsightsRoute
   '/near-me': typeof NearMeRoute
@@ -174,6 +182,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/facilities': typeof FacilitiesRouteWithChildren
   '/faq': typeof FaqRoute
+  '/feedback': typeof FeedbackRoute
   '/impact': typeof ImpactRoute
   '/insights': typeof InsightsRoute
   '/near-me': typeof NearMeRoute
@@ -196,6 +205,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/facilities'
     | '/faq'
+    | '/feedback'
     | '/impact'
     | '/insights'
     | '/near-me'
@@ -216,6 +226,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/facilities'
     | '/faq'
+    | '/feedback'
     | '/impact'
     | '/insights'
     | '/near-me'
@@ -237,6 +248,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/facilities'
     | '/faq'
+    | '/feedback'
     | '/impact'
     | '/insights'
     | '/near-me'
@@ -259,6 +271,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   FacilitiesRoute: typeof FacilitiesRouteWithChildren
   FaqRoute: typeof FaqRoute
+  FeedbackRoute: typeof FeedbackRoute
   ImpactRoute: typeof ImpactRoute
   InsightsRoute: typeof InsightsRoute
   NearMeRoute: typeof NearMeRoute
@@ -320,6 +333,13 @@ declare module '@tanstack/react-router' {
       path: '/impact'
       fullPath: '/impact'
       preLoaderRoute: typeof ImpactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feedback': {
+      id: '/feedback'
+      path: '/feedback'
+      fullPath: '/feedback'
+      preLoaderRoute: typeof FeedbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -441,6 +461,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   FacilitiesRoute: FacilitiesRouteWithChildren,
   FaqRoute: FaqRoute,
+  FeedbackRoute: FeedbackRoute,
   ImpactRoute: ImpactRoute,
   InsightsRoute: InsightsRoute,
   NearMeRoute: NearMeRoute,
