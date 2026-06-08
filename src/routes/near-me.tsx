@@ -524,9 +524,14 @@ function IntroPanel() {
 function EmptyResult() {
   return (
     <div className="rounded-3xl border border-dashed border-outline-variant bg-surface-container p-10 text-center">
-      <h3 className="text-base font-semibold text-on-surface">No facilities in this range</h3>
+      <h3 className="text-base font-semibold text-on-surface">Nothing in this range yet</h3>
       <p className="mt-1 text-sm text-on-surface-muted">
-        Try widening the proximity range, switching service type, or turning off the inpatient filter.
+        Try widening the distance, choosing a different service type, or turning off the inpatient
+        filter. You can also{" "}
+        <Link to="/facilities" className="font-medium text-primary underline-offset-2 hover:underline">
+          browse the full directory
+        </Link>
+        .
       </p>
     </div>
   );
