@@ -22,8 +22,11 @@ function AdminInsightsPage() {
   const navigate = useNavigate();
   const insightsFn = useServerFn(getAdminInsights);
   const exportFn = useServerFn(exportMonthlyImpact);
+  const deployFn = useServerFn(triggerVercelRedeploy);
   const [windowDays, setWindowDays] = useState<7 | 30 | 90>(30);
   const [exporting, setExporting] = useState(false);
+  const [deploying, setDeploying] = useState(false);
+  const [deployMsg, setDeployMsg] = useState<{ kind: "ok" | "err"; text: string } | null>(null);
 
   const { data, isLoading, error, refetch, isRefetching } = useQuery({
     queryKey: ["admin-insights", windowDays],
