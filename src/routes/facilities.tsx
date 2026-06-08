@@ -18,6 +18,7 @@ import {
 import type { RegionCode, ServiceType } from "@/data/facilities.types";
 import { FacilityCard } from "@/components/facility-card";
 import { cn } from "@/lib/utils";
+import { track, resultBucket } from "@/lib/metrics";
 
 type Search = {
   q?: string;
@@ -142,6 +143,17 @@ function FacilitiesPage() {
         REGION_LABELS[f.region].toLowerCase().includes(q)
       );
     });
+  }, [deferredQ, search.region, search.service, search.inpatient]);
+
+  // Track searches once the deferred query settles. No PII — just the query length bucket.
+  useEffect(() => {
+    const q = deferredQ.trim();
+    if (!q && !search.region && !search.service && !search.inpatient) return;
+    const id = window.setTimeout(() => {
+      track("search_submitted", { key: "result_bucket", value: resultBucket(filtered.length) });
+    }, 400);
+    return () => window.clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deferredQ, search.region, search.service, search.inpatient]);
 
   const groupedByRegion = useMemo(() => {
