@@ -33,10 +33,12 @@ export function SiteFooter() {
           >
             <FooterLink to="/facilities">All facilities</FooterLink>
             <FooterLink to="/insights">Insights</FooterLink>
+            <FooterLink to="/impact">Impact</FooterLink>
             <FooterLink to="/faq">FAQ</FooterLink>
             <FooterLink to="/about">About</FooterLink>
             <FooterLink to="/terms">Terms</FooterLink>
             <FooterLink to="/privacy">Privacy</FooterLink>
+
 
           </nav>
         </div>
@@ -68,7 +70,7 @@ function FooterLink({
   to,
   children,
 }: {
-  to: "/facilities" | "/insights" | "/faq" | "/about" | "/terms" | "/privacy";
+  to: "/facilities" | "/insights" | "/impact" | "/faq" | "/about" | "/terms" | "/privacy";
   children: React.ReactNode;
 }) {
   return (

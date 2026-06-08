@@ -5,6 +5,7 @@ import type { Facility } from "@/data/facilities.types";
 import { REGION_LABELS } from "@/data/facility-meta";
 import { directionsHref, openDirections } from "@/lib/facilities-helpers";
 import { formatKm, driveMinutes } from "@/lib/geo";
+import { track } from "@/lib/metrics";
 import { cn } from "@/lib/utils";
 
 export const FacilityCard = memo(function FacilityCard({
@@ -109,6 +110,7 @@ export const FacilityCard = memo(function FacilityCard({
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
+                track("directions_tapped", { key: "region", value: facility.region ?? "unknown" });
                 openDirections({ name: facility.name, address: facility.address });
               }}
               className="state-layer press inline-flex min-h-[2rem] items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-primary-foreground"
@@ -121,7 +123,10 @@ export const FacilityCard = memo(function FacilityCard({
               {primaryPhone && (
                 <a
                   href={telHref(primaryPhone)}
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    track("call_tapped");
+                  }}
                   className="state-layer press inline-flex items-center gap-1.5 rounded-full bg-primary-container px-2.5 py-1 text-on-primary-container"
                   aria-label={`Call ${facility.name} at ${primaryPhone}`}
                 >

@@ -14,12 +14,14 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NearMeRouteImport } from './routes/near-me'
 import { Route as InsightsRouteImport } from './routes/insights'
+import { Route as ImpactRouteImport } from './routes/impact'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as FacilitiesRouteImport } from './routes/facilities'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FacilitiesIdRouteImport } from './routes/facilities.$id'
 import { Route as ApiOgRouteImport } from './routes/api.og'
+import { Route as ApiPublicMetricsIngestRouteImport } from './routes/api/public/metrics.ingest'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -44,6 +46,11 @@ const NearMeRoute = NearMeRouteImport.update({
 const InsightsRoute = InsightsRouteImport.update({
   id: '/insights',
   path: '/insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImpactRoute = ImpactRouteImport.update({
+  id: '/impact',
+  path: '/impact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -76,12 +83,18 @@ const ApiOgRoute = ApiOgRouteImport.update({
   path: '/api/og',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicMetricsIngestRoute = ApiPublicMetricsIngestRouteImport.update({
+  id: '/api/public/metrics/ingest',
+  path: '/api/public/metrics/ingest',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/facilities': typeof FacilitiesRouteWithChildren
   '/faq': typeof FaqRoute
+  '/impact': typeof ImpactRoute
   '/insights': typeof InsightsRoute
   '/near-me': typeof NearMeRoute
   '/privacy': typeof PrivacyRoute
@@ -89,12 +102,14 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
+  '/api/public/metrics/ingest': typeof ApiPublicMetricsIngestRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/facilities': typeof FacilitiesRouteWithChildren
   '/faq': typeof FaqRoute
+  '/impact': typeof ImpactRoute
   '/insights': typeof InsightsRoute
   '/near-me': typeof NearMeRoute
   '/privacy': typeof PrivacyRoute
@@ -102,6 +117,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
+  '/api/public/metrics/ingest': typeof ApiPublicMetricsIngestRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -109,6 +125,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/facilities': typeof FacilitiesRouteWithChildren
   '/faq': typeof FaqRoute
+  '/impact': typeof ImpactRoute
   '/insights': typeof InsightsRoute
   '/near-me': typeof NearMeRoute
   '/privacy': typeof PrivacyRoute
@@ -116,6 +133,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
+  '/api/public/metrics/ingest': typeof ApiPublicMetricsIngestRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -124,6 +142,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/facilities'
     | '/faq'
+    | '/impact'
     | '/insights'
     | '/near-me'
     | '/privacy'
@@ -131,12 +150,14 @@ export interface FileRouteTypes {
     | '/terms'
     | '/api/og'
     | '/facilities/$id'
+    | '/api/public/metrics/ingest'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/facilities'
     | '/faq'
+    | '/impact'
     | '/insights'
     | '/near-me'
     | '/privacy'
@@ -144,12 +165,14 @@ export interface FileRouteTypes {
     | '/terms'
     | '/api/og'
     | '/facilities/$id'
+    | '/api/public/metrics/ingest'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/facilities'
     | '/faq'
+    | '/impact'
     | '/insights'
     | '/near-me'
     | '/privacy'
@@ -157,6 +180,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/api/og'
     | '/facilities/$id'
+    | '/api/public/metrics/ingest'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -164,12 +188,14 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   FacilitiesRoute: typeof FacilitiesRouteWithChildren
   FaqRoute: typeof FaqRoute
+  ImpactRoute: typeof ImpactRoute
   InsightsRoute: typeof InsightsRoute
   NearMeRoute: typeof NearMeRoute
   PrivacyRoute: typeof PrivacyRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   ApiOgRoute: typeof ApiOgRoute
+  ApiPublicMetricsIngestRoute: typeof ApiPublicMetricsIngestRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -207,6 +233,13 @@ declare module '@tanstack/react-router' {
       path: '/insights'
       fullPath: '/insights'
       preLoaderRoute: typeof InsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/impact': {
+      id: '/impact'
+      path: '/impact'
+      fullPath: '/impact'
+      preLoaderRoute: typeof ImpactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -251,6 +284,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiOgRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/metrics/ingest': {
+      id: '/api/public/metrics/ingest'
+      path: '/api/public/metrics/ingest'
+      fullPath: '/api/public/metrics/ingest'
+      preLoaderRoute: typeof ApiPublicMetricsIngestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -271,12 +311,14 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   FacilitiesRoute: FacilitiesRouteWithChildren,
   FaqRoute: FaqRoute,
+  ImpactRoute: ImpactRoute,
   InsightsRoute: InsightsRoute,
   NearMeRoute: NearMeRoute,
   PrivacyRoute: PrivacyRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   ApiOgRoute: ApiOgRoute,
+  ApiPublicMetricsIngestRoute: ApiPublicMetricsIngestRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
