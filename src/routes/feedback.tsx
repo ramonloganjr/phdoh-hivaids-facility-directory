@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Loader2, Send, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { Turnstile } from "@/components/turnstile";
 
 export const Route = createFileRoute("/feedback")({
   head: () => ({
@@ -32,6 +33,8 @@ function FeedbackPage() {
   const [message, setMessage] = useState("");
   const [region, setRegion] = useState("");
   const [website, setWebsite] = useState(""); // honeypot
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileError, setTurnstileError] = useState(false);
   const startedAtRef = useRef<number>(Date.now());
   const [state, setState] = useState<SubmitState>({ kind: "idle" });
 
@@ -40,7 +43,8 @@ function FeedbackPage() {
   }, []);
 
   const remaining = 1000 - message.length;
-  const canSubmit = message.trim().length >= 8 && state.kind !== "submitting";
+  const canSubmit =
+    message.trim().length >= 8 && turnstileToken.length > 0 && state.kind !== "submitting";
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,6 +59,7 @@ function FeedbackPage() {
           region: region.trim() || undefined,
           website, // honeypot
           client_started_at: startedAtRef.current,
+          turnstile_token: turnstileToken,
         }),
       });
       const json = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
