@@ -47,10 +47,6 @@ export function SiteFooter() {
             and not a substitute for medical advice. ©{" "}
             <span className="tabular-nums">{new Date().getFullYear()}</span>
           </p>
-          <div
-            aria-hidden="true"
-            className="h-px w-12 rounded-full bg-outline-variant"
-          />
           <p className="w-full">
             Built with care by{" "}
             <a
