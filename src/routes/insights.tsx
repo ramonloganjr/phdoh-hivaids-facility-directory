@@ -112,12 +112,12 @@ function Header() {
         Surveillance Insights · {reportMeta.quarter}
       </p>
       <h1 className="mt-3 text-3xl font-semibold tracking-tight text-on-surface sm:text-4xl">
-        Philippines HIV &amp; AIDS, at a glance
+        The Philippine HIV response, in numbers
       </h1>
       <p className="mt-3 max-w-2xl text-sm leading-relaxed text-on-surface-muted">
-        Interactive visualizations of the DOH Epidemiology Bureau's{" "}
-        <span className="text-on-surface">{reportMeta.period}</span> surveillance
-        report. Every number below is reproduced verbatim from the source.
+        Clear visualizations of the DOH Epidemiology Bureau's{" "}
+        <span className="text-on-surface">{reportMeta.period}</span> surveillance report. Every
+        figure here is reproduced exactly from the source — no edits, no estimates added.
       </p>
     </header>
   );
