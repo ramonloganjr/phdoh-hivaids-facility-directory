@@ -99,12 +99,12 @@ function NearMePage() {
       (err) => {
         const message =
           err.code === err.PERMISSION_DENIED
-            ? "Location access was blocked. Enable location permissions in your browser settings, then try again."
+            ? "Location is off for this site. You can still browse the full directory, or turn on location in your browser settings to sort facilities by distance."
             : err.code === err.POSITION_UNAVAILABLE
-              ? "We couldn't determine your position. Move to an area with better signal or GPS coverage and retry."
+              ? "Your device couldn't get a location fix right now. Move somewhere with a clearer GPS or Wi-Fi signal and try again."
               : err.code === err.TIMEOUT
-                ? "Locating you took too long. Please try again."
-                : "Something went wrong while locating you. Please try again.";
+                ? "Locating you is taking longer than expected. Try again in a moment."
+                : "We couldn't read your location. Try again, or browse the full directory instead.";
         setGeo({ status: "error", message, code: err.code });
       },
       { enableHighAccuracy: true, maximumAge: 60_000, timeout: 12_000 },
