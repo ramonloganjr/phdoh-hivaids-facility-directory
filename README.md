@@ -252,6 +252,39 @@ The project targets **WCAG 2.1 Level AA**.
 
 ---
 
+## Changelog
+
+### June 2026 — Branding, theming, and enterprise audit pass
+
+**Branding and metadata**
+- Fixed manifest `name` duplication ("Philippine HIV Care Philippines" → "HIV Care Philippines"); same fix applied to `<title>`, `og:image:alt`, and `og:site_name`.
+- Unified favicon source — single pointer in `manifest.webmanifest`, no CDN drift.
+- Added swapping header logo (light/dark) to `/auth`.
+- Split `<meta name="theme-color">` into `media`-scoped light (`#FFF5F6`) and dark (`#1A0E11`) variants for iOS Safari.
+
+**Theming and accessibility**
+- Replaced `text-white` in `theme-toggle.tsx` with `text-primary-foreground` (token compliance).
+- Fixed `@custom-variant dark` selector to match both `html.dark` and descendants (`&:where(.dark, .dark *)`).
+- Lifted light-mode `--on-surface-muted` from `0.48` to `0.44` for WCAG-AA-safe secondary text (~5.3:1 contrast).
+
+**Reliability**
+- Hardened `getPublicImpact` server function with `Promise.allSettled` and an `emptyImpact()` fallback so the `/impact` page degrades gracefully when the backend is unreachable.
+- Replaced default Recharts tooltips with a Material-styled `ChartTip` across `/insights` (PieChart + three BarCharts).
+- Switched router `defaultPreload` from `"intent"` to `"viewport"` to eliminate a TanStack Router hover-race console error.
+
+**Security**
+- Added per-IP token-bucket rate limiting to `/api/public/metrics/ingest` (30 events/minute, hashed IPs, in-memory).
+- Documented two warn-level findings deferred to integration-managed files (`auth-middleware.ts`, `_authenticated/route.tsx`).
+
+**Verified clean**
+- Dependency scan: no high/critical vulnerabilities.
+- SEO scan: zero failing findings.
+- Accessibility: all icon buttons labeled, single `<main>` per page, semantic tokens throughout.
+
+---
+
+
+
 ## Data Sources
 
 All facility data is mirrored from the Philippine **Department of Health Department Circular No. 2026-0065**. The project is independent and non-commercial. No personally identifiable patient information is collected, stored, or transmitted.
