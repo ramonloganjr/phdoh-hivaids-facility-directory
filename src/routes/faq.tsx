@@ -3,6 +3,7 @@ import { useDeferredValue, useMemo, useState } from "react";
 import { ChevronDown, Search } from "lucide-react";
 import { faqCategories, faqs, type FaqItem } from "@/data/faqs";
 import { cn } from "@/lib/utils";
+import { track } from "@/lib/metrics";
 
 export const Route = createFileRoute("/faq")({
   head: () => ({
@@ -151,6 +152,13 @@ function FaqRow({ item, index }: { item: FaqItem; index: number }) {
   const [open, setOpen] = useState(false);
   const panelId = `faq-panel-${item.id}`;
   const buttonId = `faq-trigger-${item.id}`;
+  const toggle = () => {
+    setOpen((v) => {
+      const next = !v;
+      if (next) track("faq_opened", { key: "faq_id", value: item.id });
+      return next;
+    });
+  };
   return (
     <div
       className={cn(
@@ -164,7 +172,7 @@ function FaqRow({ item, index }: { item: FaqItem; index: number }) {
           id={buttonId}
           aria-expanded={open}
           aria-controls={panelId}
-          onClick={() => setOpen((v) => !v)}
+          onClick={toggle}
           className="state-layer flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
         >
           <span className="flex items-baseline gap-3">
