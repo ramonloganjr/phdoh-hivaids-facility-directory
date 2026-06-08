@@ -78,6 +78,15 @@ export const FacilityCard = memo(function FacilityCard({
             <span className="inline-flex items-center rounded-full bg-surface-container-high px-2.5 py-0.5 text-[11px] font-medium text-on-surface-muted">
               {REGION_LABELS[facility.region]}
             </span>
+            {typeof distanceKm === "number" && (
+              <span
+                className="inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-0.5 text-[11px] font-semibold text-primary-foreground tabular-nums"
+                title={`Approximately ${driveMinutes(distanceKm)} min drive`}
+              >
+                <Compass className="h-3 w-3" aria-hidden="true" />
+                {formatKm(distanceKm)}
+              </span>
+            )}
           </div>
           <p className="mt-3 flex items-start gap-1.5 text-xs leading-relaxed text-on-surface-muted">
             <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
