@@ -1,8 +1,9 @@
 import { memo } from "react";
 import { Link } from "@tanstack/react-router";
-import { Hospital, Stethoscope, MapPin, ArrowUpRight, Phone, Mail, Facebook } from "lucide-react";
+import { Hospital, Stethoscope, MapPin, ArrowUpRight, Phone, Mail, Facebook, Navigation } from "lucide-react";
 import type { Facility } from "@/data/facilities.types";
 import { REGION_LABELS } from "@/data/facility-meta";
+import { directionsHref } from "@/lib/facilities-helpers";
 import { cn } from "@/lib/utils";
 
 export const FacilityCard = memo(function FacilityCard({ facility }: { facility: Facility }) {
@@ -82,8 +83,19 @@ export const FacilityCard = memo(function FacilityCard({ facility }: { facility:
               <span className="font-medium text-on-surface">{leadContact.name}</span>
             </p>
           )}
-          {(primaryPhone || primaryEmail || primaryFacebook) && (
-            <div className="relative z-10 mt-3 flex flex-wrap items-center gap-1.5 text-[11px] font-medium">
+          <div className="relative z-10 mt-3 flex flex-wrap items-center gap-1.5 text-[11px] font-medium">
+            <a
+              href={directionsHref({ name: facility.name, address: facility.address })}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="state-layer press inline-flex min-h-[2rem] items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-primary-foreground"
+              aria-label={`Get Google Maps directions to ${facility.name}`}
+              title="Open directions in Google Maps"
+            >
+              <Navigation className="h-3 w-3" aria-hidden="true" />
+              <span>Directions</span>
+            </a>
               {primaryPhone && (
                 <a
                   href={telHref(primaryPhone)}
@@ -123,7 +135,7 @@ export const FacilityCard = memo(function FacilityCard({ facility }: { facility:
                 </a>
               )}
             </div>
-          )}
+
         </div>
       </div>
     </article>

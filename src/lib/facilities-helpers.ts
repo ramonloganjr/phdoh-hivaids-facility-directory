@@ -21,3 +21,18 @@ export function fbHref(label: string): string {
 export function findFacility(id: string) {
   return FACILITIES.find((f) => f.id === id);
 }
+
+/**
+ * Build a universal Google Maps Directions URL using the facility's name
+ * and verified address as the destination query. Uses the official
+ * `dir/?api=1` schema which is supported across desktop browsers,
+ * Android (deep-links into the Google Maps app), and iOS (opens the
+ * Google Maps app if installed, otherwise the web client). Origin is
+ * omitted so Google uses the user's current location.
+ *
+ * Docs: https://developers.google.com/maps/documentation/urls/get-started
+ */
+export function directionsHref(opts: { name: string; address: string }): string {
+  const q = [opts.name, opts.address].filter(Boolean).join(", ");
+  return `https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=${encodeURIComponent(q)}`;
+}
