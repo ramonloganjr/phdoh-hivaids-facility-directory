@@ -14,7 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      metric_events: {
+        Row: {
+          dimension_key: string | null
+          dimension_value: string | null
+          event: string
+          id: number
+          occurred_at: string
+        }
+        Insert: {
+          dimension_key?: string | null
+          dimension_value?: string | null
+          event: string
+          id?: number
+          occurred_at?: string
+        }
+        Update: {
+          dimension_key?: string | null
+          dimension_value?: string | null
+          event?: string
+          id?: number
+          occurred_at?: string
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          attribution: string
+          consent_verified_at: string | null
+          created_at: string
+          id: string
+          published: boolean
+          quote: string
+          region: string | null
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          attribution: string
+          consent_verified_at?: string | null
+          created_at?: string
+          id?: string
+          published?: boolean
+          quote: string
+          region?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          attribution?: string
+          consent_verified_at?: string | null
+          created_at?: string
+          id?: string
+          published?: boolean
+          quote?: string
+          region?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
