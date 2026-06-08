@@ -34,17 +34,17 @@ const COORDS = facilityCoords as Record<string, CoordEntry>;
 export const Route = createFileRoute("/near-me")({
   head: () => ({
     meta: [
-      { title: "Find HIV facilities near me — PH HIV Care Directory" },
+      { title: "Find HIV care near you — PH HIV Care Directory" },
       {
         name: "description",
         content:
-          "Use your location to discover the closest DOH-designated HIV treatment hubs and primary care facilities, sorted by distance with one-tap directions.",
+          "See the closest DOH-designated HIV treatment hubs and primary care facilities, ranked by real distance. Your location stays on your device.",
       },
-      { property: "og:title", content: "Find HIV facilities near me" },
+      { property: "og:title", content: "Find HIV care near you" },
       {
         property: "og:description",
         content:
-          "Real-time proximity search across 338 DOH-designated HIV facilities in the Philippines.",
+          "Private, on-device proximity search across 338 DOH-designated HIV facilities in the Philippines.",
       },
       { property: "og:url", content: "/near-me" },
     ],
