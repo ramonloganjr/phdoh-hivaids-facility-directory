@@ -1,0 +1,79 @@
+Philippine HIV Care Directory
+Copyright (c) 2026 Ramon Logan Jr. (https://www.ramonloganjr.com)
+
+This project is dual-licensed. You may use, modify, and distribute it under
+the terms of EITHER of the following licenses, at your option:
+
+  1. MIT License — applies to the SOURCE CODE of this project.
+  2. Creative Commons Attribution 4.0 International (CC BY 4.0) — applies to
+     CONTENT, DOCUMENTATION, COPY, AND DATA PRESENTATIONS authored by the
+     project (excluding third-party data mirrored from official sources,
+     which remains the property of its original publishers).
+
+Attribution: When redistributing, forking, or building derivative works, you
+must retain the copyright notice above and provide reasonable credit to
+"Ramon Logan Jr. — https://www.ramonloganjr.com".
+
+================================================================================
+MIT License (Source Code)
+================================================================================
+
+Copyright (c) 2026 Ramon Logan Jr.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+Creative Commons Attribution 4.0 International (CC BY 4.0) — Content
+================================================================================
+
+Copyright (c) 2026 Ramon Logan Jr.
+
+The non-code content of this project — including written documentation,
+editorial copy, visual design, and data presentations authored by the project
+— is licensed under the Creative Commons Attribution 4.0 International
+License (CC BY 4.0).
+
+You are free to:
+
+  - Share — copy and redistribute the material in any medium or format.
+  - Adapt — remix, transform, and build upon the material for any purpose,
+    even commercially.
+
+Under the following terms:
+
+  - Attribution — You must give appropriate credit to "Ramon Logan Jr.
+    (https://www.ramonloganjr.com)", provide a link to this license, and
+    indicate if changes were made. You may do so in any reasonable manner,
+    but not in any way that suggests the licensor endorses you or your use.
+
+  - No additional restrictions — You may not apply legal terms or
+    technological measures that legally restrict others from doing anything
+    the license permits.
+
+Full license text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+================================================================================
+Third-Party Data Notice
+================================================================================
+
+Facility data displayed by this project is mirrored from the Philippine
+Department of Health (DOH) Department Circular No. 2026-0065 and remains the
+intellectual property of the Republic of the Philippines and the Department
+of Health. This project asserts no ownership over that underlying data and
+presents it for public-information purposes only.
