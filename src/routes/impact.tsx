@@ -29,18 +29,16 @@ export const Route = createFileRoute("/impact")({
   }),
   loader: ({ context }) => context.queryClient.ensureQueryData(impactQuery),
   component: ImpactPage,
-  errorComponent: ({ error, reset }) => (
+  errorComponent: ({ reset }) => (
     <div role="alert" className="mx-auto max-w-2xl px-6 py-16 text-on-surface">
-      <h1 className="text-2xl font-semibold">Impact numbers are loading slowly right now</h1>
+      <h1 className="text-2xl font-semibold">Numbers are taking a moment to load</h1>
       <p className="mt-3 text-on-surface-muted">
-        The connection to our measurement service may have dropped. Your visit is safe — try again
-        in a moment.
+        The connection hiccuped. Your visit is safe — try again in a moment.
       </p>
-      <pre className="mt-4 text-xs text-on-surface-muted">{String(error?.message ?? "")}</pre>
       <button
         type="button"
         onClick={() => reset()}
-        className="press state-layer mt-6 rounded-full bg-primary px-5 py-2.5 text-on-primary"
+        className="press state-layer mt-6 rounded-full bg-primary px-5 py-2.5 text-primary-foreground"
       >
         Try again
       </button>
