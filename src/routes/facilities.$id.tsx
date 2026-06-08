@@ -9,10 +9,11 @@ import {
   Facebook,
   User,
   ExternalLink,
+  Navigation,
 } from "lucide-react";
 import { FACILITIES, REGION_LABELS } from "@/data/facilities";
 import type { Facility } from "@/data/facilities.types";
-import { findFacility, telHref, fbHref } from "@/lib/facilities-helpers";
+import { findFacility, telHref, fbHref, directionsHref, openDirections } from "@/lib/facilities-helpers";
 import { cn } from "@/lib/utils";
 import { ShareBar } from "@/components/share-bar";
 
