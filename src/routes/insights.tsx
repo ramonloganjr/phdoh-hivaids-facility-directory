@@ -412,6 +412,7 @@ function SexCard() {
             paddingAngle={3}
             stroke="var(--color-surface-container)"
             strokeWidth={4}
+            isAnimationActive={false}
           >
             <Cell fill={COLORS.primary} />
             <Cell fill={COLORS.tertiary} />
