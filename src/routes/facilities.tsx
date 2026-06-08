@@ -76,6 +76,7 @@ function FacilitiesPage() {
   const [localQ, setLocalQ] = useState(search.q ?? "");
   const deferredQ = useDeferredValue(localQ);
   const [showTop, setShowTop] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     let raf = 0;
@@ -83,8 +84,14 @@ function FacilitiesPage() {
       if (raf) return;
       raf = requestAnimationFrame(() => {
         raf = 0;
-        const next = window.scrollY > 480;
+        const y = window.scrollY;
+        const max = Math.max(
+          1,
+          document.documentElement.scrollHeight - window.innerHeight,
+        );
+        const next = y > 480;
         setShowTop((prev) => (prev === next ? prev : next));
+        setScrollProgress(Math.min(1, Math.max(0, y / max)));
       });
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -94,6 +101,24 @@ function FacilitiesPage() {
       if (raf) cancelAnimationFrame(raf);
     };
   }, []);
+
+  const handleBackToTop = () => {
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({
+      top: 0,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
+    // Move focus to top of document for keyboard users
+    requestAnimationFrame(() => {
+      const main = document.querySelector("main") as HTMLElement | null;
+      if (main) {
+        main.setAttribute("tabindex", "-1");
+        main.focus({ preventScroll: true });
+      }
+    });
+  };
 
 
   const setSearch = (patch: Partial<Search>) => {
@@ -374,22 +399,65 @@ function FacilitiesPage() {
       </div>
 
       {/* Back to top */}
-      <button
-        type="button"
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        aria-label="Back to top"
-        aria-hidden={!showTop}
-        tabIndex={showTop ? 0 : -1}
+      <div
         className={cn(
-          "fixed right-6 z-40 inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white elev-3 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] will-change-transform",
-          "bottom-[calc(env(safe-area-inset-bottom,0px)+1.5rem)]",
+          "pointer-events-none fixed right-4 z-40 sm:right-6",
+          "bottom-[calc(env(safe-area-inset-bottom,0px)+1rem)] sm:bottom-[calc(env(safe-area-inset-bottom,0px)+1.5rem)]",
+          "motion-safe:transition-[opacity,transform] motion-safe:duration-300",
+          "ease-[cubic-bezier(0.32,0.72,0,1)] will-change-transform",
           showTop
-            ? "pointer-events-auto translate-y-0 opacity-100"
-            : "pointer-events-none translate-y-3 opacity-0",
+            ? "translate-y-0 opacity-100"
+            : "translate-y-3 opacity-0",
         )}
+        aria-hidden={!showTop}
       >
-        <ArrowUp className="h-5 w-5" aria-hidden="true" />
-      </button>
+        <button
+          type="button"
+          onClick={handleBackToTop}
+          aria-label={`Back to top — ${Math.round(scrollProgress * 100)}% scrolled`}
+          tabIndex={showTop ? 0 : -1}
+          className={cn(
+            "group relative inline-flex h-12 w-12 items-center justify-center overflow-hidden rounded-full",
+            "bg-primary text-primary-foreground elev-3",
+            "state-layer press",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+            showTop ? "pointer-events-auto" : "pointer-events-none",
+          )}
+        >
+          {/* Scroll progress ring */}
+          <svg
+            className="pointer-events-none absolute inset-0 h-full w-full -rotate-90"
+            viewBox="0 0 48 48"
+            aria-hidden="true"
+          >
+            <circle
+              cx="24"
+              cy="24"
+              r="22"
+              fill="none"
+              stroke="currentColor"
+              strokeOpacity="0.22"
+              strokeWidth="2"
+            />
+            <circle
+              cx="24"
+              cy="24"
+              r="22"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeDasharray={2 * Math.PI * 22}
+              strokeDashoffset={2 * Math.PI * 22 * (1 - scrollProgress)}
+              className="motion-safe:transition-[stroke-dashoffset] motion-safe:duration-150 ease-out"
+            />
+          </svg>
+          <ArrowUp
+            className="relative h-5 w-5 motion-safe:transition-transform motion-safe:duration-200 group-hover:-translate-y-0.5"
+            aria-hidden="true"
+          />
+        </button>
+      </div>
     </div>
   );
 }
