@@ -284,9 +284,18 @@ function TrendCard() {
           <XAxis dataKey="year" stroke={COLORS.fgMuted} fontSize={12} tickLine={false} axisLine={false} />
           <YAxis stroke={COLORS.fgMuted} fontSize={12} tickLine={false} axisLine={false} />
           <Tooltip
-            contentStyle={TOOLTIP_STYLE}
             cursor={{ stroke: COLORS.primary, strokeOpacity: 0.4 }}
-            formatter={(v: number) => [`${nf.format(v)} / mo`, "Avg. new diagnoses"]}
+            content={({ active, payload, label }) => (
+              <ChartTip
+                active={active}
+                title={String(label ?? "")}
+                items={(payload ?? []).map((p) => ({
+                  label: "Avg. new diagnoses",
+                  value: `${nf.format(Number(p.value))} / mo`,
+                  swatch: COLORS.primary,
+                }))}
+              />
+            )}
           />
           <Area
             type="monotone"
@@ -326,9 +335,18 @@ function TransmissionCard() {
             width={140}
           />
           <Tooltip
-            contentStyle={TOOLTIP_STYLE}
             cursor={{ fill: COLORS.primarySoft }}
-            formatter={(v: number) => [nf.format(v), "Cases"]}
+            content={({ active, payload, label }) => (
+              <ChartTip
+                active={active}
+                title={String(label ?? "")}
+                items={(payload ?? []).map((p) => ({
+                  label: "Cases",
+                  value: nf.format(Number(p.value)),
+                  swatch: COLORS.primary,
+                }))}
+              />
+            )}
           />
           <Bar dataKey="count" radius={[0, 8, 8, 0]} fill={COLORS.primary} />
         </BarChart>
@@ -349,9 +367,18 @@ function AgeCard() {
           <XAxis dataKey="group" stroke={COLORS.fgMuted} fontSize={12} tickLine={false} axisLine={false} />
           <YAxis stroke={COLORS.fgMuted} fontSize={12} tickLine={false} axisLine={false} unit="%" />
           <Tooltip
-            contentStyle={TOOLTIP_STYLE}
             cursor={{ fill: COLORS.primarySoft }}
-            formatter={(v: number) => [`${v}%`, "Share"]}
+            content={({ active, payload, label }) => (
+              <ChartTip
+                active={active}
+                title={String(label ?? "")}
+                items={(payload ?? []).map((p) => ({
+                  label: "Share of new diagnoses",
+                  value: `${Number(p.value)}%`,
+                  swatch: COLORS.primary,
+                }))}
+              />
+            )}
           />
           <Bar dataKey="pct" radius={[8, 8, 0, 0]}>
             {ageDistribution.map((_, i) => (
@@ -389,11 +416,19 @@ function SexCard() {
             <Cell fill={COLORS.tertiary} />
           </Pie>
           <Tooltip
-            contentStyle={TOOLTIP_STYLE}
-            formatter={(v: number, _n, item: { payload?: { pct?: number } }) => [
-              `${nf.format(v)} (${item?.payload?.pct ?? 0}%)`,
-              "Cases",
-            ]}
+            content={({ active, payload }) => (
+              <ChartTip
+                active={active}
+                items={(payload ?? []).map((p) => {
+                  const row = p.payload as { label: string; pct?: number };
+                  return {
+                    label: row.label,
+                    value: `${nf.format(Number(p.value))} (${row.pct ?? 0}%)`,
+                    swatch: row.label === "Male" ? COLORS.primary : COLORS.tertiary,
+                  };
+                })}
+              />
+            )}
           />
         </PieChart>
       </ResponsiveContainer>
