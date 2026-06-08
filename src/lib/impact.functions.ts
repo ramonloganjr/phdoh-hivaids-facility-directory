@@ -14,6 +14,13 @@ const WINDOW_DAYS = 90;
 
 type Counts = Record<string, number>;
 
+type MetricEventRow = {
+  event: string;
+  dimension_key: string | null;
+  dimension_value: string | null;
+  occurred_at: string;
+};
+
 type Testimonial = {
   id: string;
   quote: string;
@@ -73,10 +80,10 @@ export const getPublicImpact = createServerFn({ method: "GET" }).handler(
 
     const since = new Date(Date.now() - WINDOW_DAYS * 24 * 60 * 60 * 1000).toISOString();
 
-    let eventsRes: Awaited<ReturnType<typeof supabaseAdmin.from<"metric_events">>> | null = null;
-    let storiesRes: Awaited<ReturnType<typeof supabaseAdmin.from<"testimonials">>> | null = null;
+    let events: MetricEventRow[] | null = null;
+    let stories: Testimonial[] | null = null;
     try {
-      const [events, stories] = await Promise.all([
+      const [eventsRes, storiesRes] = await Promise.all([
         supabaseAdmin
           .from("metric_events")
           .select("event,dimension_key,dimension_value,occurred_at")
@@ -90,17 +97,14 @@ export const getPublicImpact = createServerFn({ method: "GET" }).handler(
           .order("sort_order", { ascending: true })
           .limit(12),
       ]);
-      eventsRes = events;
-      storiesRes = stories;
+      if (eventsRes.error) console.error("[impact] events", eventsRes.error);
+      if (storiesRes.error) console.error("[impact] stories", storiesRes.error);
+      events = eventsRes.error ? null : eventsRes.data;
+      stories = storiesRes.error ? null : storiesRes.data;
     } catch (err) {
       console.error("[impact] database query unavailable", err);
       return emptyImpact();
     }
-
-    if (eventsRes.error) console.error("[impact] events", eventsRes.error);
-    if (storiesRes.error) console.error("[impact] stories", storiesRes.error);
-    const events = eventsRes.error ? null : eventsRes.data;
-    const stories = storiesRes.error ? null : storiesRes.data;
 
     const rows = events ?? [];
     const counts: Counts = {};
