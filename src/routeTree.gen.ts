@@ -28,6 +28,7 @@ import { Route as ApiOgRouteImport } from './routes/api.og'
 import { Route as ApiPublicFeedbackRouteImport } from './routes/api/public/feedback'
 import { Route as AuthenticatedAdminStoriesRouteImport } from './routes/_authenticated/admin.stories'
 import { Route as AuthenticatedAdminInsightsRouteImport } from './routes/_authenticated/admin.insights'
+import { Route as AuthenticatedAdminFeedbackRouteImport } from './routes/_authenticated/admin.feedback'
 import { Route as ApiPublicMetricsIngestRouteImport } from './routes/api/public/metrics.ingest'
 
 const TermsRoute = TermsRouteImport.update({
@@ -126,6 +127,12 @@ const AuthenticatedAdminInsightsRoute =
     path: '/admin/insights',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminFeedbackRoute =
+  AuthenticatedAdminFeedbackRouteImport.update({
+    id: '/admin/feedback',
+    path: '/admin/feedback',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ApiPublicMetricsIngestRoute = ApiPublicMetricsIngestRouteImport.update({
   id: '/api/public/metrics/ingest',
   path: '/api/public/metrics/ingest',
@@ -148,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
+  '/admin/feedback': typeof AuthenticatedAdminFeedbackRoute
   '/admin/insights': typeof AuthenticatedAdminInsightsRoute
   '/admin/stories': typeof AuthenticatedAdminStoriesRoute
   '/api/public/feedback': typeof ApiPublicFeedbackRoute
@@ -169,6 +177,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
+  '/admin/feedback': typeof AuthenticatedAdminFeedbackRoute
   '/admin/insights': typeof AuthenticatedAdminInsightsRoute
   '/admin/stories': typeof AuthenticatedAdminStoriesRoute
   '/api/public/feedback': typeof ApiPublicFeedbackRoute
@@ -192,6 +201,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
+  '/_authenticated/admin/feedback': typeof AuthenticatedAdminFeedbackRoute
   '/_authenticated/admin/insights': typeof AuthenticatedAdminInsightsRoute
   '/_authenticated/admin/stories': typeof AuthenticatedAdminStoriesRoute
   '/api/public/feedback': typeof ApiPublicFeedbackRoute
@@ -215,6 +225,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/api/og'
     | '/facilities/$id'
+    | '/admin/feedback'
     | '/admin/insights'
     | '/admin/stories'
     | '/api/public/feedback'
@@ -236,6 +247,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/api/og'
     | '/facilities/$id'
+    | '/admin/feedback'
     | '/admin/insights'
     | '/admin/stories'
     | '/api/public/feedback'
@@ -258,6 +270,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/api/og'
     | '/facilities/$id'
+    | '/_authenticated/admin/feedback'
     | '/_authenticated/admin/insights'
     | '/_authenticated/admin/stories'
     | '/api/public/feedback'
@@ -419,6 +432,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminInsightsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/feedback': {
+      id: '/_authenticated/admin/feedback'
+      path: '/admin/feedback'
+      fullPath: '/admin/feedback'
+      preLoaderRoute: typeof AuthenticatedAdminFeedbackRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/metrics/ingest': {
       id: '/api/public/metrics/ingest'
       path: '/api/public/metrics/ingest'
@@ -430,11 +450,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminFeedbackRoute: typeof AuthenticatedAdminFeedbackRoute
   AuthenticatedAdminInsightsRoute: typeof AuthenticatedAdminInsightsRoute
   AuthenticatedAdminStoriesRoute: typeof AuthenticatedAdminStoriesRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminFeedbackRoute: AuthenticatedAdminFeedbackRoute,
   AuthenticatedAdminInsightsRoute: AuthenticatedAdminInsightsRoute,
   AuthenticatedAdminStoriesRoute: AuthenticatedAdminStoriesRoute,
 }
