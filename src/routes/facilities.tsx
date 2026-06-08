@@ -76,6 +76,7 @@ function FacilitiesPage() {
   const [localQ, setLocalQ] = useState(search.q ?? "");
   const deferredQ = useDeferredValue(localQ);
   const [showTop, setShowTop] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     let raf = 0;
@@ -83,8 +84,14 @@ function FacilitiesPage() {
       if (raf) return;
       raf = requestAnimationFrame(() => {
         raf = 0;
-        const next = window.scrollY > 480;
+        const y = window.scrollY;
+        const max = Math.max(
+          1,
+          document.documentElement.scrollHeight - window.innerHeight,
+        );
+        const next = y > 480;
         setShowTop((prev) => (prev === next ? prev : next));
+        setScrollProgress(Math.min(1, Math.max(0, y / max)));
       });
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -94,6 +101,24 @@ function FacilitiesPage() {
       if (raf) cancelAnimationFrame(raf);
     };
   }, []);
+
+  const handleBackToTop = () => {
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({
+      top: 0,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
+    // Move focus to top of document for keyboard users
+    requestAnimationFrame(() => {
+      const main = document.querySelector("main") as HTMLElement | null;
+      if (main) {
+        main.setAttribute("tabindex", "-1");
+        main.focus({ preventScroll: true });
+      }
+    });
+  };
 
 
   const setSearch = (patch: Partial<Search>) => {
