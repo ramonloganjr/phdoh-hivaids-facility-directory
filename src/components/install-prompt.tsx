@@ -109,12 +109,12 @@ export function InstallPrompt() {
         </span>
         <div className="min-w-0 flex-1">
           <p id="pwa-install-title" className="text-sm font-semibold text-on-surface">
-            Install HIV Care Directory
+            Keep care close, even offline
           </p>
           <p id="pwa-install-desc" className="mt-1 text-xs leading-relaxed text-on-surface-muted">
             {iosHint
-              ? "Tap the Share icon in Safari, then choose “Add to Home Screen” for one-tap access offline."
-              : "Add to your home screen for faster access, offline browsing, and a full-screen app experience."}
+              ? "Tap the Share icon in Safari, then choose “Add to Home Screen” to open the directory with one tap — even without signal."
+              : "Add the directory to your home screen for one-tap access, faster loads, and offline browsing when you need it most."}
           </p>
           <div className="mt-3 flex items-center gap-2">
             {deferred && !iosHint && (
@@ -124,7 +124,7 @@ export function InstallPrompt() {
                 className="state-layer press inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-xs font-semibold text-primary-foreground elev-1"
               >
                 <Download className="h-3.5 w-3.5" aria-hidden="true" />
-                Install
+                Add to home screen
               </button>
             )}
             <button
@@ -132,7 +132,7 @@ export function InstallPrompt() {
               onClick={dismiss}
               className="state-layer inline-flex items-center rounded-full px-3 py-1.5 text-xs font-medium text-on-surface-muted hover:text-on-surface"
             >
-              Not now
+              Maybe later
             </button>
           </div>
         </div>
