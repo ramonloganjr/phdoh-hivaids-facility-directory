@@ -150,7 +150,34 @@ function AdminInsightsPage() {
           )}
           Last-month CSV
         </button>
+        <button
+          type="button"
+          onClick={redeploy}
+          disabled={deploying}
+          className="state-layer press inline-flex items-center gap-1.5 rounded-full bg-surface-container-highest px-3.5 py-2 text-xs font-semibold text-on-surface disabled:opacity-70"
+          title="Trigger a new Vercel deployment"
+        >
+          {deploying ? (
+            <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
+          ) : (
+            <Rocket className="h-3.5 w-3.5" aria-hidden="true" />
+          )}
+          {deploying ? "Triggering…" : "Redeploy to Vercel"}
+        </button>
       </div>
+
+      {deployMsg && (
+        <p
+          role="status"
+          className={`mt-3 rounded-2xl px-4 py-2.5 text-xs ${
+            deployMsg.kind === "ok"
+              ? "bg-primary-container text-on-primary-container"
+              : "bg-surface-container-high text-on-surface"
+          }`}
+        >
+          {deployMsg.text}
+        </p>
+      )}
 
       {isLoading && (
         <p className="mt-10 text-sm text-on-surface-muted">Loading the latest counts…</p>
