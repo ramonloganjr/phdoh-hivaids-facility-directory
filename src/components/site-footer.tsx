@@ -41,7 +41,7 @@ export function SiteFooter() {
             <FooterLink to="/privacy">Privacy</FooterLink>
           </nav>
         </div>
-        <div className="mt-10 flex flex-col items-start gap-5 border-t border-outline-variant pt-6 text-xs leading-relaxed text-on-surface-muted md:gap-6">
+        <div className="mt-10 flex flex-col items-start gap-2 border-t border-outline-variant pt-6 text-xs leading-relaxed text-on-surface-muted">
           <p className="w-full">
             An independent public-information mirror. Not affiliated with the Department of Health,
             and not a substitute for medical advice. ©{" "}
