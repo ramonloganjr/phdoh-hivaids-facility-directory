@@ -71,7 +71,7 @@ function AdminInsightsPage() {
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <Link
-            to="/_authenticated/admin/stories"
+            to="/admin/stories"
             className="state-layer press inline-flex items-center gap-1.5 rounded-full bg-surface-container-high px-3.5 py-2 text-xs font-medium text-on-surface"
           >
             <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />

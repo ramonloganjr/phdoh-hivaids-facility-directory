@@ -44,8 +44,16 @@ function AdminStoriesPage() {
 
   const invalidate = () => qc.invalidateQueries({ queryKey: ["admin-stories"] });
 
+  type NewStory = {
+    quote: string;
+    attribution: string;
+    region?: string;
+    consent_verified_at?: string;
+    published?: boolean;
+    sort_order?: number;
+  };
   const create = useMutation({
-    mutationFn: (payload: Parameters<typeof createFn>[0]["data"]) => createFn({ data: payload }),
+    mutationFn: (payload: NewStory) => createFn({ data: payload as never }),
     onSuccess: invalidate,
   });
   const update = useMutation({
@@ -54,7 +62,7 @@ function AdminStoriesPage() {
     onSuccess: invalidate,
   });
   const remove = useMutation({
-    mutationFn: (id: string) => deleteFn({ data: { id } }),
+    mutationFn: (id: string) => deleteFn({ data: { id } as never }),
     onSuccess: invalidate,
   });
 
@@ -74,7 +82,7 @@ function AdminStoriesPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
       <Link
-        to="/_authenticated/admin/insights"
+        to="/admin/insights"
         className="state-layer inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm text-on-surface-muted hover:text-on-surface"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden="true" />
