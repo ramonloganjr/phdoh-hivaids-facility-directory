@@ -14,6 +14,7 @@ import { registerPWA } from "@/lib/pwa-register";
 import { InstallPrompt } from "@/components/install-prompt";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { NotFound } from "@/components/not-found";
 import faviconAsset from "@/assets/favicon.png.asset.json";
 import ogImageAsset from "@/assets/open-graph.png.asset.json";
 
@@ -27,35 +28,7 @@ const THEME_INIT_SCRIPT = `
 `;
 
 function NotFoundComponent() {
-  return (
-    <div className="flex min-h-[70dvh] items-center justify-center px-4">
-      <div className="max-w-md text-center">
-        <p className="text-xs font-medium uppercase tracking-[0.18em] text-on-surface-muted">
-          404 — Not found
-        </p>
-        <h1 className="mt-3 text-3xl font-semibold tracking-tight text-on-surface">
-          We couldn't find that page
-        </h1>
-        <p className="mt-3 text-sm text-on-surface-muted">
-          The link may be outdated. The full directory is always one tap away.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <Link
-            to="/facilities"
-            className="state-layer inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground elev-1"
-          >
-            Browse facilities
-          </Link>
-          <Link
-            to="/"
-            className="state-layer inline-flex items-center justify-center rounded-full border border-outline px-5 py-2.5 text-sm font-medium text-on-surface"
-          >
-            Home
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
+  return <NotFound />;
 }
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
