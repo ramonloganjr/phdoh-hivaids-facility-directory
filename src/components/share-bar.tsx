@@ -135,8 +135,8 @@ export function ShareBar({
         <button
           type="button"
           onClick={onNativeShare}
-          aria-label="Open device share sheet (Instagram, Messages, more)"
-          title="More — opens device share sheet"
+          aria-label="Share with someone who needs it"
+          title="Share with someone who needs it"
           className="state-layer press inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground elev-1"
         >
           <Share2 className="h-4 w-4" aria-hidden="true" />
@@ -159,8 +159,8 @@ export function ShareBar({
         <button
           type="button"
           onClick={onCopy}
-          aria-label={copied ? "Link copied" : "Copy link"}
-          title={copied ? "Copied!" : "Copy link"}
+          aria-label={copied ? "Link copied to clipboard" : "Copy link to share"}
+          title={copied ? "Copied to your clipboard" : "Copy link"}
           aria-live="polite"
           className="state-layer press inline-flex h-10 items-center gap-1.5 rounded-full bg-surface-container-high px-3 text-xs font-medium text-on-surface hover:bg-primary-container hover:text-on-primary-container"
         >
@@ -169,7 +169,7 @@ export function ShareBar({
           ) : (
             <Link2 className="h-4 w-4" aria-hidden="true" />
           )}
-          {copied ? "Copied" : "Copy"}
+          {copied ? "Copied" : "Copy link"}
         </button>
       </div>
     </div>
