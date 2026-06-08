@@ -73,25 +73,34 @@ export const getPublicImpact = createServerFn({ method: "GET" }).handler(
 
     const since = new Date(Date.now() - WINDOW_DAYS * 24 * 60 * 60 * 1000).toISOString();
 
-    const [eventsRes, storiesRes] = await Promise.allSettled([
-      supabaseAdmin
-        .from("metric_events")
-        .select("event,dimension_key,dimension_value,occurred_at")
-        .gte("occurred_at", since)
-        .limit(200000),
-      supabaseAdmin
-        .from("testimonials")
-        .select("id,quote,attribution,region,consent_verified_at,published,sort_order")
-        .eq("published", true)
-        .not("consent_verified_at", "is", null)
-        .order("sort_order", { ascending: true })
-        .limit(12),
-    ]);
+    let eventsRes: Awaited<ReturnType<typeof supabaseAdmin.from<"metric_events">>> | null = null;
+    let storiesRes: Awaited<ReturnType<typeof supabaseAdmin.from<"testimonials">>> | null = null;
+    try {
+      const [events, stories] = await Promise.all([
+        supabaseAdmin
+          .from("metric_events")
+          .select("event,dimension_key,dimension_value,occurred_at")
+          .gte("occurred_at", since)
+          .limit(200000),
+        supabaseAdmin
+          .from("testimonials")
+          .select("id,quote,attribution,region,consent_verified_at,published,sort_order")
+          .eq("published", true)
+          .not("consent_verified_at", "is", null)
+          .order("sort_order", { ascending: true })
+          .limit(12),
+      ]);
+      eventsRes = events;
+      storiesRes = stories;
+    } catch (err) {
+      console.error("[impact] database query unavailable", err);
+      return emptyImpact();
+    }
 
-    const events = eventsRes.status === "fulfilled" ? eventsRes.value.data : null;
-    const stories = storiesRes.status === "fulfilled" ? storiesRes.value.data : null;
-    if (eventsRes.status === "rejected") console.error("[impact] events", eventsRes.reason);
-    if (storiesRes.status === "rejected") console.error("[impact] stories", storiesRes.reason);
+    if (eventsRes.error) console.error("[impact] events", eventsRes.error);
+    if (storiesRes.error) console.error("[impact] stories", storiesRes.error);
+    const events = eventsRes.error ? null : eventsRes.data;
+    const stories = storiesRes.error ? null : storiesRes.data;
 
     const rows = events ?? [];
     const counts: Counts = {};
