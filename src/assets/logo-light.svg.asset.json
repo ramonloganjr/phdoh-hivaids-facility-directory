@@ -1,11 +1,6 @@
 {
   "version": 1,
-  "asset_id": "9f27cd7e-642e-4749-bf4b-5916841992be",
-  "project_id": "6f5c1b88-0d4f-4382-a269-5868fe7f3f84",
-  "url": "/__l5e/assets-v1/9f27cd7e-642e-4749-bf4b-5916841992be/logo-light.svg",
-  "r2_key": "a/v1/6f5c1b88-0d4f-4382-a269-5868fe7f3f84/9f27cd7e-642e-4749-bf4b-5916841992be/logo-light.svg",
+  "url": "/brand/logo-light.svg",
   "original_filename": "logo-light.svg",
-  "size": 5745,
-  "content_type": "image/svg+xml",
-  "created_at": "2026-06-08T08:25:01Z"
+  "content_type": "image/svg+xml"
 }
