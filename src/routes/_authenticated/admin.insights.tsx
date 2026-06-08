@@ -58,6 +58,27 @@ function AdminInsightsPage() {
     navigate({ to: "/auth" });
   };
 
+  const redeploy = async () => {
+    if (deploying) return;
+    const confirmed = window.confirm(
+      "Trigger a new Vercel deployment now? The live site will rebuild in a few minutes."
+    );
+    if (!confirmed) return;
+    setDeploying(true);
+    setDeployMsg(null);
+    try {
+      const res = await deployFn();
+      setDeployMsg({
+        kind: "ok",
+        text: `Deploy started at ${new Date(res.triggeredAt).toLocaleTimeString()}. Watch progress in Vercel.`,
+      });
+    } catch (err) {
+      setDeployMsg({ kind: "err", text: (err as Error).message });
+    } finally {
+      setDeploying(false);
+    }
+  };
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
       <header className="flex flex-wrap items-end justify-between gap-4">
