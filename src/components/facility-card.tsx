@@ -81,10 +81,11 @@ export const FacilityCard = memo(function FacilityCard({
             {typeof distanceKm === "number" && (
               <span
                 className="inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-0.5 text-[11px] font-semibold text-primary-foreground tabular-nums"
-                title={`Approximately ${driveMinutes(distanceKm)} min drive`}
+                title={`About ${driveMinutes(distanceKm)} min by car from you`}
+                aria-label={`${formatKm(distanceKm)} away, about ${driveMinutes(distanceKm)} minutes by car`}
               >
                 <Compass className="h-3 w-3" aria-hidden="true" />
-                {formatKm(distanceKm)}
+                {formatKm(distanceKm)} away
               </span>
             )}
           </div>
