@@ -39,11 +39,54 @@ function ack() {
   return new Response(null, { status: 204 });
 }
 
+/**
+ * Best-effort in-memory rate limit per client IP.
+ * Token bucket: BUCKET_MAX events per BUCKET_WINDOW_MS.
+ *
+ * Note: This is per-worker-instance. Cloudflare may spin up multiple
+ * isolates, so the effective ceiling is N * BUCKET_MAX. For stricter
+ * guarantees, move to a Durable Object or KV-backed counter.
+ */
+const BUCKET_MAX = 30;
+const BUCKET_WINDOW_MS = 60_000;
+const MAX_BUCKETS = 5_000;
+const buckets = new Map<string, { count: number; resetAt: number }>();
+
+function hashIp(ip: string): string {
+  // Tiny non-cryptographic hash — we just need a stable bucket key
+  // without persisting raw IPs.
+  let h = 2166136261;
+  for (let i = 0; i < ip.length; i++) {
+    h ^= ip.charCodeAt(i);
+    h = (h * 16777619) >>> 0;
+  }
+  return h.toString(36);
+}
+
+function isRateLimited(request: Request): boolean {
+  const fwd = request.headers.get("cf-connecting-ip")
+    ?? request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+    ?? "unknown";
+  const key = hashIp(fwd);
+  const now = Date.now();
+  const bucket = buckets.get(key);
+
+  if (!bucket || bucket.resetAt < now) {
+    if (buckets.size > MAX_BUCKETS) buckets.clear();
+    buckets.set(key, { count: 1, resetAt: now + BUCKET_WINDOW_MS });
+    return false;
+  }
+  bucket.count++;
+  return bucket.count > BUCKET_MAX;
+}
+
 export const Route = createFileRoute("/api/public/metrics/ingest")({
   server: {
     handlers: {
       POST: async ({ request }) => {
         try {
+          if (isRateLimited(request)) return ack();
+
           const raw = await request.text();
           if (!raw || raw.length > 1024) return ack();
 
