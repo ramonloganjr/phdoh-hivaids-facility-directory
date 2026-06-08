@@ -32,6 +32,7 @@ const Schema = z.object({
     .or(z.literal("")),
   website: z.string().max(0, "Spam detected.").optional().or(z.literal("")), // honeypot
   client_started_at: z.number().int().positive(),
+  turnstile_token: z.string().min(10).max(4096),
 });
 
 type Body = z.infer<typeof Schema>;
@@ -96,6 +97,29 @@ export const Route = createFileRoute("/api/public/feedback")({
         const elapsed = Date.now() - body.client_started_at;
         if (elapsed < MIN_FILL_MS || elapsed > MAX_FILL_MS) {
           return json(429, { error: "Please take a moment to write your feedback, then submit." });
+        }
+
+        // 3b. Cloudflare Turnstile verification
+        const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+        if (!turnstileSecret) {
+          console.error("[feedback] TURNSTILE_SECRET_KEY not configured");
+          return json(500, { error: "Server is not configured for verification yet." });
+        }
+        try {
+          const form = new URLSearchParams();
+          form.set("secret", turnstileSecret);
+          form.set("response", body.turnstile_token);
+          const verifyRes = await fetch(
+            "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+            { method: "POST", body: form },
+          );
+          const verify = (await verifyRes.json()) as { success?: boolean };
+          if (!verify.success) {
+            return json(400, { error: "Verification failed. Refresh the page and try again." });
+          }
+        } catch (e) {
+          console.error("[feedback] turnstile verify error", e);
+          return json(502, { error: "Couldn't reach verification service. Try again shortly." });
         }
 
         // 4. Content heuristics
