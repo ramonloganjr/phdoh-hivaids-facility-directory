@@ -70,13 +70,17 @@ function emptyImpact(): PublicImpact {
 
 export const getPublicImpact = createServerFn({ method: "GET" }).handler(
   async (): Promise<PublicImpact> => {
-    let supabaseAdmin: (typeof import("@/integrations/supabase/client.server"))["supabaseAdmin"];
-    try {
-      ({ supabaseAdmin } = await import("@/integrations/supabase/client.server"));
-    } catch (err) {
-      console.error("[impact] admin client unavailable", err);
+    const { createClient } = await import("@supabase/supabase-js");
+    const url = process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL;
+    const key =
+      process.env.SUPABASE_PUBLISHABLE_KEY ?? process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+    if (!url || !key) {
+      console.error("[impact] supabase env missing");
       return emptyImpact();
     }
+    const supabase = createClient(url, key, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
 
     const since = new Date(Date.now() - WINDOW_DAYS * 24 * 60 * 60 * 1000).toISOString();
 
@@ -84,12 +88,12 @@ export const getPublicImpact = createServerFn({ method: "GET" }).handler(
     let stories: Testimonial[] | null = null;
     try {
       const [eventsRes, storiesRes] = await Promise.all([
-        supabaseAdmin
+        supabase
           .from("metric_events")
           .select("event,dimension_key,dimension_value,occurred_at")
           .gte("occurred_at", since)
           .limit(200000),
-        supabaseAdmin
+        supabase
           .from("testimonials")
           .select("id,quote,attribution,region,consent_verified_at,published,sort_order")
           .eq("published", true)
@@ -105,6 +109,7 @@ export const getPublicImpact = createServerFn({ method: "GET" }).handler(
       console.error("[impact] database query unavailable", err);
       return emptyImpact();
     }
+
 
     const rows = events ?? [];
     const counts: Counts = {};
