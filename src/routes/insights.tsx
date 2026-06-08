@@ -304,6 +304,7 @@ function TrendCard() {
             strokeWidth={2.5}
             fill="url(#trendFill)"
             activeDot={{ r: 5, strokeWidth: 0 }}
+            isAnimationActive={false}
           />
         </AreaChart>
       </ResponsiveContainer>
