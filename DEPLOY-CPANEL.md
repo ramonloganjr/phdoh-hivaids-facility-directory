@@ -108,3 +108,5 @@ If you build locally instead, just re-upload `dist/` and click **Restart**.
 - **CSS / JS 404s** → `dist/client/` was not uploaded, or the Node app isn't actually serving it. Confirm `dist/server/index.mjs` is the startup file.
 - **Service worker errors** → must be served over HTTPS. Turn on AutoSSL.
 - **Native module errors during NPM install** → set Node to 20.x (not 18.x).
+
+<!-- sync-test: GitHub auto-sync verified -->
