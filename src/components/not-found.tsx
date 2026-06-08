@@ -54,7 +54,7 @@ export function NotFound() {
             className="inline-block h-1.5 w-1.5 rounded-full bg-primary"
             aria-hidden="true"
           />
-          Error 404
+          Page not found
         </span>
 
         {/* Hero numeral */}
@@ -67,11 +67,11 @@ export function NotFound() {
         </h1>
 
         <h2 className="mt-4 max-w-2xl text-balance text-3xl font-semibold tracking-tight text-on-surface sm:text-4xl">
-          We can't find that page
+          We couldn't find that page
         </h2>
         <p className="mt-3 max-w-xl text-pretty text-base text-on-surface-muted sm:text-lg">
-          The link may be outdated, mistyped, or the facility record has moved.
-          The full directory is always one tap away.
+          The link may be outdated or mistyped, or the facility record may have moved. The full
+          directory is one tap away — let's get you back on track.
         </p>
 
         {/* Primary CTAs */}
