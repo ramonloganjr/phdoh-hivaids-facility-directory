@@ -96,7 +96,7 @@ export function NotFound() {
       {/* Quick links grid */}
       <div className="mt-14 w-full">
         <p className="eyebrow mb-4 text-center text-on-surface-muted">
-          Or jump to a section
+          Where would you like to go?
         </p>
         <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {QUICK_LINKS.map(({ to, label, description, icon: Icon }) => (
