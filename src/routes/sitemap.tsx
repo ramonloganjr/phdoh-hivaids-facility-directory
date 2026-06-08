@@ -11,7 +11,7 @@ import {
   Hospital,
   LogIn,
   Home,
-  Sitemap as SitemapIcon,
+  Network as SitemapIcon,
 } from "lucide-react";
 
 export const Route = createFileRoute("/sitemap")({
