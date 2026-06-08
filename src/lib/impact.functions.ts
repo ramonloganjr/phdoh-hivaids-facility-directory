@@ -42,13 +42,38 @@ function roundTo10(n: number) {
   return Math.round(n / 10) * 10;
 }
 
+function emptyImpact(): PublicImpact {
+  return {
+    windowDays: WINDOW_DAYS,
+    generatedAt: new Date().toISOString(),
+    totals: {
+      searches: 0,
+      facilitiesViewed: 0,
+      directionsTapped: 0,
+      nearMeActivations: 0,
+      shares: 0,
+      peopleHelped: 0,
+    },
+    searchSuccessRate: null,
+    topRegions: [],
+    testimonials: [],
+    lastEventAt: null,
+  };
+}
+
 export const getPublicImpact = createServerFn({ method: "GET" }).handler(
   async (): Promise<PublicImpact> => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    let supabaseAdmin: typeof import("@/integrations/supabase/client.server")["supabaseAdmin"];
+    try {
+      ({ supabaseAdmin } = await import("@/integrations/supabase/client.server"));
+    } catch (err) {
+      console.error("[impact] admin client unavailable", err);
+      return emptyImpact();
+    }
 
     const since = new Date(Date.now() - WINDOW_DAYS * 24 * 60 * 60 * 1000).toISOString();
 
-    const [{ data: events, error: evErr }, { data: stories, error: stErr }] = await Promise.all([
+    const [eventsRes, storiesRes] = await Promise.allSettled([
       supabaseAdmin
         .from("metric_events")
         .select("event,dimension_key,dimension_value,occurred_at")
@@ -63,8 +88,10 @@ export const getPublicImpact = createServerFn({ method: "GET" }).handler(
         .limit(12),
     ]);
 
-    if (evErr) console.error("[impact] events", evErr);
-    if (stErr) console.error("[impact] stories", stErr);
+    const events = eventsRes.status === "fulfilled" ? eventsRes.value.data : null;
+    const stories = storiesRes.status === "fulfilled" ? storiesRes.value.data : null;
+    if (eventsRes.status === "rejected") console.error("[impact] events", eventsRes.reason);
+    if (storiesRes.status === "rejected") console.error("[impact] stories", storiesRes.reason);
 
     const rows = events ?? [];
     const counts: Counts = {};
