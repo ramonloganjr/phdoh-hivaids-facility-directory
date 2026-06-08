@@ -77,10 +77,12 @@ function FooterLink({
     | "/impact"
     | "/faq"
     | "/about"
+    | "/feedback"
     | "/sitemap"
     | "/terms"
     | "/privacy";
   children: React.ReactNode;
+
 }) {
   return (
     <Link
