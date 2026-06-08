@@ -1,18 +1,9 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "@/integrations/supabase/types";
 
-async function assertAdmin(userId: string) {
-  const { createClient } = await import("@supabase/supabase-js");
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const publishableKey = process.env.SUPABASE_PUBLISHABLE_KEY;
-
-  if (!supabaseUrl || !publishableKey) {
-    throw new Error("Backend auth isn't configured. Add backend URL and publishable key secrets.");
-  }
-
-  const supabase = createClient(supabaseUrl, publishableKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
+async function assertAdmin(supabase: SupabaseClient<Database>, userId: string) {
   const { data, error } = await supabase
     .from("user_roles")
     .select("id")
@@ -32,7 +23,7 @@ async function assertAdmin(userId: string) {
 export const triggerVercelRedeploy = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    await assertAdmin(context.userId);
+    await assertAdmin(context.supabase, context.userId);
 
     const hookUrl = process.env.VERCEL_DEPLOY_HOOK_URL;
     if (!hookUrl) {
