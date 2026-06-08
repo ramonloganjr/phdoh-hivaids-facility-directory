@@ -18,7 +18,7 @@ export const Route = createFileRoute("/api/og")({
     handlers: {
       GET: async ({ request }) => {
         const u = new URL(request.url);
-        const title = clamp(u.searchParams.get("title") ?? "Philippine HIV Care Philippines", 140);
+        const title = clamp(u.searchParams.get("title") ?? "HIV Care Philippines", 140);
         const subtitle = clamp(
           u.searchParams.get("subtitle") ??
             "All 338 DOH-designated treatment hubs and primary care facilities.",

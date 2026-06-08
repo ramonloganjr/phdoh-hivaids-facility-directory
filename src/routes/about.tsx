@@ -9,7 +9,7 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "Source, legal basis, and methodology for the Philippine HIV Care Philippines — mirrored from DOH Department Circular 2026-0065.",
+          "Source, legal basis, and methodology for the HIV Care Philippines — mirrored from DOH Department Circular 2026-0065.",
       },
       { property: "og:title", content: "About the data — PH HIV Care Philippines" },
       { property: "og:description", content: "Source, legal basis, and methodology." },

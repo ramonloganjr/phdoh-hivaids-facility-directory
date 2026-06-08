@@ -3,11 +3,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms of Use — Philippine HIV Care Philippines" },
+      { title: "Terms of Use — HIV Care Philippines" },
       {
         name: "description",
         content:
-          "Terms of Use governing access to the Philippine HIV Care Philippines, an independent public-information mirror by Ramon Logan Jr.",
+          "Terms of Use governing access to the HIV Care Philippines, an independent public-information mirror by Ramon Logan Jr.",
       },
       { property: "og:title", content: "Terms of Use — PH HIV Care Philippines" },
       {
@@ -42,7 +42,7 @@ function TermsPage() {
             These Terms of Use (&ldquo;Terms&rdquo;) form a binding legal agreement between you
             (&ldquo;you&rdquo;, &ldquo;User&rdquo;) and Ramon Logan Jr. (&ldquo;Operator&rdquo;,
             &ldquo;we&rdquo;, &ldquo;us&rdquo;), the independent developer and operator of the
-            Philippine HIV Care Philippines (the &ldquo;Platform&rdquo;). By accessing, browsing,
+            HIV Care Philippines (the &ldquo;Platform&rdquo;). By accessing, browsing,
             or otherwise using the Platform, you agree to be bound by these Terms in their
             entirety. If you do not agree, you must discontinue use immediately.
           </p>
