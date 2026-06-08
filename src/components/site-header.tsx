@@ -6,11 +6,12 @@ import { cn } from "@/lib/utils";
 import logoLight from "@/assets/logo-light.svg.asset.json";
 import logoDark from "@/assets/logo-dark.svg.asset.json";
 
-type NavTo = "/" | "/facilities" | "/insights" | "/faq" | "/about";
+type NavTo = "/" | "/facilities" | "/near-me" | "/insights" | "/faq" | "/about";
 
 const NAV_ITEMS: { to: NavTo; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
   { to: "/facilities", label: "Facilities" },
+  { to: "/near-me", label: "Near me" },
   { to: "/insights", label: "Insights" },
   { to: "/faq", label: "FAQ" },
   { to: "/about", label: "About" },
