@@ -90,7 +90,7 @@ function Hero({ data }: { data: PublicImpact }) {
       </p>
       <div className="mt-8 flex flex-wrap items-baseline gap-4">
         <span className="text-5xl font-semibold text-primary sm:text-6xl">
-          {helped.toLocaleString()}+
+          {fmtNum(helped)}+
         </span>
         <span className="text-base text-on-surface-muted">
           times the directory helped someone take a next step toward care
@@ -104,7 +104,7 @@ function Tiles({ data }: { data: PublicImpact }) {
   const tiles: Array<{ label: string; value: string; hint: string }> = [
     {
       label: "Searches run",
-      value: `${data.totals.searches.toLocaleString()}+`,
+      value: `${fmtNum(data.totals.searches)}+`,
       hint:
         data.searchSuccessRate !== null
           ? `${Math.round(data.searchSuccessRate * 100)}% returned a real facility`
@@ -112,22 +112,22 @@ function Tiles({ data }: { data: PublicImpact }) {
     },
     {
       label: "Facilities opened",
-      value: `${data.totals.facilitiesViewed.toLocaleString()}+`,
+      value: `${fmtNum(data.totals.facilitiesViewed)}+`,
       hint: "People learning hours, services, and contact details",
     },
     {
       label: "Directions tapped",
-      value: `${data.totals.directionsTapped.toLocaleString()}+`,
+      value: `${fmtNum(data.totals.directionsTapped)}+`,
       hint: "Likely a real visit on the way",
     },
     {
       label: "Near Me activations",
-      value: `${data.totals.nearMeActivations.toLocaleString()}+`,
+      value: `${fmtNum(data.totals.nearMeActivations)}+`,
       hint: "People asking for care close to them",
     },
     {
       label: "Shares with friends",
-      value: `${data.totals.shares.toLocaleString()}+`,
+      value: `${fmtNum(data.totals.shares)}+`,
       hint: "The directory reaching one more person",
     },
   ];
@@ -159,7 +159,7 @@ function Tiles({ data }: { data: PublicImpact }) {
                 key={r.region}
                 className="rounded-full bg-primary-container px-3.5 py-1.5 text-sm text-on-primary-container"
               >
-                {r.region} &middot; {r.count.toLocaleString()}+
+                {r.region} &middot; {fmtNum(r.count)}+
               </li>
             ))}
           </ul>
@@ -221,7 +221,7 @@ function Methodology({ data }: { data: PublicImpact }) {
           {data.lastEventAt ? (
             <>
               {" "}
-              Last activity recorded {new Date(data.lastEventAt).toLocaleString()}.
+              Last activity recorded {fmtDate(data.lastEventAt)}.
             </>
           ) : null}
         </li>
