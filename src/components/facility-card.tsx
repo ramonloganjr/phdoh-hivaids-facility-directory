@@ -1,8 +1,9 @@
 import { memo } from "react";
 import { Link } from "@tanstack/react-router";
-import { Hospital, Stethoscope, MapPin, ArrowUpRight, Phone, Mail, Facebook } from "lucide-react";
+import { Hospital, Stethoscope, MapPin, ArrowUpRight, Phone, Mail, Facebook, Navigation } from "lucide-react";
 import type { Facility } from "@/data/facilities.types";
 import { REGION_LABELS } from "@/data/facility-meta";
+import { directionsHref } from "@/lib/facilities-helpers";
 import { cn } from "@/lib/utils";
 
 export const FacilityCard = memo(function FacilityCard({ facility }: { facility: Facility }) {
