@@ -1,12 +1,20 @@
 import { memo } from "react";
 import { Link } from "@tanstack/react-router";
-import { Hospital, Stethoscope, MapPin, ArrowUpRight, Phone, Mail, Facebook, Navigation } from "lucide-react";
+import { Hospital, Stethoscope, MapPin, ArrowUpRight, Phone, Mail, Facebook, Navigation, Compass } from "lucide-react";
 import type { Facility } from "@/data/facilities.types";
 import { REGION_LABELS } from "@/data/facility-meta";
 import { directionsHref, openDirections } from "@/lib/facilities-helpers";
+import { formatKm, driveMinutes } from "@/lib/geo";
 import { cn } from "@/lib/utils";
 
-export const FacilityCard = memo(function FacilityCard({ facility }: { facility: Facility }) {
+export const FacilityCard = memo(function FacilityCard({
+  facility,
+  distanceKm,
+}: {
+  facility: Facility;
+  /** Optional distance from the user in km. When supplied, a proximity chip is shown. */
+  distanceKm?: number;
+}) {
 
   const isHub = facility.serviceType === "Treatment Hub";
   const Icon = isHub ? Hospital : Stethoscope;
