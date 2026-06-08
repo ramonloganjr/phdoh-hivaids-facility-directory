@@ -8,11 +8,13 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 export const checkIsAdmin = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<{ isAdmin: boolean }> => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { data, error } = await supabaseAdmin.rpc("has_role", {
-      _user_id: context.userId,
-      _role: "admin",
-    });
+    const { data, error } = await context.supabase
+      .from("user_roles")
+      .select("id")
+      .eq("user_id", context.userId)
+      .eq("role", "admin")
+      .maybeSingle();
+
     if (error) throw new Error(error.message);
-    return { isAdmin: data === true };
+    return { isAdmin: Boolean(data) };
   });

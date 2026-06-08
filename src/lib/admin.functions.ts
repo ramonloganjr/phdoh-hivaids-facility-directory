@@ -1,27 +1,33 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "@/integrations/supabase/types";
 
 /**
  * Admin server functions for the insights dashboard and stories CRUD.
  *
  * Every function:
  * 1. Validates the user via `requireSupabaseAuth`.
- * 2. Re-verifies admin role via service-role `has_role(uid, 'admin')`.
- * 3. Uses `supabaseAdmin` for the actual data work — RLS is bypassed only
- *    after the role check passes.
+ * 2. Re-verifies admin role through the authenticated backend client.
+ * 3. Uses normal RLS-protected queries, so deployed environments do not need
+ *    the service-role secret for admin story management.
  */
 
-async function assertAdmin(userId: string) {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { data, error } = await supabaseAdmin.rpc("has_role", {
-    _user_id: userId,
-    _role: "admin",
-  });
-  if (error || data !== true) {
+type AppSupabase = SupabaseClient<Database>;
+
+async function assertAdmin(supabase: AppSupabase, userId: string) {
+  const { data, error } = await supabase
+    .from("user_roles")
+    .select("id")
+    .eq("user_id", userId)
+    .eq("role", "admin")
+    .maybeSingle();
+
+  if (error || !data) {
     throw new Error("Forbidden: admin access required.");
   }
-  return supabaseAdmin;
+  return supabase;
 }
 
 // ----- Insights --------------------------------------------------------------
@@ -43,7 +49,7 @@ export const getAdminInsights = createServerFn({ method: "POST" })
     windowDays: Math.min(Math.max(input?.windowDays ?? 30, 1), 365),
   }))
   .handler(async ({ data, context }): Promise<AdminInsights> => {
-    const supabase = await assertAdmin(context.userId);
+    const supabase = await assertAdmin(context.supabase, context.userId);
     const since = new Date(Date.now() - data.windowDays * 86400_000).toISOString();
 
     const { data: rows, error } = await supabase
@@ -117,7 +123,7 @@ export const exportMonthlyImpact = createServerFn({ method: "POST" })
     z.object({ year: z.number().int().min(2024).max(2100), month: z.number().int().min(1).max(12) }).parse(input),
   )
   .handler(async ({ data, context }) => {
-    const supabase = await assertAdmin(context.userId);
+    const supabase = await assertAdmin(context.supabase, context.userId);
     const start = new Date(Date.UTC(data.year, data.month - 1, 1)).toISOString();
     const end = new Date(Date.UTC(data.year, data.month, 1)).toISOString();
 
@@ -153,7 +159,7 @@ export const exportMonthlyImpact = createServerFn({ method: "POST" })
 export const listTestimonials = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const supabase = await assertAdmin(context.userId);
+    const supabase = await assertAdmin(context.supabase, context.userId);
     const { data, error } = await supabase
       .from("testimonials")
       .select("*")
@@ -176,7 +182,7 @@ export const createTestimonial = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => StorySchema.parse(input))
   .handler(async ({ data, context }) => {
-    const supabase = await assertAdmin(context.userId);
+    const supabase = await assertAdmin(context.supabase, context.userId);
     const { data: row, error } = await supabase
       .from("testimonials")
       .insert({
@@ -199,7 +205,7 @@ export const updateTestimonial = createServerFn({ method: "POST" })
     z.object({ id: z.string().uuid(), patch: StorySchema.partial() }).parse(input),
   )
   .handler(async ({ data, context }) => {
-    const supabase = await assertAdmin(context.userId);
+    const supabase = await assertAdmin(context.supabase, context.userId);
     const { data: row, error } = await supabase
       .from("testimonials")
       .update(data.patch)
@@ -214,7 +220,7 @@ export const deleteTestimonial = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => z.object({ id: z.string().uuid() }).parse(input))
   .handler(async ({ data, context }) => {
-    const supabase = await assertAdmin(context.userId);
+    const supabase = await assertAdmin(context.supabase, context.userId);
     const { error } = await supabase.from("testimonials").delete().eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };
