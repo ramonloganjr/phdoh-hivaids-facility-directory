@@ -112,10 +112,10 @@ export const FacilityCard = memo(function FacilityCard({
               }}
               className="state-layer press inline-flex min-h-[2rem] items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-primary-foreground"
               aria-label={`Get directions to ${facility.name}`}
-              title="Open directions in your maps app"
+              title="Opens in your maps app"
             >
               <Navigation className="h-3 w-3" aria-hidden="true" />
-              <span>Directions</span>
+              <span>Get directions</span>
             </a>
               {primaryPhone && (
                 <a
