@@ -24,6 +24,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FacilitiesIdRouteImport } from './routes/facilities.$id'
 import { Route as ApiOgRouteImport } from './routes/api.og'
+import { Route as ApiPublicFeedbackRouteImport } from './routes/api/public/feedback'
 import { Route as AuthenticatedAdminStoriesRouteImport } from './routes/_authenticated/admin.stories'
 import { Route as AuthenticatedAdminInsightsRouteImport } from './routes/_authenticated/admin.insights'
 import { Route as ApiPublicMetricsIngestRouteImport } from './routes/api/public/metrics.ingest'
@@ -102,6 +103,11 @@ const ApiOgRoute = ApiOgRouteImport.update({
   path: '/api/og',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicFeedbackRoute = ApiPublicFeedbackRouteImport.update({
+  id: '/api/public/feedback',
+  path: '/api/public/feedback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminStoriesRoute =
   AuthenticatedAdminStoriesRouteImport.update({
     id: '/admin/stories',
@@ -137,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/facilities/$id': typeof FacilitiesIdRoute
   '/admin/insights': typeof AuthenticatedAdminInsightsRoute
   '/admin/stories': typeof AuthenticatedAdminStoriesRoute
+  '/api/public/feedback': typeof ApiPublicFeedbackRoute
   '/api/public/metrics/ingest': typeof ApiPublicMetricsIngestRoute
 }
 export interface FileRoutesByTo {
@@ -156,6 +163,7 @@ export interface FileRoutesByTo {
   '/facilities/$id': typeof FacilitiesIdRoute
   '/admin/insights': typeof AuthenticatedAdminInsightsRoute
   '/admin/stories': typeof AuthenticatedAdminStoriesRoute
+  '/api/public/feedback': typeof ApiPublicFeedbackRoute
   '/api/public/metrics/ingest': typeof ApiPublicMetricsIngestRoute
 }
 export interface FileRoutesById {
@@ -177,6 +185,7 @@ export interface FileRoutesById {
   '/facilities/$id': typeof FacilitiesIdRoute
   '/_authenticated/admin/insights': typeof AuthenticatedAdminInsightsRoute
   '/_authenticated/admin/stories': typeof AuthenticatedAdminStoriesRoute
+  '/api/public/feedback': typeof ApiPublicFeedbackRoute
   '/api/public/metrics/ingest': typeof ApiPublicMetricsIngestRoute
 }
 export interface FileRouteTypes {
@@ -198,6 +207,7 @@ export interface FileRouteTypes {
     | '/facilities/$id'
     | '/admin/insights'
     | '/admin/stories'
+    | '/api/public/feedback'
     | '/api/public/metrics/ingest'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -217,6 +227,7 @@ export interface FileRouteTypes {
     | '/facilities/$id'
     | '/admin/insights'
     | '/admin/stories'
+    | '/api/public/feedback'
     | '/api/public/metrics/ingest'
   id:
     | '__root__'
@@ -237,6 +248,7 @@ export interface FileRouteTypes {
     | '/facilities/$id'
     | '/_authenticated/admin/insights'
     | '/_authenticated/admin/stories'
+    | '/api/public/feedback'
     | '/api/public/metrics/ingest'
   fileRoutesById: FileRoutesById
 }
@@ -255,6 +267,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   ApiOgRoute: typeof ApiOgRoute
+  ApiPublicFeedbackRoute: typeof ApiPublicFeedbackRoute
   ApiPublicMetricsIngestRoute: typeof ApiPublicMetricsIngestRoute
 }
 
@@ -365,6 +378,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiOgRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/feedback': {
+      id: '/api/public/feedback'
+      path: '/api/public/feedback'
+      fullPath: '/api/public/feedback'
+      preLoaderRoute: typeof ApiPublicFeedbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin/stories': {
       id: '/_authenticated/admin/stories'
       path: '/admin/stories'
@@ -429,6 +449,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   ApiOgRoute: ApiOgRoute,
+  ApiPublicFeedbackRoute: ApiPublicFeedbackRoute,
   ApiPublicMetricsIngestRoute: ApiPublicMetricsIngestRoute,
 }
 export const routeTree = rootRouteImport
