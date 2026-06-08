@@ -70,7 +70,7 @@ function emptyImpact(): PublicImpact {
 
 export const getPublicImpact = createServerFn({ method: "GET" }).handler(
   async (): Promise<PublicImpact> => {
-    let supabaseAdmin: typeof import("@/integrations/supabase/client.server")["supabaseAdmin"];
+    let supabaseAdmin: (typeof import("@/integrations/supabase/client.server"))["supabaseAdmin"];
     try {
       ({ supabaseAdmin } = await import("@/integrations/supabase/client.server"));
     } catch (err) {
@@ -141,8 +141,7 @@ export const getPublicImpact = createServerFn({ method: "GET" }).handler(
 
     const successes =
       (searchBuckets["1-5"] ?? 0) + (searchBuckets["6-20"] ?? 0) + (searchBuckets["20+"] ?? 0);
-    const searchSuccessRate =
-      searches > 0 ? Math.min(1, Math.max(0, successes / searches)) : null;
+    const searchSuccessRate = searches > 0 ? Math.min(1, Math.max(0, successes / searches)) : null;
 
     const topRegions = Object.entries(regionCounts)
       .filter(([, c]) => c >= AGGREGATION_FLOOR)
