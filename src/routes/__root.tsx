@@ -141,7 +141,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             {
               "@type": "Organization",
               "@id": "#org",
-              name: "Philippine HIV Care Philippines",
+              name: "HIV Care Philippines",
               alternateName: "PH HIV Care Philippines",
               description:
                 "Independent public-information mirror of DOH-designated HIV treatment hubs and primary care facilities in the Philippines.",
@@ -155,7 +155,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             {
               "@type": "WebSite",
               "@id": "#website",
-              name: "Philippine HIV Care Philippines",
+              name: "HIV Care Philippines",
               inLanguage: "en-PH",
               publisher: { "@id": "#org" },
               potentialAction: {
