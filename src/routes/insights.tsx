@@ -349,7 +349,7 @@ function TransmissionCard() {
               />
             )}
           />
-          <Bar dataKey="count" radius={[0, 8, 8, 0]} fill={COLORS.primary} />
+          <Bar dataKey="count" radius={[0, 8, 8, 0]} fill={COLORS.primary} isAnimationActive={false} />
         </BarChart>
       </ResponsiveContainer>
     </ChartCard>
