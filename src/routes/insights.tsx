@@ -69,15 +69,40 @@ const COLORS = {
   tertiary: "var(--color-tertiary)",
 };
 
-const TOOLTIP_STYLE = {
-  background: "var(--color-surface-container-highest)",
-  border: "1px solid var(--color-outline-variant)",
-  borderRadius: 12,
-  color: "var(--color-on-surface)",
-  fontSize: 12,
-  padding: "8px 12px",
-  boxShadow: "0 8px 24px -10px rgba(0,0,0,0.18)",
-};
+type TipDatum = { label: string; value: string; swatch?: string };
+function ChartTip({
+  active,
+  title,
+  items,
+}: {
+  active?: boolean;
+  title?: string;
+  items?: TipDatum[];
+}) {
+  if (!active || !items?.length) return null;
+  return (
+    <div className="rounded-2xl bg-surface-container-highest px-3.5 py-2.5 text-on-surface elev-2">
+      {title ? (
+        <p className="text-[11px] font-medium text-on-surface-muted">{title}</p>
+      ) : null}
+      <ul className="mt-1 space-y-1">
+        {items.map((it, i) => (
+          <li key={i} className="flex items-center gap-2 text-sm">
+            {it.swatch ? (
+              <span
+                aria-hidden="true"
+                className="inline-block h-2 w-2 rounded-full"
+                style={{ background: it.swatch }}
+              />
+            ) : null}
+            <span className="text-on-surface-muted">{it.label}</span>
+            <span className="ml-auto font-semibold tabular-nums">{it.value}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 // ─── Page ───────────────────────────────────────────────────────────────────
 
