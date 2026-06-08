@@ -4,8 +4,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { Loader2, ShieldCheck } from "lucide-react";
 import logoLight from "@/assets/logo-light.svg.asset.json";
 import logoDark from "@/assets/logo-dark.svg.asset.json";
-import { useServerFn } from "@tanstack/react-start";
-import { checkIsAdmin } from "@/lib/admin-auth.functions";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -18,9 +16,19 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
+async function userHasAdminRole(userId: string): Promise<boolean> {
+  const { data, error } = await supabase
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", userId)
+    .eq("role", "admin")
+    .maybeSingle();
+  if (error) throw error;
+  return !!data;
+}
+
 function AuthPage() {
   const navigate = useNavigate();
-  const isAdminFn = useServerFn(checkIsAdmin);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -32,36 +40,41 @@ function AuthPage() {
       const { data } = await supabase.auth.getUser();
       if (cancelled || !data.user) return;
       try {
-        const { isAdmin } = await isAdminFn();
-        if (!cancelled && isAdmin) navigate({ to: "/admin/insights" });
+        if (await userHasAdminRole(data.user.id)) {
+          if (!cancelled) navigate({ to: "/admin/insights" });
+        }
       } catch {
-        /* not admin — stay on sign-in */
+        /* stay on sign-in */
       }
     })();
     return () => {
       cancelled = true;
     };
-  }, [navigate, isAdminFn]);
+  }, [navigate]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
-    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
-    if (signInError) {
+    const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (signInError || !signInData.user) {
       setLoading(false);
       setError("That email and password don't match. Check the address, then try again.");
       return;
     }
     try {
-      const { isAdmin } = await isAdminFn();
+      const isAdmin = await userHasAdminRole(signInData.user.id);
       if (!isAdmin) {
         await supabase.auth.signOut();
         setLoading(false);
         setError("This account doesn't have admin access. Contact the site owner if that's wrong.");
         return;
       }
-    } catch {
+    } catch (err) {
+      console.error("Admin role check failed:", err);
       await supabase.auth.signOut();
       setLoading(false);
       setError("We couldn't verify your admin access. Try again in a moment.");
