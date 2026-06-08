@@ -125,18 +125,18 @@ function Landing() {
               {reportMeta.publisher} · {reportMeta.quarter}
             </p>
             <h2 className="font-display text-3xl font-medium tracking-tight text-on-surface sm:text-4xl">
-              Key visual insights
+              The national picture, at a glance
             </h2>
             <p className="max-w-lg text-sm leading-relaxed text-on-surface-muted">
-              A live summary of the national HIV response — diagnosis, treatment, and
-              viral suppression at a glance.
+              A clear view of how the country is doing — from diagnosis through treatment to viral
+              suppression — so progress and gaps are easy to see.
             </p>
           </div>
           <Link
             to="/insights"
             className="state-layer press group inline-flex items-center gap-1.5 rounded-full bg-surface px-4 py-2 text-xs font-semibold text-on-surface"
           >
-            Full dashboard
+            Open full dashboard
             <ArrowUpRight
               className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               aria-hidden="true"
