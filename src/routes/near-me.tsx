@@ -34,17 +34,17 @@ const COORDS = facilityCoords as Record<string, CoordEntry>;
 export const Route = createFileRoute("/near-me")({
   head: () => ({
     meta: [
-      { title: "Find HIV facilities near me — PH HIV Care Directory" },
+      { title: "Find HIV care near you — PH HIV Care Directory" },
       {
         name: "description",
         content:
-          "Use your location to discover the closest DOH-designated HIV treatment hubs and primary care facilities, sorted by distance with one-tap directions.",
+          "See the closest DOH-designated HIV treatment hubs and primary care facilities, ranked by real distance. Your location stays on your device.",
       },
-      { property: "og:title", content: "Find HIV facilities near me" },
+      { property: "og:title", content: "Find HIV care near you" },
       {
         property: "og:description",
         content:
-          "Real-time proximity search across 338 DOH-designated HIV facilities in the Philippines.",
+          "Private, on-device proximity search across 338 DOH-designated HIV facilities in the Philippines.",
       },
       { property: "og:url", content: "/near-me" },
     ],
@@ -82,7 +82,8 @@ function NearMePage() {
     if (typeof navigator === "undefined" || !("geolocation" in navigator)) {
       setGeo({
         status: "error",
-        message: "Geolocation isn't supported in this browser. Try a recent version of Chrome, Safari, or Firefox.",
+        message:
+          "This browser can't share your location. Try a recent version of Chrome, Safari, or Firefox — or browse the full directory instead.",
       });
       return;
     }
@@ -99,12 +100,12 @@ function NearMePage() {
       (err) => {
         const message =
           err.code === err.PERMISSION_DENIED
-            ? "Location access was blocked. Enable location permissions in your browser settings, then try again."
+            ? "Location is off for this site. You can still browse the full directory, or turn on location in your browser settings to sort facilities by distance."
             : err.code === err.POSITION_UNAVAILABLE
-              ? "We couldn't determine your position. Move to an area with better signal or GPS coverage and retry."
+              ? "Your device couldn't get a location fix right now. Move somewhere with a clearer GPS or Wi-Fi signal and try again."
               : err.code === err.TIMEOUT
-                ? "Locating you took too long. Please try again."
-                : "Something went wrong while locating you. Please try again.";
+                ? "Locating you is taking longer than expected. Try again in a moment."
+                : "We couldn't read your location. Try again, or browse the full directory instead.";
         setGeo({ status: "error", message, code: err.code });
       },
       { enableHighAccuracy: true, maximumAge: 60_000, timeout: 12_000 },
@@ -165,15 +166,15 @@ function NearMePage() {
         <div className="flex flex-col items-start gap-4">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary-foreground">
             <Sparkles className="h-3 w-3" aria-hidden="true" />
-            Location intelligence
+            Care close to you
           </span>
           <h1 className="text-3xl font-semibold tracking-tight text-on-surface sm:text-5xl">
-            HIV facilities near you
+            Find HIV care near you
           </h1>
           <p className="max-w-2xl text-sm text-on-surface-muted sm:text-base">
-            Share your location once and we'll surface the closest DOH-designated treatment hubs and
-            primary care facilities, ranked by real distance with one-tap directions to your device's
-            native maps app.
+            Share your location once and we'll show the closest DOH-designated treatment hubs and primary
+            care facilities, ranked by real distance with one-tap directions. Your location stays on your
+            device — nothing is sent to a server, and we don't track you.
           </p>
           <LocationCta geo={geo} onRequest={requestLocation} />
         </div>
@@ -181,7 +182,7 @@ function NearMePage() {
 
       {/* Status strip — coverage transparency */}
       <p className="mt-4 text-xs text-on-surface-muted">
-        Geocoded coverage:{" "}
+        Mapped so far:{" "}
         <span className="font-medium text-on-surface tabular-nums">
           {result.mapped.toLocaleString()} of {result.total.toLocaleString()}
         </span>{" "}
@@ -189,7 +190,7 @@ function NearMePage() {
         {result.unmapped > 0 && (
           <>
             {" "}
-            {result.unmapped} facilities are still being mapped — they appear in the{" "}
+            {result.unmapped} are still being verified — you'll find them in the{" "}
             <Link to="/facilities" className="font-medium text-primary underline-offset-2 hover:underline">
               full directory
             </Link>
@@ -197,6 +198,8 @@ function NearMePage() {
           </>
         )}
       </p>
+
+
 
       {geo.status === "ready" && (
         <>
@@ -309,15 +312,16 @@ function LocationCta({ geo, onRequest }: { geo: GeoState; onRequest: () => void 
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
           </span>
-          Location active · accurate to ±{Math.round(geo.accuracy)} m
+          Using your location · accurate to ±{Math.round(geo.accuracy)} m
         </span>
         <button
           type="button"
           onClick={onRequest}
           className="state-layer press inline-flex items-center gap-1.5 rounded-full bg-surface px-3.5 py-2 text-xs font-medium text-on-surface"
+          aria-label="Update your location"
         >
           <LocateFixed className="h-3.5 w-3.5" aria-hidden="true" />
-          Refresh location
+          Update location
         </button>
       </div>
     );
@@ -330,36 +334,52 @@ function LocationCta({ geo, onRequest }: { geo: GeoState; onRequest: () => void 
         className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground opacity-80"
       >
         <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-        Locating you…
+        Finding your location…
       </button>
     );
   }
   if (geo.status === "error") {
     return (
-      <div className="flex w-full max-w-xl flex-col gap-3 rounded-2xl bg-surface p-4 elev-1">
+      <div
+        role="alert"
+        className="flex w-full max-w-xl flex-col gap-3 rounded-2xl bg-surface p-4 elev-1"
+      >
         <p className="flex items-start gap-2 text-sm text-on-surface">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
           {geo.message}
         </p>
-        <button
-          type="button"
-          onClick={onRequest}
-          className="state-layer press self-start rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
-        >
-          Try again
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={onRequest}
+            className="state-layer press rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
+          >
+            Try again
+          </button>
+          <Link
+            to="/facilities"
+            className="state-layer press rounded-full bg-surface-container-high px-4 py-2 text-sm font-medium text-on-surface"
+          >
+            Browse full directory
+          </Link>
+        </div>
       </div>
     );
   }
   return (
-    <button
-      type="button"
-      onClick={onRequest}
-      className="state-layer press inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground elev-2"
-    >
-      <Compass className="h-4 w-4" aria-hidden="true" />
-      Use my current location
-    </button>
+    <div className="flex flex-col items-start gap-2">
+      <button
+        type="button"
+        onClick={onRequest}
+        className="state-layer press inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground elev-2"
+      >
+        <Compass className="h-4 w-4" aria-hidden="true" />
+        Use my location
+      </button>
+      <p className="text-xs text-on-surface-muted">
+        We'll ask your browser once. Your coordinates never leave your device.
+      </p>
+    </div>
   );
 }
 
@@ -419,7 +439,7 @@ function RecommendationCard({
               id="recommendation-h"
               className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary"
             >
-              Closest treatment hub
+              Suggested for you · closest treatment hub
             </p>
             <h2 className="mt-1 text-lg font-semibold leading-snug text-on-surface sm:text-xl">
               {facility.name}
@@ -431,11 +451,11 @@ function RecommendationCard({
             <p className="mt-2 text-sm text-on-surface">
               <span className="font-semibold tabular-nums">{formatKm(distanceKm)}</span>{" "}
               <span className="text-on-surface-muted">
-                away · approx. {driveMinutes(distanceKm)} min drive
+                away · about {driveMinutes(distanceKm)} min by car
               </span>
               {outsideRange && (
                 <span className="ml-1 inline-flex items-center rounded-full bg-primary-container px-2 py-0.5 text-[10px] font-medium text-on-primary-container">
-                  Outside selected range
+                  Beyond your selected range
                 </span>
               )}
             </p>
@@ -468,18 +488,18 @@ function IntroPanel() {
     <section className="mt-8 grid gap-4 sm:grid-cols-3">
       {[
         {
-          title: "Real distance",
-          body: "Great-circle distance from your device to each facility, ranked nearest first.",
+          title: "Real distance, not guesses",
+          body: "We measure the straight-line distance from your device to each facility and rank from nearest to farthest.",
           icon: Compass,
         },
         {
-          title: "Smart clusters",
-          body: "Results grouped by walking, nearby, citywide, regional, and farther afield bands.",
+          title: "Grouped so you can decide",
+          body: "Results are clustered into walkable, nearby, citywide, and regional bands — pick what fits your day.",
           icon: Sparkles,
         },
         {
-          title: "Native directions",
-          body: "Open turn-by-turn navigation in Apple Maps, Google Maps, or your default app.",
+          title: "One tap to directions",
+          body: "Open turn-by-turn navigation in your phone's maps app. No extra logins, no tracking.",
           icon: Navigation,
         },
       ].map((c) => (
@@ -504,9 +524,14 @@ function IntroPanel() {
 function EmptyResult() {
   return (
     <div className="rounded-3xl border border-dashed border-outline-variant bg-surface-container p-10 text-center">
-      <h3 className="text-base font-semibold text-on-surface">No facilities in this range</h3>
+      <h3 className="text-base font-semibold text-on-surface">Nothing in this range yet</h3>
       <p className="mt-1 text-sm text-on-surface-muted">
-        Try widening the proximity range, switching service type, or turning off the inpatient filter.
+        Try widening the distance, choosing a different service type, or turning off the inpatient
+        filter. You can also{" "}
+        <Link to="/facilities" className="font-medium text-primary underline-offset-2 hover:underline">
+          browse the full directory
+        </Link>
+        .
       </p>
     </div>
   );
