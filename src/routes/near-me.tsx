@@ -312,15 +312,16 @@ function LocationCta({ geo, onRequest }: { geo: GeoState; onRequest: () => void 
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
           </span>
-          Location active · accurate to ±{Math.round(geo.accuracy)} m
+          Using your location · accurate to ±{Math.round(geo.accuracy)} m
         </span>
         <button
           type="button"
           onClick={onRequest}
           className="state-layer press inline-flex items-center gap-1.5 rounded-full bg-surface px-3.5 py-2 text-xs font-medium text-on-surface"
+          aria-label="Update your location"
         >
           <LocateFixed className="h-3.5 w-3.5" aria-hidden="true" />
-          Refresh location
+          Update location
         </button>
       </div>
     );
@@ -333,36 +334,52 @@ function LocationCta({ geo, onRequest }: { geo: GeoState; onRequest: () => void 
         className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground opacity-80"
       >
         <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-        Locating you…
+        Finding your location…
       </button>
     );
   }
   if (geo.status === "error") {
     return (
-      <div className="flex w-full max-w-xl flex-col gap-3 rounded-2xl bg-surface p-4 elev-1">
+      <div
+        role="alert"
+        className="flex w-full max-w-xl flex-col gap-3 rounded-2xl bg-surface p-4 elev-1"
+      >
         <p className="flex items-start gap-2 text-sm text-on-surface">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
           {geo.message}
         </p>
-        <button
-          type="button"
-          onClick={onRequest}
-          className="state-layer press self-start rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
-        >
-          Try again
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={onRequest}
+            className="state-layer press rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
+          >
+            Try again
+          </button>
+          <Link
+            to="/facilities"
+            className="state-layer press rounded-full bg-surface-container-high px-4 py-2 text-sm font-medium text-on-surface"
+          >
+            Browse full directory
+          </Link>
+        </div>
       </div>
     );
   }
   return (
-    <button
-      type="button"
-      onClick={onRequest}
-      className="state-layer press inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground elev-2"
-    >
-      <Compass className="h-4 w-4" aria-hidden="true" />
-      Use my current location
-    </button>
+    <div className="flex flex-col items-start gap-2">
+      <button
+        type="button"
+        onClick={onRequest}
+        className="state-layer press inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground elev-2"
+      >
+        <Compass className="h-4 w-4" aria-hidden="true" />
+        Use my location
+      </button>
+      <p className="text-xs text-on-surface-muted">
+        We'll ask your browser once. Your coordinates never leave your device.
+      </p>
+    </div>
   );
 }
 
