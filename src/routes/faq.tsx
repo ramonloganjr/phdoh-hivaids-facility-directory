@@ -137,7 +137,7 @@ function FaqPage() {
       <div className="mt-4 space-y-2">
         {visible.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-outline-variant bg-surface p-8 text-center text-sm text-on-surface-muted">
-            No questions match your search. Try a different term or category.
+            Nothing matches that search yet. Try a different word, or pick another category above.
           </div>
         ) : (
           visible.map((f, i) => <FaqRow key={f.id} item={f} index={i} />)
