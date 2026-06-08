@@ -9,6 +9,7 @@ import {
   Share2,
   Check,
 } from "lucide-react";
+import { track } from "@/lib/metrics";
 
 type ShareBarProps = {
   url: string; // relative path or absolute
@@ -54,6 +55,7 @@ export function ShareBar({
     const full = absUrl(url);
     try {
       await navigator.clipboard.writeText(full);
+      track("share_tapped", { key: "channel", value: "copy_link" });
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1800);
     } catch {
@@ -66,6 +68,7 @@ export function ShareBar({
     if (typeof navigator !== "undefined" && "share" in navigator) {
       try {
         await navigator.share({ title, text: text ?? title, url: full });
+        track("share_tapped", { key: "channel", value: "native" });
       } catch {
         // User cancelled or share failed; no-op.
       }
@@ -150,6 +153,7 @@ export function ShareBar({
             rel="noreferrer noopener"
             aria-label={`Share on ${t.label}`}
             title={t.label}
+            onClick={() => track("share_tapped", { key: "channel", value: t.key })}
             className="state-layer press inline-flex h-10 w-10 items-center justify-center rounded-full bg-surface-container-high text-on-surface hover:bg-primary-container hover:text-on-primary-container"
           >
             {t.svg ?? t.icon}

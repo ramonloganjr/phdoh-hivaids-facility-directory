@@ -16,6 +16,8 @@ import type { Facility } from "@/data/facilities.types";
 import { findFacility, telHref, fbHref, directionsHref, openDirections } from "@/lib/facilities-helpers";
 import { cn } from "@/lib/utils";
 import { ShareBar } from "@/components/share-bar";
+import { useEffect } from "react";
+import { track } from "@/lib/metrics";
 
 export const Route = createFileRoute("/facilities/$id")({
   loader: async ({ params }) => {
@@ -147,6 +149,10 @@ function FacilityDetail() {
   const { facility: f } = Route.useLoaderData() as { facility: Facility };
   const isHub = f.serviceType === "Treatment Hub";
   const Icon = isHub ? Hospital : Stethoscope;
+
+  useEffect(() => {
+    track("facility_viewed", { key: "region", value: f.region });
+  }, [f.id, f.region]);
 
   const otherInRegion = FACILITIES.filter(
     (x) => x.region === f.region && x.id !== f.id,

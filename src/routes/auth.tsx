@@ -1,0 +1,94 @@
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { Loader2, ShieldCheck } from "lucide-react";
+
+export const Route = createFileRoute("/auth")({
+  head: () => ({
+    meta: [
+      { title: "Sign in — HIV Care Philippines" },
+      { name: "robots", content: "noindex, nofollow" },
+      { name: "description", content: "Admin sign-in for HIV Care Philippines." },
+    ],
+  }),
+  component: AuthPage,
+});
+
+function AuthPage() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const { data: sub } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "SIGNED_IN") navigate({ to: "/admin/insights" });
+    });
+    return () => sub.subscription.unsubscribe();
+  }, [navigate]);
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setLoading(false);
+    if (error) {
+      setError("That email and password don't match. Check the address, then try again.");
+      return;
+    }
+    navigate({ to: "/admin/insights" });
+  };
+
+  return (
+    <div className="mx-auto flex max-w-md flex-col gap-6 px-4 py-16 sm:py-24">
+      <div className="flex items-center gap-2 text-primary">
+        <ShieldCheck className="h-5 w-5" aria-hidden="true" />
+        <span className="text-[11px] font-semibold uppercase tracking-[0.18em]">Admin sign-in</span>
+      </div>
+      <h1 className="text-3xl font-semibold tracking-tight text-on-surface">Sign in to continue</h1>
+      <p className="text-sm text-on-surface-muted">
+        This area is for the team that maintains the directory. Public pages stay open to everyone — no
+        account needed.
+      </p>
+      <form onSubmit={onSubmit} className="space-y-4 rounded-3xl bg-surface-container p-6 elev-1">
+        <label className="block text-sm">
+          <span className="mb-1 block font-medium text-on-surface">Email</span>
+          <input
+            type="email"
+            required
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="h-11 w-full rounded-full border border-outline-variant bg-surface px-4 text-sm text-on-surface focus:border-primary focus:outline-none"
+          />
+        </label>
+        <label className="block text-sm">
+          <span className="mb-1 block font-medium text-on-surface">Password</span>
+          <input
+            type="password"
+            required
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="h-11 w-full rounded-full border border-outline-variant bg-surface px-4 text-sm text-on-surface focus:border-primary focus:outline-none"
+          />
+        </label>
+        {error && (
+          <p role="alert" className="rounded-2xl bg-primary-container px-4 py-3 text-sm text-on-primary-container">
+            {error}
+          </p>
+        )}
+        <button
+          type="submit"
+          disabled={loading}
+          className="state-layer press inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-primary text-sm font-semibold text-primary-foreground disabled:opacity-70"
+        >
+          {loading ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
+          Sign in
+        </button>
+      </form>
+    </div>
+  );
+}

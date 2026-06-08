@@ -107,6 +107,39 @@ function PrivacyPage() {
           </p>
         </Section>
 
+        <Section title="5a. What we count, and what we never count">
+          <p>
+            To know whether the directory is actually helping people, we count a small set of
+            anonymous actions on the server — never a profile of you.
+          </p>
+          <p className="font-medium text-on-surface">What we count (anonymously):</p>
+          <ul className="ml-5 list-disc space-y-1.5">
+            <li>Searches submitted, and whether they returned results;</li>
+            <li>Facility detail views and which region they're in;</li>
+            <li>Get-directions and call-facility taps;</li>
+            <li>Near Me activations, grants, and denials (the result, not your coordinates);</li>
+            <li>Share taps and which channel (e.g. Messenger, Copy link);</li>
+            <li>Home-screen install acceptances;</li>
+            <li>Which FAQ questions are opened.</li>
+          </ul>
+          <p className="font-medium text-on-surface">What we never count:</p>
+          <ul className="ml-5 list-disc space-y-1.5">
+            <li>Your IP address, device fingerprint, or user-agent;</li>
+            <li>Any account, name, email, or identifier;</li>
+            <li>Your search terms, location, or browsing path;</li>
+            <li>Anything that could re-identify you, alone or combined.</li>
+          </ul>
+          <p>
+            Counts under 5 for a single dimension are suppressed before they're published so no
+            individual can be inferred. If your browser sends Do Not Track or Global Privacy
+            Control, we don't count anything at all. See the public{" "}
+            <Link to="/impact" className="font-medium text-primary hover:underline">
+              Impact page
+            </Link>{" "}
+            for the rounded numbers we publish.
+          </p>
+        </Section>
+
         <Section title="6. How We Use Data">
           <p>Personal data we lawfully hold is used solely to:</p>
           <ul className="ml-5 list-disc space-y-1.5">

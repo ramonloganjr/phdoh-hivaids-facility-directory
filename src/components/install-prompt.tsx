@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Download, X, Smartphone } from "lucide-react";
+import { track } from "@/lib/metrics";
 
 type BIPEvent = Event & {
   prompt: () => Promise<void>;
@@ -84,8 +85,12 @@ export function InstallPrompt() {
     try {
       await deferred.prompt();
       const choice = await deferred.userChoice;
-      if (choice.outcome === "dismissed") dismiss();
-      else setOpen(false);
+      if (choice.outcome === "dismissed") {
+        dismiss();
+      } else {
+        track("install_accepted");
+        setOpen(false);
+      }
     } finally {
       setDeferred(null);
     }

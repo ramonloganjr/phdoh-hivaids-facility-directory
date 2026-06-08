@@ -17,10 +17,14 @@ import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as ImpactRouteImport } from './routes/impact'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as FacilitiesRouteImport } from './routes/facilities'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FacilitiesIdRouteImport } from './routes/facilities.$id'
 import { Route as ApiOgRouteImport } from './routes/api.og'
+import { Route as AuthenticatedAdminStoriesRouteImport } from './routes/_authenticated/admin.stories'
+import { Route as AuthenticatedAdminInsightsRouteImport } from './routes/_authenticated/admin.insights'
 import { Route as ApiPublicMetricsIngestRouteImport } from './routes/api/public/metrics.ingest'
 
 const TermsRoute = TermsRouteImport.update({
@@ -63,9 +67,18 @@ const FacilitiesRoute = FacilitiesRouteImport.update({
   path: '/facilities',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -83,6 +96,18 @@ const ApiOgRoute = ApiOgRouteImport.update({
   path: '/api/og',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminStoriesRoute =
+  AuthenticatedAdminStoriesRouteImport.update({
+    id: '/admin/stories',
+    path: '/admin/stories',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminInsightsRoute =
+  AuthenticatedAdminInsightsRouteImport.update({
+    id: '/admin/insights',
+    path: '/admin/insights',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ApiPublicMetricsIngestRoute = ApiPublicMetricsIngestRouteImport.update({
   id: '/api/public/metrics/ingest',
   path: '/api/public/metrics/ingest',
@@ -92,6 +117,7 @@ const ApiPublicMetricsIngestRoute = ApiPublicMetricsIngestRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/facilities': typeof FacilitiesRouteWithChildren
   '/faq': typeof FaqRoute
   '/impact': typeof ImpactRoute
@@ -102,11 +128,14 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
+  '/admin/insights': typeof AuthenticatedAdminInsightsRoute
+  '/admin/stories': typeof AuthenticatedAdminStoriesRoute
   '/api/public/metrics/ingest': typeof ApiPublicMetricsIngestRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/facilities': typeof FacilitiesRouteWithChildren
   '/faq': typeof FaqRoute
   '/impact': typeof ImpactRoute
@@ -117,12 +146,16 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
+  '/admin/insights': typeof AuthenticatedAdminInsightsRoute
+  '/admin/stories': typeof AuthenticatedAdminStoriesRoute
   '/api/public/metrics/ingest': typeof ApiPublicMetricsIngestRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/facilities': typeof FacilitiesRouteWithChildren
   '/faq': typeof FaqRoute
   '/impact': typeof ImpactRoute
@@ -133,6 +166,8 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
+  '/_authenticated/admin/insights': typeof AuthenticatedAdminInsightsRoute
+  '/_authenticated/admin/stories': typeof AuthenticatedAdminStoriesRoute
   '/api/public/metrics/ingest': typeof ApiPublicMetricsIngestRoute
 }
 export interface FileRouteTypes {
@@ -140,6 +175,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/auth'
     | '/facilities'
     | '/faq'
     | '/impact'
@@ -150,11 +186,14 @@ export interface FileRouteTypes {
     | '/terms'
     | '/api/og'
     | '/facilities/$id'
+    | '/admin/insights'
+    | '/admin/stories'
     | '/api/public/metrics/ingest'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/auth'
     | '/facilities'
     | '/faq'
     | '/impact'
@@ -165,11 +204,15 @@ export interface FileRouteTypes {
     | '/terms'
     | '/api/og'
     | '/facilities/$id'
+    | '/admin/insights'
+    | '/admin/stories'
     | '/api/public/metrics/ingest'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
+    | '/auth'
     | '/facilities'
     | '/faq'
     | '/impact'
@@ -180,12 +223,16 @@ export interface FileRouteTypes {
     | '/terms'
     | '/api/og'
     | '/facilities/$id'
+    | '/_authenticated/admin/insights'
+    | '/_authenticated/admin/stories'
     | '/api/public/metrics/ingest'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
+  AuthRoute: typeof AuthRoute
   FacilitiesRoute: typeof FacilitiesRouteWithChildren
   FaqRoute: typeof FaqRoute
   ImpactRoute: typeof ImpactRoute
@@ -256,11 +303,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FacilitiesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -284,6 +345,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiOgRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/stories': {
+      id: '/_authenticated/admin/stories'
+      path: '/admin/stories'
+      fullPath: '/admin/stories'
+      preLoaderRoute: typeof AuthenticatedAdminStoriesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/insights': {
+      id: '/_authenticated/admin/insights'
+      path: '/admin/insights'
+      fullPath: '/admin/insights'
+      preLoaderRoute: typeof AuthenticatedAdminInsightsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/metrics/ingest': {
       id: '/api/public/metrics/ingest'
       path: '/api/public/metrics/ingest'
@@ -293,6 +368,19 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminInsightsRoute: typeof AuthenticatedAdminInsightsRoute
+  AuthenticatedAdminStoriesRoute: typeof AuthenticatedAdminStoriesRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminInsightsRoute: AuthenticatedAdminInsightsRoute,
+  AuthenticatedAdminStoriesRoute: AuthenticatedAdminStoriesRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface FacilitiesRouteChildren {
   FacilitiesIdRoute: typeof FacilitiesIdRoute
@@ -308,7 +396,9 @@ const FacilitiesRouteWithChildren = FacilitiesRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
+  AuthRoute: AuthRoute,
   FacilitiesRoute: FacilitiesRouteWithChildren,
   FaqRoute: FaqRoute,
   ImpactRoute: ImpactRoute,

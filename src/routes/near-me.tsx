@@ -27,6 +27,7 @@ import {
 } from "@/lib/geo";
 import { openDirections } from "@/lib/facilities-helpers";
 import { cn } from "@/lib/utils";
+import { track } from "@/lib/metrics";
 
 type CoordEntry = { lat: number; lon: number; source: "name" | "address" | "city" };
 const COORDS = facilityCoords as Record<string, CoordEntry>;
@@ -87,9 +88,11 @@ function NearMePage() {
       });
       return;
     }
+    track("near_me_activated");
     setGeo({ status: "loading" });
     navigator.geolocation.getCurrentPosition(
       (pos) => {
+        track("near_me_granted");
         setGeo({
           status: "ready",
           coords: { lat: pos.coords.latitude, lon: pos.coords.longitude },
@@ -98,6 +101,7 @@ function NearMePage() {
         });
       },
       (err) => {
+        track("near_me_denied");
         const message =
           err.code === err.PERMISSION_DENIED
             ? "Location is off for this site. You can still browse the full directory, or turn on location in your browser settings to sort facilities by distance."
