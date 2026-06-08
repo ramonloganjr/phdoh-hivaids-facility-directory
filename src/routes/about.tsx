@@ -27,13 +27,12 @@ function AboutPage() {
         About this directory
       </p>
       <h1 className="mt-3 text-3xl font-semibold tracking-tight text-on-surface sm:text-4xl">
-        A faithful, accessible mirror of DOH's HIV facility directory.
+        A faithful, accessible mirror of the DOH HIV facility directory.
       </h1>
       <p className="mt-4 text-base leading-relaxed text-on-surface-muted">
-        This site reproduces the official directory of DOH-designated HIV treatment hubs
-        and primary HIV care facilities in the Philippines, optimized for fast lookup on
-        any device. All data is sourced verbatim — names, addresses, contacts, and
-        designations — from the Department Circular below.
+        Everything you see here comes straight from the Department of Health — every name,
+        address, contact, and designation. We just made it easier to search and faster to use on
+        any device, especially when you're on the go.
       </p>
 
       <div className="mt-8 grid gap-3 sm:grid-cols-3">
@@ -66,16 +65,15 @@ function AboutPage() {
 
         <Block icon={Database} title="Data integrity">
           <p>
-            All 338 records (192 treatment hubs + 146 primary HIV care facilities) were
-            sourced directly from the Department of Health of the Philippines. No entries
-            were added, removed, or edited. Phone numbers are reformatted only for
-            tap-to-call links; the original text is preserved on every facility page.
+            All 338 records (192 treatment hubs + 146 primary HIV care facilities) come directly
+            from the Department of Health of the Philippines. Nothing was added, removed, or
+            edited. Phone numbers are lightly reformatted so tap-to-call works on your phone, but
+            the original text is preserved on every facility page.
           </p>
 
           <p className="mt-3">
-            For the most current information — especially regarding service hours,
-            availability, or staff changes — always contact the facility directly or refer
-            to the original circular.
+            Hours, contacts, and services can change — for anything time-sensitive, please call
+            the facility directly or check the original circular.
           </p>
         </Block>
 
