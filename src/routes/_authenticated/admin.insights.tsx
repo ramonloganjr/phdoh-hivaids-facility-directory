@@ -2,8 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { Activity, Download, Loader2, RefreshCw, BookOpen, LogOut } from "lucide-react";
+import { Activity, Download, Loader2, RefreshCw, BookOpen, LogOut, Rocket } from "lucide-react";
 import { getAdminInsights, exportMonthlyImpact } from "@/lib/admin.functions";
+import { triggerVercelRedeploy } from "@/lib/deploy.functions";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "@tanstack/react-router";
 
