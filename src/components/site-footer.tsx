@@ -18,12 +18,12 @@ export function SiteFooter() {
             <div className="space-y-3">
               <p className="text-sm font-semibold text-primary">HIV Care Directory</p>
               <p className="max-w-md text-sm leading-relaxed text-on-surface-muted">
-                Mirrored from{" "}
+                A community-built mirror of{" "}
                 <span className="font-semibold text-on-surface">
                   DOH Department Circular No. 2026-0065
                 </span>{" "}
-                (4 February 2026). Verified facility listings as of 31 December 2025. Always
-                confirm with the facility before visiting.
+                (4 February 2026), with facility listings verified as of 31 December 2025. Hours,
+                contacts, and services can change — please call ahead before visiting.
               </p>
             </div>
           </div>
