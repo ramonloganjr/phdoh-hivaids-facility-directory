@@ -2,12 +2,25 @@ import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 async function assertAdmin(userId: string) {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const { data, error } = await supabaseAdmin.rpc("has_role", {
-    _user_id: userId,
-    _role: "admin",
+  const { createClient } = await import("@supabase/supabase-js");
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const publishableKey = process.env.SUPABASE_PUBLISHABLE_KEY;
+
+  if (!supabaseUrl || !publishableKey) {
+    throw new Error("Backend auth isn't configured. Add backend URL and publishable key secrets.");
+  }
+
+  const supabase = createClient(supabaseUrl, publishableKey, {
+    auth: { persistSession: false, autoRefreshToken: false },
   });
-  if (error || data !== true) {
+  const { data, error } = await supabase
+    .from("user_roles")
+    .select("id")
+    .eq("user_id", userId)
+    .eq("role", "admin")
+    .maybeSingle();
+
+  if (error || !data) {
     throw new Error("Forbidden: admin access required.");
   }
 }
