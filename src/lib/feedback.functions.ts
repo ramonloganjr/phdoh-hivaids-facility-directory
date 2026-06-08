@@ -81,3 +81,59 @@ export const deleteFeedback = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true };
   });
+
+/**
+ * Promote an anonymous feedback message to a draft story.
+ *
+ * Creates an UNPUBLISHED testimonial (consent_verified_at = NULL) so the
+ * moderator must still record consent before it appears on /impact. The
+ * source feedback row is marked approved.
+ */
+export const promoteFeedbackToStory = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) =>
+    z
+      .object({
+        id: z.string().uuid(),
+        attribution: z.string().trim().min(2).max(120),
+      })
+      .parse(input),
+  )
+  .handler(async ({ data, context }) => {
+    const supabase = await assertAdmin(context.supabase, context.userId);
+
+    const { data: fb, error: readErr } = await supabase
+      .from("feedback")
+      .select("message, region")
+      .eq("id", data.id)
+      .maybeSingle();
+    if (readErr) throw new Error(readErr.message);
+    if (!fb) throw new Error("Feedback not found.");
+
+    const { data: story, error: insertErr } = await supabase
+      .from("testimonials")
+      .insert({
+        quote: fb.message,
+        attribution: data.attribution,
+        region: fb.region,
+        consent_verified_at: null,
+        published: false,
+        sort_order: 0,
+      })
+      .select("id")
+      .single();
+    if (insertErr) throw new Error(insertErr.message);
+
+    const { error: updErr } = await supabase
+      .from("feedback")
+      .update({
+        status: "approved",
+        reviewer_id: context.userId,
+        reviewed_at: new Date().toISOString(),
+      })
+      .eq("id", data.id);
+    if (updErr) throw new Error(updErr.message);
+
+    return { ok: true, storyId: story.id };
+  });
+
