@@ -1,12 +1,13 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { ArrowLeft, CheckCircle2, XCircle, Trash2, Loader2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2, XCircle, Trash2, Loader2, Sparkles } from "lucide-react";
 import {
   listFeedback,
   moderateFeedback,
   deleteFeedback,
+  promoteFeedbackToStory,
   type FeedbackRow,
 } from "@/lib/feedback.functions";
 
@@ -24,11 +25,13 @@ type Filter = "pending" | "approved" | "rejected" | "all";
 
 function AdminFeedbackPage() {
   const qc = useQueryClient();
+  const navigate = useNavigate();
   const [filter, setFilter] = useState<Filter>("pending");
 
   const listFn = useServerFn(listFeedback);
   const moderateFn = useServerFn(moderateFeedback);
   const deleteFn = useServerFn(deleteFeedback);
+  const promoteFn = useServerFn(promoteFeedbackToStory);
 
   const { data: rows, isLoading } = useQuery({
     queryKey: ["admin-feedback", filter],
@@ -46,6 +49,23 @@ function AdminFeedbackPage() {
     mutationFn: (id: string) => deleteFn({ data: { id } as never }),
     onSuccess: invalidate,
   });
+  const promote = useMutation({
+    mutationFn: (p: { id: string; attribution: string }) =>
+      promoteFn({ data: p as never }),
+    onSuccess: () => {
+      invalidate();
+      navigate({ to: "/admin/stories" });
+    },
+  });
+
+  const onPromote = (id: string) => {
+    const attribution = window.prompt(
+      "Attribution for this story (e.g. \"M., 32, Quezon City\"). The story will be created unpublished — you must record consent on the Stories page before it appears on /impact.",
+      "",
+    );
+    if (!attribution || attribution.trim().length < 2) return;
+    promote.mutate({ id, attribution: attribution.trim() });
+  };
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
@@ -115,6 +135,16 @@ function AdminFeedbackPage() {
               >
                 <XCircle className="mr-1 inline h-3.5 w-3.5" aria-hidden="true" />
                 Reject
+              </button>
+              <button
+                type="button"
+                onClick={() => onPromote(r.id)}
+                disabled={promote.isPending}
+                className="state-layer press inline-flex items-center gap-1.5 rounded-full bg-surface-container-high px-3 py-1 font-medium text-on-surface disabled:opacity-60"
+                title="Create a draft story from this feedback"
+              >
+                <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+                Promote to story
               </button>
               <button
                 type="button"
