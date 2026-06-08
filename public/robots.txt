@@ -1,4 +1,4 @@
-# Philippine HIV Care Directory
+# Philippine HIV Care Philippines
 # Public mirror of DOH Department Circular No. 2026-0065.
 # Operated by Ramon Logan Jr. — see /terms and /privacy.
 

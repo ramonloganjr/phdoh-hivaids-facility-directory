@@ -28,17 +28,17 @@ export const Route = createFileRoute("/")({
   },
   head: ({ loaderData }) => {
     const origin = loaderData?.origin ?? "";
-    const ogPath = `/api/og?eyebrow=${encodeURIComponent("DOH PHILIPPINES")}&title=${encodeURIComponent("Philippine HIV Care Directory")}&subtitle=${encodeURIComponent("All 338 DOH-designated treatment hubs and primary care facilities, in one searchable directory.")}`;
+    const ogPath = `/api/og?eyebrow=${encodeURIComponent("DOH PHILIPPINES")}&title=${encodeURIComponent("Philippine HIV Care Philippines")}&subtitle=${encodeURIComponent("All 338 DOH-designated treatment hubs and primary care facilities, in one searchable directory.")}`;
     const ogImage = origin ? `${origin}${ogPath}` : ogPath;
     return {
       meta: [
-        { title: "Philippine HIV Care Directory — DOH-Designated Facilities" },
+        { title: "Philippine HIV Care Philippines — DOH-Designated Facilities" },
         {
           name: "description",
           content:
             "All 338 DOH-designated HIV treatment hubs and primary care facilities in the Philippines, in one searchable directory.",
         },
-        { property: "og:title", content: "Philippine HIV Care Directory" },
+        { property: "og:title", content: "Philippine HIV Care Philippines" },
         {
           property: "og:description",
           content:

@@ -3,13 +3,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy Policy — Philippine HIV Care Directory" },
+      { title: "Privacy Policy — Philippine HIV Care Philippines" },
       {
         name: "description",
         content:
-          "How the Philippine HIV Care Directory handles personal data, aligned with the Philippine Data Privacy Act of 2012 (RA 10173).",
+          "How the Philippine HIV Care Philippines handles personal data, aligned with the Philippine Data Privacy Act of 2012 (RA 10173).",
       },
-      { property: "og:title", content: "Privacy Policy — PH HIV Care Directory" },
+      { property: "og:title", content: "Privacy Policy — PH HIV Care Philippines" },
       {
         property: "og:description",
         content: "Data handling practices, user rights under RA 10173, and contact channels.",
@@ -40,7 +40,7 @@ function PrivacyPage() {
       <div className="space-y-8 text-[15px] leading-relaxed text-on-surface">
         <Section title="1. Who We Are (Personal Information Controller)">
           <p>
-            The Philippine HIV Care Directory (the &ldquo;Platform&rdquo;) is operated by{" "}
+            The Philippine HIV Care Philippines (the &ldquo;Platform&rdquo;) is operated by{" "}
             <strong>Ramon Logan Jr.</strong> as a sole, independent, non-commercial public-information
             project. For purposes of Republic Act No. 10173, the &ldquo;Data Privacy Act of 2012&rdquo;
             (&ldquo;DPA&rdquo;), Ramon Logan Jr. is the <strong>Personal Information Controller</strong>{" "}

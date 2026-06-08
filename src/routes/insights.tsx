@@ -31,13 +31,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/insights")({
   head: () => ({
     meta: [
-      { title: "Surveillance Insights — PH HIV Care Directory" },
+      { title: "Surveillance Insights — PH HIV Care Philippines" },
       {
         name: "description",
         content:
           "Interactive visualizations of the Philippines' Q2 2025 HIV & AIDS surveillance report — national 95-95-95 cascade, regional gaps, transmission, demographics.",
       },
-      { property: "og:title", content: "Surveillance Insights — PH HIV Care Directory" },
+      { property: "og:title", content: "Surveillance Insights — PH HIV Care Philippines" },
       {
         property: "og:description",
         content:

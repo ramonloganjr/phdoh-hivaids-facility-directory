@@ -34,7 +34,7 @@ const COORDS = facilityCoords as Record<string, CoordEntry>;
 export const Route = createFileRoute("/near-me")({
   head: () => ({
     meta: [
-      { title: "Find HIV care near you — PH HIV Care Directory" },
+      { title: "Find HIV care near you — PH HIV Care Philippines" },
       {
         name: "description",
         content:

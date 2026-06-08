@@ -93,7 +93,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "apple-mobile-web-app-title", content: "HIV Care PH" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "application-name", content: "HIV Care PH" },
-      { title: "Philippine HIV Care Directory — DOH-Designated Facilities" },
+      { title: "Philippine HIV Care Philippines — DOH-Designated Facilities" },
       {
         name: "description",
         content:
@@ -104,7 +104,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
       { name: "googlebot", content: "index, follow" },
       // Open Graph
-      { property: "og:site_name", content: "PH HIV Care Directory" },
+      { property: "og:site_name", content: "PH HIV Care Philippines" },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "en_PH" },
       { property: "og:image", content: ogImageUrl },
@@ -112,7 +112,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:image:type", content: "image/png" },
-      { property: "og:image:alt", content: "Philippine HIV Care Directory — DOH-designated facilities" },
+      { property: "og:image:alt", content: "Philippine HIV Care Philippines — DOH-designated facilities" },
       { name: "twitter:image", content: ogImageUrl },
       // Twitter
       { name: "twitter:card", content: "summary_large_image" },
@@ -140,8 +140,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             {
               "@type": "Organization",
               "@id": "#org",
-              name: "Philippine HIV Care Directory",
-              alternateName: "PH HIV Care Directory",
+              name: "Philippine HIV Care Philippines",
+              alternateName: "PH HIV Care Philippines",
               description:
                 "Independent public-information mirror of DOH-designated HIV treatment hubs and primary care facilities in the Philippines.",
               founder: {
@@ -154,7 +154,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             {
               "@type": "WebSite",
               "@id": "#website",
-              name: "Philippine HIV Care Directory",
+              name: "Philippine HIV Care Philippines",
               inLanguage: "en-PH",
               publisher: { "@id": "#org" },
               potentialAction: {
