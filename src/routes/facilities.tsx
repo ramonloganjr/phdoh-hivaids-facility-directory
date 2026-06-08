@@ -46,7 +46,7 @@ export const Route = createFileRoute("/facilities")({
   },
   head: () => ({
     meta: [
-      { title: "All HIV facilities — Philippine HIV Care Philippines" },
+      { title: "All HIV facilities — HIV Care Philippines" },
       {
         name: "description",
         content:
