@@ -11,26 +11,26 @@ type QuickLink = {
 const QUICK_LINKS: QuickLink[] = [
   {
     to: "/facilities",
-    label: "Browse facilities",
-    description: "All 338 DOH-designated hubs and primary care sites.",
+    label: "Browse all facilities",
+    description: "Every DOH-designated treatment hub and primary care site, in one place.",
     icon: MapPin,
   },
   {
     to: "/insights",
-    label: "Insights",
-    description: "Surveillance data and trends at a glance.",
+    label: "See the bigger picture",
+    description: "Surveillance data and trends, explained simply.",
     icon: Compass,
   },
   {
     to: "/faq",
-    label: "FAQ",
-    description: "Common questions about HIV care in the Philippines.",
+    label: "Common questions",
+    description: "Plain-language answers about HIV care in the Philippines.",
     icon: HelpCircle,
   },
   {
     to: "/about",
     label: "About this directory",
-    description: "Who maintains it and how it stays current.",
+    description: "Who maintains it, where the data comes from, and how it stays current.",
     icon: Search,
   },
 ];
