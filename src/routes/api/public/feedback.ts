@@ -32,6 +32,7 @@ const Schema = z.object({
     .or(z.literal("")),
   website: z.string().max(0, "Spam detected.").optional().or(z.literal("")), // honeypot
   client_started_at: z.number().int().positive(),
+  turnstile_token: z.string().min(10).max(4096),
 });
 
 type Body = z.infer<typeof Schema>;
