@@ -111,23 +111,34 @@ export const Route = createFileRoute("/facilities/$id")({
   component: FacilityDetail,
   notFoundComponent: () => (
     <div className="mx-auto max-w-2xl px-4 py-20 text-center">
-      <h1 className="text-2xl font-semibold text-on-surface">Facility not found</h1>
+      <h1 className="text-2xl font-semibold text-on-surface">We couldn't find that facility</h1>
       <p className="mt-2 text-sm text-on-surface-muted">
-        We couldn't find that facility in the directory.
+        The link may be outdated, or the listing may have moved. Browse the full directory to find
+        care near you.
       </p>
       <Link
         to="/facilities"
         className="state-layer mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-        Back to directory
+        Back to the directory
       </Link>
     </div>
   ),
   errorComponent: ({ error }) => (
-    <div className="mx-auto max-w-2xl px-4 py-20 text-center">
-      <h1 className="text-2xl font-semibold text-on-surface">Couldn't load facility</h1>
-      <p className="mt-2 text-sm text-on-surface-muted">{error.message}</p>
+    <div className="mx-auto max-w-2xl px-4 py-20 text-center" role="alert">
+      <h1 className="text-2xl font-semibold text-on-surface">This facility didn't load</h1>
+      <p className="mt-2 text-sm text-on-surface-muted">
+        Your connection may have dropped. Reload to try again, or browse the full directory.
+      </p>
+      <p className="mt-3 text-xs text-on-surface-muted/70">{error.message}</p>
+      <Link
+        to="/facilities"
+        className="state-layer mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground"
+      >
+        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+        Back to the directory
+      </Link>
     </div>
   ),
 });
