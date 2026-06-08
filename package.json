@@ -7,6 +7,8 @@
     "dev": "vite dev",
     "build": "vite build",
     "build:dev": "vite build --mode development",
+    "build:cpanel": "NITRO_PRESET=node-server vite build",
+    "start:cpanel": "NODE_ENV=production node dist/server/index.mjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."
