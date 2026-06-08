@@ -3,7 +3,7 @@
 @import "tw-animate-css";
 
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 /*
  * Material You / Android 14 inspired design system.
@@ -83,7 +83,7 @@
   --surface-container-high: oklch(0.94 0.012 17);
   --surface-container-highest: oklch(0.92 0.015 17);
   --on-surface: oklch(0.16 0.02 17);
-  --on-surface-muted: oklch(0.48 0.02 17);
+  --on-surface-muted: oklch(0.44 0.02 17);
   --outline: oklch(0.55 0.02 17);
   --outline-variant: oklch(0.86 0.01 17);
 

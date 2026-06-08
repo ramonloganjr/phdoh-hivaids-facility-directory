@@ -15,7 +15,7 @@ import { InstallPrompt } from "@/components/install-prompt";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { NotFound } from "@/components/not-found";
-import faviconAsset from "@/assets/favicon.png.asset.json";
+
 import ogImageAsset from "@/assets/open-graph.png.asset.json";
 import { getRequestOrigin } from "@/lib/origin.functions";
 
@@ -85,7 +85,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { name: "theme-color", content: "#FF2E51" },
+      { name: "theme-color", content: "#FFF5F6", media: "(prefers-color-scheme: light)" },
+      { name: "theme-color", content: "#1A0E11", media: "(prefers-color-scheme: dark)" },
       { name: "color-scheme", content: "light dark" },
       { name: "format-detection", content: "telephone=yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
@@ -93,7 +94,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "apple-mobile-web-app-title", content: "HIV Care PH" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "application-name", content: "HIV Care PH" },
-      { title: "Philippine HIV Care Philippines — DOH-Designated Facilities" },
+      { title: "HIV Care Philippines — DOH-Designated Facilities" },
       {
         name: "description",
         content:
@@ -104,7 +105,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
       { name: "googlebot", content: "index, follow" },
       // Open Graph
-      { property: "og:site_name", content: "PH HIV Care Philippines" },
+      { property: "og:site_name", content: "HIV Care Philippines" },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "en_PH" },
       { property: "og:image", content: ogImageUrl },
@@ -112,7 +113,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:image:type", content: "image/png" },
-      { property: "og:image:alt", content: "Philippine HIV Care Philippines — DOH-designated facilities" },
+      { property: "og:image:alt", content: "HIV Care Philippines — DOH-designated facilities" },
       { name: "twitter:image", content: ogImageUrl },
       // Twitter
       { name: "twitter:card", content: "summary_large_image" },
@@ -121,8 +122,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", type: "image/png", href: faviconAsset.url },
-      { rel: "apple-touch-icon", href: faviconAsset.url },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "apple-touch-icon", href: "/favicon.png" },
       { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "" },

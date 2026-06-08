@@ -1,7 +1,9 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2, ShieldCheck } from "lucide-react";
+import logoLight from "@/assets/logo-light.svg.asset.json";
+import logoDark from "@/assets/logo-dark.svg.asset.json";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -43,6 +45,15 @@ function AuthPage() {
 
   return (
     <div className="mx-auto flex max-w-md flex-col gap-6 px-4 py-16 sm:py-24">
+      <Link
+        to="/"
+        aria-label="HIV Care Philippines — home"
+        className="state-layer inline-flex w-fit items-center gap-2 rounded-full px-2 py-1.5"
+      >
+        <img src={logoLight.url} alt="" className="block h-12 w-auto dark:hidden" draggable={false} />
+        <img src={logoDark.url} alt="" className="hidden h-12 w-auto dark:block" draggable={false} />
+        <span className="sr-only">HIV Care Philippines</span>
+      </Link>
       <div className="flex items-center gap-2 text-primary">
         <ShieldCheck className="h-5 w-5" aria-hidden="true" />
         <span className="text-[11px] font-semibold uppercase tracking-[0.18em]">Admin sign-in</span>

@@ -44,7 +44,7 @@ export function ThemeToggle({ className }: { className?: string }) {
             data-no-color-transition
             className={cn(
               "state-layer relative z-10 inline-flex h-9 w-9 items-center justify-center rounded-full",
-              active ? "text-white" : "text-on-surface-muted hover:text-on-surface",
+              active ? "text-primary-foreground" : "text-on-surface-muted hover:text-on-surface",
             )}
 
           >
