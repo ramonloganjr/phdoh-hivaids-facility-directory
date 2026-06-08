@@ -100,6 +100,84 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_create_testimonial: {
+        Args: {
+          _attribution: string
+          _consent_verified_at?: string
+          _published?: boolean
+          _quote: string
+          _region?: string
+          _sort_order?: number
+        }
+        Returns: {
+          attribution: string
+          consent_verified_at: string | null
+          created_at: string
+          id: string
+          published: boolean
+          quote: string
+          region: string | null
+          sort_order: number
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "testimonials"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      admin_delete_testimonial: { Args: { _id: string }; Returns: boolean }
+      admin_has_access: { Args: never; Returns: boolean }
+      admin_list_testimonials: {
+        Args: never
+        Returns: {
+          attribution: string
+          consent_verified_at: string | null
+          created_at: string
+          id: string
+          published: boolean
+          quote: string
+          region: string | null
+          sort_order: number
+          updated_at: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "testimonials"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      admin_metric_events: {
+        Args: { _since: string }
+        Returns: {
+          dimension_key: string
+          dimension_value: string
+          event: string
+          occurred_at: string
+        }[]
+      }
+      admin_update_testimonial: {
+        Args: { _id: string; _patch: Json }
+        Returns: {
+          attribution: string
+          consent_verified_at: string | null
+          created_at: string
+          id: string
+          published: boolean
+          quote: string
+          region: string | null
+          sort_order: number
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "testimonials"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
