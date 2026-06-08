@@ -166,19 +166,38 @@ function NearMePage() {
         <div className="flex flex-col items-start gap-4">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary-foreground">
             <Sparkles className="h-3 w-3" aria-hidden="true" />
-            Location intelligence
+            Care close to you
           </span>
           <h1 className="text-3xl font-semibold tracking-tight text-on-surface sm:text-5xl">
-            HIV facilities near you
+            Find HIV care near you
           </h1>
           <p className="max-w-2xl text-sm text-on-surface-muted sm:text-base">
-            Share your location once and we'll surface the closest DOH-designated treatment hubs and
-            primary care facilities, ranked by real distance with one-tap directions to your device's
-            native maps app.
+            Share your location once and we'll show the closest DOH-designated treatment hubs and primary
+            care facilities, ranked by real distance with one-tap directions. Your location stays on your
+            device — nothing is sent to a server, and we don't track you.
           </p>
           <LocationCta geo={geo} onRequest={requestLocation} />
         </div>
       </header>
+
+      {/* Status strip — coverage transparency */}
+      <p className="mt-4 text-xs text-on-surface-muted">
+        Mapped so far:{" "}
+        <span className="font-medium text-on-surface tabular-nums">
+          {result.mapped.toLocaleString()} of {result.total.toLocaleString()}
+        </span>{" "}
+        facilities ({Math.round((result.mapped / result.total) * 100)}%).
+        {result.unmapped > 0 && (
+          <>
+            {" "}
+            {result.unmapped} are still being verified — you'll find them in the{" "}
+            <Link to="/facilities" className="font-medium text-primary underline-offset-2 hover:underline">
+              full directory
+            </Link>
+            .
+          </>
+        )}
+      </p>
 
       {/* Status strip — coverage transparency */}
       <p className="mt-4 text-xs text-on-surface-muted">
