@@ -166,6 +166,21 @@ function FeedbackPage() {
           </label>
         </div>
 
+        <div className="pt-1">
+          <Turnstile
+            onToken={(t) => {
+              setTurnstileToken(t);
+              setTurnstileError(false);
+            }}
+            onError={() => setTurnstileError(true)}
+          />
+          {turnstileError && (
+            <p className="mt-2 text-center text-xs text-on-surface-muted">
+              Verification couldn't load. Refresh the page and try again.
+            </p>
+          )}
+        </div>
+
         {state.kind === "error" && (
           <p
             role="alert"
