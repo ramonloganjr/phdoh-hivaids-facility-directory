@@ -27,13 +27,12 @@ function AboutPage() {
         About this directory
       </p>
       <h1 className="mt-3 text-3xl font-semibold tracking-tight text-on-surface sm:text-4xl">
-        A faithful, accessible mirror of DOH's HIV facility directory.
+        A faithful, accessible mirror of the DOH HIV facility directory.
       </h1>
       <p className="mt-4 text-base leading-relaxed text-on-surface-muted">
-        This site reproduces the official directory of DOH-designated HIV treatment hubs
-        and primary HIV care facilities in the Philippines, optimized for fast lookup on
-        any device. All data is sourced verbatim — names, addresses, contacts, and
-        designations — from the Department Circular below.
+        Everything you see here comes straight from the Department of Health — every name,
+        address, contact, and designation. We just made it easier to search and faster to use on
+        any device, especially when you're on the go.
       </p>
 
       <div className="mt-8 grid gap-3 sm:grid-cols-3">
