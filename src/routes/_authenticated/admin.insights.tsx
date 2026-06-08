@@ -2,8 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { Activity, Download, Loader2, RefreshCw, BookOpen, LogOut } from "lucide-react";
+import { Activity, Download, Loader2, RefreshCw, BookOpen, LogOut, Rocket } from "lucide-react";
 import { getAdminInsights, exportMonthlyImpact } from "@/lib/admin.functions";
+import { triggerVercelRedeploy } from "@/lib/deploy.functions";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "@tanstack/react-router";
 
@@ -21,8 +22,11 @@ function AdminInsightsPage() {
   const navigate = useNavigate();
   const insightsFn = useServerFn(getAdminInsights);
   const exportFn = useServerFn(exportMonthlyImpact);
+  const deployFn = useServerFn(triggerVercelRedeploy);
   const [windowDays, setWindowDays] = useState<7 | 30 | 90>(30);
   const [exporting, setExporting] = useState(false);
+  const [deploying, setDeploying] = useState(false);
+  const [deployMsg, setDeployMsg] = useState<{ kind: "ok" | "err"; text: string } | null>(null);
 
   const { data, isLoading, error, refetch, isRefetching } = useQuery({
     queryKey: ["admin-insights", windowDays],
@@ -52,6 +56,27 @@ function AdminInsightsPage() {
   const signOut = async () => {
     await supabase.auth.signOut();
     navigate({ to: "/auth" });
+  };
+
+  const redeploy = async () => {
+    if (deploying) return;
+    const confirmed = window.confirm(
+      "Trigger a new Vercel deployment now? The live site will rebuild in a few minutes."
+    );
+    if (!confirmed) return;
+    setDeploying(true);
+    setDeployMsg(null);
+    try {
+      const res = await deployFn();
+      setDeployMsg({
+        kind: "ok",
+        text: `Deploy started at ${new Date(res.triggeredAt).toLocaleTimeString()}. Watch progress in Vercel.`,
+      });
+    } catch (err) {
+      setDeployMsg({ kind: "err", text: (err as Error).message });
+    } finally {
+      setDeploying(false);
+    }
   };
 
   return (
@@ -125,7 +150,34 @@ function AdminInsightsPage() {
           )}
           Last-month CSV
         </button>
+        <button
+          type="button"
+          onClick={redeploy}
+          disabled={deploying}
+          className="state-layer press inline-flex items-center gap-1.5 rounded-full bg-surface-container-highest px-3.5 py-2 text-xs font-semibold text-on-surface disabled:opacity-70"
+          title="Trigger a new Vercel deployment"
+        >
+          {deploying ? (
+            <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
+          ) : (
+            <Rocket className="h-3.5 w-3.5" aria-hidden="true" />
+          )}
+          {deploying ? "Triggering…" : "Redeploy to Vercel"}
+        </button>
       </div>
+
+      {deployMsg && (
+        <p
+          role="status"
+          className={`mt-3 rounded-2xl px-4 py-2.5 text-xs ${
+            deployMsg.kind === "ok"
+              ? "bg-primary-container text-on-primary-container"
+              : "bg-surface-container-high text-on-surface"
+          }`}
+        >
+          {deployMsg.text}
+        </p>
+      )}
 
       {isLoading && (
         <p className="mt-10 text-sm text-on-surface-muted">Loading the latest counts…</p>
