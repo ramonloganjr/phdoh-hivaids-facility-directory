@@ -82,7 +82,8 @@ function NearMePage() {
     if (typeof navigator === "undefined" || !("geolocation" in navigator)) {
       setGeo({
         status: "error",
-        message: "Geolocation isn't supported in this browser. Try a recent version of Chrome, Safari, or Firefox.",
+        message:
+          "This browser can't share your location. Try a recent version of Chrome, Safari, or Firefox — or browse the full directory instead.",
       });
       return;
     }
