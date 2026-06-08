@@ -38,7 +38,7 @@ export default defineConfig({
       },
     }),
     nitro({
-      preset: process.env.NITRO_PRESET ?? "node-server",
+      preset: process.env.NITRO_PRESET ?? (process.env.VERCEL ? "vercel" : "node-server"),
       output: {
         dir: "dist",
         serverDir: "dist/server",
