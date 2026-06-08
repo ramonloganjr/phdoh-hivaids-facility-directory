@@ -60,8 +60,8 @@
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
 
-  --font-display: "Roboto Flex", "Google Sans Text", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Google Sans Text", "Roboto Flex", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Google Sans Flex", "Google Sans Text", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Google Sans Flex", "Google Sans Text", ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 
   /* Material standard easing + duration */
