@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      feedback: {
+        Row: {
+          created_at: string
+          id: string
+          ip_hash: string | null
+          message: string
+          region: string | null
+          reviewed_at: string | null
+          reviewer_id: string | null
+          status: Database["public"]["Enums"]["feedback_status"]
+          ua_hash: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ip_hash?: string | null
+          message: string
+          region?: string | null
+          reviewed_at?: string | null
+          reviewer_id?: string | null
+          status?: Database["public"]["Enums"]["feedback_status"]
+          ua_hash?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ip_hash?: string | null
+          message?: string
+          region?: string | null
+          reviewed_at?: string | null
+          reviewer_id?: string | null
+          status?: Database["public"]["Enums"]["feedback_status"]
+          ua_hash?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       metric_events: {
         Row: {
           dimension_key: string | null
@@ -110,6 +149,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
+      feedback_status: "pending" | "approved" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -238,6 +278,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "moderator", "user"],
+      feedback_status: ["pending", "approved", "rejected"],
     },
   },
 } as const
