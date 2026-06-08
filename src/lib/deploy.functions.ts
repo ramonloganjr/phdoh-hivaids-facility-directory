@@ -34,16 +34,9 @@ export const triggerVercelRedeploy = createServerFn({ method: "POST" })
       throw new Error(`Vercel responded ${res.status}: ${text.slice(0, 200)}`);
     }
 
-    let job: unknown = null;
-    try {
-      job = JSON.parse(text);
-    } catch {
-      job = { raw: text };
-    }
-
     return {
-      ok: true,
+      ok: true as const,
       triggeredAt: new Date().toISOString(),
-      job,
+      response: text.slice(0, 500),
     };
   });
