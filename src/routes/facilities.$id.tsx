@@ -17,22 +17,31 @@ import { cn } from "@/lib/utils";
 import { ShareBar } from "@/components/share-bar";
 
 export const Route = createFileRoute("/facilities/$id")({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     const f = findFacility(params.id);
     if (!f) throw notFound();
-    return { facility: f };
+    let origin = "";
+    try {
+      const { getRequestOrigin } = await import("@/lib/origin.functions");
+      origin = await getRequestOrigin();
+    } catch {
+      origin = "";
+    }
+    return { facility: f, origin };
   },
   head: ({ loaderData, params }) => {
     const f = loaderData?.facility;
+    const origin = loaderData?.origin ?? "";
     const title = f
       ? `${f.name} — ${REGION_LABELS[f.region]} | PH HIV Care Directory`
       : "Facility — PH HIV Care Directory";
     const desc = f
       ? `${f.serviceType} in ${REGION_LABELS[f.region]}. ${f.address}`
       : "DOH-designated HIV facility details.";
-    const ogImage = f
+    const ogPath = f
       ? `/api/og?eyebrow=${encodeURIComponent(REGION_LABELS[f.region])}&title=${encodeURIComponent(f.name)}&subtitle=${encodeURIComponent(`${f.serviceType} · ${f.address}`)}`
       : `/api/og?title=${encodeURIComponent(title)}`;
+    const ogImage = origin ? `${origin}${ogPath}` : ogPath;
     return {
       meta: [
         { title },

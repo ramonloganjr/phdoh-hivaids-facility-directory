@@ -16,10 +16,20 @@ import {
   transmissionMode,
   reportMeta,
 } from "@/data/surveillance";
+import { getRequestOrigin } from "@/lib/origin.functions";
 
 export const Route = createFileRoute("/")({
-  head: () => {
-    const ogImage = `/api/og?eyebrow=${encodeURIComponent("DOH PHILIPPINES")}&title=${encodeURIComponent("Philippine HIV Care Directory")}&subtitle=${encodeURIComponent("All 338 DOH-designated treatment hubs and primary care facilities, in one searchable directory.")}`;
+  loader: async () => {
+    try {
+      return { origin: await getRequestOrigin() };
+    } catch {
+      return { origin: "" };
+    }
+  },
+  head: ({ loaderData }) => {
+    const origin = loaderData?.origin ?? "";
+    const ogPath = `/api/og?eyebrow=${encodeURIComponent("DOH PHILIPPINES")}&title=${encodeURIComponent("Philippine HIV Care Directory")}&subtitle=${encodeURIComponent("All 338 DOH-designated treatment hubs and primary care facilities, in one searchable directory.")}`;
+    const ogImage = origin ? `${origin}${ogPath}` : ogPath;
     return {
       meta: [
         { title: "Philippine HIV Care Directory — DOH-Designated Facilities" },
