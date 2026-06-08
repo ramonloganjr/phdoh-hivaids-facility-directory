@@ -488,18 +488,18 @@ function IntroPanel() {
     <section className="mt-8 grid gap-4 sm:grid-cols-3">
       {[
         {
-          title: "Real distance",
-          body: "Great-circle distance from your device to each facility, ranked nearest first.",
+          title: "Real distance, not guesses",
+          body: "We measure the straight-line distance from your device to each facility and rank from nearest to farthest.",
           icon: Compass,
         },
         {
-          title: "Smart clusters",
-          body: "Results grouped by walking, nearby, citywide, regional, and farther afield bands.",
+          title: "Grouped so you can decide",
+          body: "Results are clustered into walkable, nearby, citywide, and regional bands — pick what fits your day.",
           icon: Sparkles,
         },
         {
-          title: "Native directions",
-          body: "Open turn-by-turn navigation in Apple Maps, Google Maps, or your default app.",
+          title: "One tap to directions",
+          body: "Open turn-by-turn navigation in your phone's maps app. No extra logins, no tracking.",
           icon: Navigation,
         },
       ].map((c) => (
