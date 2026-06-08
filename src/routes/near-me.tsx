@@ -439,7 +439,7 @@ function RecommendationCard({
               id="recommendation-h"
               className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary"
             >
-              Closest treatment hub
+              Suggested for you · closest treatment hub
             </p>
             <h2 className="mt-1 text-lg font-semibold leading-snug text-on-surface sm:text-xl">
               {facility.name}
