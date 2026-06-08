@@ -24,12 +24,11 @@ type Dimension = { key: string; value: string } | undefined;
 
 function userOptedOut(): boolean {
   if (typeof navigator === "undefined") return false;
-  const dnt =
-    // @ts-expect-error: legacy
-    navigator.doNotTrack ?? (typeof window !== "undefined" ? (window as any).doNotTrack : null);
-  if (dnt === "1" || dnt === "yes" || dnt === true) return true;
-  // Global Privacy Control
-  if ((navigator as any).globalPrivacyControl === true) return true;
+  const nav = navigator as Navigator & { doNotTrack?: string; globalPrivacyControl?: boolean };
+  const win = typeof window !== "undefined" ? (window as Window & { doNotTrack?: string }) : undefined;
+  const dnt = nav.doNotTrack ?? win?.doNotTrack ?? null;
+  if (dnt === "1" || dnt === "yes") return true;
+  if (nav.globalPrivacyControl === true) return true;
   return false;
 }
 
