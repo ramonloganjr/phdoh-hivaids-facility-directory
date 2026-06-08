@@ -4,6 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Loader2, ShieldCheck } from "lucide-react";
 import logoLight from "@/assets/logo-light.svg.asset.json";
 import logoDark from "@/assets/logo-dark.svg.asset.json";
+import { useServerFn } from "@tanstack/react-start";
+import { checkIsAdmin } from "@/lib/admin-auth.functions";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -18,28 +20,54 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
+  const isAdminFn = useServerFn(checkIsAdmin);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "SIGNED_IN") navigate({ to: "/admin/insights" });
-    });
-    return () => sub.subscription.unsubscribe();
-  }, [navigate]);
+    let cancelled = false;
+    (async () => {
+      const { data } = await supabase.auth.getUser();
+      if (cancelled || !data.user) return;
+      try {
+        const { isAdmin } = await isAdminFn();
+        if (!cancelled && isAdmin) navigate({ to: "/admin/insights" });
+      } catch {
+        /* not admin — stay on sign-in */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [navigate, isAdminFn]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    setLoading(false);
-    if (error) {
+    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+    if (signInError) {
+      setLoading(false);
       setError("That email and password don't match. Check the address, then try again.");
       return;
     }
+    try {
+      const { isAdmin } = await isAdminFn();
+      if (!isAdmin) {
+        await supabase.auth.signOut();
+        setLoading(false);
+        setError("This account doesn't have admin access. Contact the site owner if that's wrong.");
+        return;
+      }
+    } catch {
+      await supabase.auth.signOut();
+      setLoading(false);
+      setError("We couldn't verify your admin access. Try again in a moment.");
+      return;
+    }
+    setLoading(false);
     navigate({ to: "/admin/insights" });
   };
 
