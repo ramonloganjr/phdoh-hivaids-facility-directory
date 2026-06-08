@@ -201,16 +201,32 @@ function FacilityDetail() {
           <div className="mt-6 grid gap-6 sm:grid-cols-2">
             <Section title="Address" icon={MapPin}>
               <p className="text-sm leading-relaxed text-on-surface">{f.address}</p>
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                  `${f.name}, ${f.address}`,
-                )}`}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
-              >
-                Open in Maps <ExternalLink className="h-3 w-3" aria-hidden="true" />
-              </a>
+              <div className="mt-3 flex flex-wrap gap-2">
+                <a
+                  href={directionsHref({ name: f.name, address: f.address })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    openDirections({ name: f.name, address: f.address });
+                  }}
+                  className="state-layer press inline-flex min-h-[2.25rem] items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-xs font-medium text-primary-foreground"
+                  aria-label={`Get directions to ${f.name}`}
+                >
+                  <Navigation className="h-3.5 w-3.5" aria-hidden="true" />
+                  Directions
+                </a>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                    `${f.name}, ${f.address}`,
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="state-layer press inline-flex min-h-[2.25rem] items-center gap-1.5 rounded-full bg-surface-container-high px-4 py-1.5 text-xs font-medium text-on-surface"
+                >
+                  Open in Maps <ExternalLink className="h-3 w-3" aria-hidden="true" />
+                </a>
+              </div>
             </Section>
 
             {f.contacts.length > 0 && (
