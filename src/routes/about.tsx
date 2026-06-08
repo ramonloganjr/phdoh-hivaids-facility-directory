@@ -5,13 +5,13 @@ import { FACILITY_COUNT, TREATMENT_HUB_COUNT, PRIMARY_CARE_COUNT } from "@/data/
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About the data — PH HIV Care Directory" },
+      { title: "About the data — PH HIV Care Philippines" },
       {
         name: "description",
         content:
-          "Source, legal basis, and methodology for the Philippine HIV Care Directory — mirrored from DOH Department Circular 2026-0065.",
+          "Source, legal basis, and methodology for the Philippine HIV Care Philippines — mirrored from DOH Department Circular 2026-0065.",
       },
-      { property: "og:title", content: "About the data — PH HIV Care Directory" },
+      { property: "og:title", content: "About the data — PH HIV Care Philippines" },
       { property: "og:description", content: "Source, legal basis, and methodology." },
       { property: "og:url", content: "/about" },
     ],

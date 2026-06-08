@@ -18,7 +18,7 @@ export const Route = createFileRoute("/api/og")({
     handlers: {
       GET: async ({ request }) => {
         const u = new URL(request.url);
-        const title = clamp(u.searchParams.get("title") ?? "Philippine HIV Care Directory", 140);
+        const title = clamp(u.searchParams.get("title") ?? "Philippine HIV Care Philippines", 140);
         const subtitle = clamp(
           u.searchParams.get("subtitle") ??
             "All 338 DOH-designated treatment hubs and primary care facilities.",
@@ -112,7 +112,7 @@ function renderSvg(opts: { title: string; subtitle: string; eyebrow: string }) {
 
   <text x="140" y="105" font-family="'Helvetica Neue', Arial, sans-serif"
         font-size="28" font-weight="700" fill="#ffffff" letter-spacing="-0.5">
-    HIV Care Directory
+    HIV Care Philippines
   </text>
   <text x="140" y="135" font-family="'Helvetica Neue', Arial, sans-serif"
         font-size="18" font-weight="500" fill="#FF8FA0" letter-spacing="3">

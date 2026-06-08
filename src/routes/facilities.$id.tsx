@@ -34,8 +34,8 @@ export const Route = createFileRoute("/facilities/$id")({
     const f = loaderData?.facility;
     const origin = loaderData?.origin ?? "";
     const title = f
-      ? `${f.name} — ${REGION_LABELS[f.region]} | PH HIV Care Directory`
-      : "Facility — PH HIV Care Directory";
+      ? `${f.name} — ${REGION_LABELS[f.region]} | PH HIV Care Philippines`
+      : "Facility — PH HIV Care Philippines";
     const desc = f
       ? `${f.serviceType} in ${REGION_LABELS[f.region]}. ${f.address}`
       : "DOH-designated HIV facility details.";

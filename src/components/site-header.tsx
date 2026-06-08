@@ -26,7 +26,7 @@ export function SiteHeader() {
         <Link
           to="/"
           className="state-layer flex items-center gap-2.5 rounded-full px-2 py-1.5 text-on-surface"
-          aria-label="HIV Care Directory — home"
+          aria-label="HIV Care Philippines — home"
         >
           <span className="relative inline-block h-12 w-auto sm:h-14" aria-hidden="true">
             <img
@@ -42,7 +42,7 @@ export function SiteHeader() {
               draggable={false}
             />
           </span>
-          <span className="sr-only">HIV Care Directory</span>
+          <span className="sr-only">HIV Care Philippines</span>
         </Link>
 
         <nav className="ml-auto hidden items-center gap-1 sm:flex" aria-label="Primary">

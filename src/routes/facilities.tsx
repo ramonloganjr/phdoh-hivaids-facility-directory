@@ -45,13 +45,13 @@ export const Route = createFileRoute("/facilities")({
   },
   head: () => ({
     meta: [
-      { title: "All HIV facilities — Philippine HIV Care Directory" },
+      { title: "All HIV facilities — Philippine HIV Care Philippines" },
       {
         name: "description",
         content:
           "Searchable list of 338 DOH-designated HIV treatment hubs and primary care facilities across the Philippines.",
       },
-      { property: "og:title", content: "All HIV facilities — PH HIV Care Directory" },
+      { property: "og:title", content: "All HIV facilities — PH HIV Care Philippines" },
       {
         property: "og:description",
         content: "Search and filter the full DOH HIV facility directory.",

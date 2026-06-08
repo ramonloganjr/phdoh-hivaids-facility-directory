@@ -16,7 +16,7 @@ export function SiteFooter() {
               draggable={false}
             />
             <div className="space-y-3">
-              <p className="text-sm font-semibold text-primary">HIV Care Directory</p>
+              <p className="text-sm font-semibold text-primary">HIV Care Philippines</p>
               <p className="max-w-md text-sm leading-relaxed text-on-surface-muted">
                 A community-built mirror of{" "}
                 <span className="font-semibold text-on-surface">
