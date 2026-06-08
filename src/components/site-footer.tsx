@@ -36,9 +36,11 @@ export function SiteFooter() {
             <FooterLink to="/impact">Impact</FooterLink>
             <FooterLink to="/faq">FAQ</FooterLink>
             <FooterLink to="/about">About</FooterLink>
+            <FooterLink to="/feedback">Feedback</FooterLink>
             <FooterLink to="/sitemap">Sitemap</FooterLink>
             <FooterLink to="/terms">Terms</FooterLink>
             <FooterLink to="/privacy">Privacy</FooterLink>
+
           </nav>
         </div>
         <div className="mt-10 flex flex-col items-start gap-2 border-t border-outline-variant pt-6 text-xs leading-relaxed text-on-surface-muted">
@@ -75,10 +77,12 @@ function FooterLink({
     | "/impact"
     | "/faq"
     | "/about"
+    | "/feedback"
     | "/sitemap"
     | "/terms"
     | "/privacy";
   children: React.ReactNode;
+
 }) {
   return (
     <Link

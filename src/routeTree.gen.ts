@@ -16,6 +16,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NearMeRouteImport } from './routes/near-me'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as ImpactRouteImport } from './routes/impact'
+import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as FacilitiesRouteImport } from './routes/facilities'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -24,8 +25,10 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FacilitiesIdRouteImport } from './routes/facilities.$id'
 import { Route as ApiOgRouteImport } from './routes/api.og'
+import { Route as ApiPublicFeedbackRouteImport } from './routes/api/public/feedback'
 import { Route as AuthenticatedAdminStoriesRouteImport } from './routes/_authenticated/admin.stories'
 import { Route as AuthenticatedAdminInsightsRouteImport } from './routes/_authenticated/admin.insights'
+import { Route as AuthenticatedAdminFeedbackRouteImport } from './routes/_authenticated/admin.feedback'
 import { Route as ApiPublicMetricsIngestRouteImport } from './routes/api/public/metrics.ingest'
 
 const TermsRoute = TermsRouteImport.update({
@@ -61,6 +64,11 @@ const InsightsRoute = InsightsRouteImport.update({
 const ImpactRoute = ImpactRouteImport.update({
   id: '/impact',
   path: '/impact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeedbackRoute = FeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -102,6 +110,11 @@ const ApiOgRoute = ApiOgRouteImport.update({
   path: '/api/og',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicFeedbackRoute = ApiPublicFeedbackRouteImport.update({
+  id: '/api/public/feedback',
+  path: '/api/public/feedback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminStoriesRoute =
   AuthenticatedAdminStoriesRouteImport.update({
     id: '/admin/stories',
@@ -112,6 +125,12 @@ const AuthenticatedAdminInsightsRoute =
   AuthenticatedAdminInsightsRouteImport.update({
     id: '/admin/insights',
     path: '/admin/insights',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminFeedbackRoute =
+  AuthenticatedAdminFeedbackRouteImport.update({
+    id: '/admin/feedback',
+    path: '/admin/feedback',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const ApiPublicMetricsIngestRoute = ApiPublicMetricsIngestRouteImport.update({
@@ -126,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/facilities': typeof FacilitiesRouteWithChildren
   '/faq': typeof FaqRoute
+  '/feedback': typeof FeedbackRoute
   '/impact': typeof ImpactRoute
   '/insights': typeof InsightsRoute
   '/near-me': typeof NearMeRoute
@@ -135,8 +155,10 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
+  '/admin/feedback': typeof AuthenticatedAdminFeedbackRoute
   '/admin/insights': typeof AuthenticatedAdminInsightsRoute
   '/admin/stories': typeof AuthenticatedAdminStoriesRoute
+  '/api/public/feedback': typeof ApiPublicFeedbackRoute
   '/api/public/metrics/ingest': typeof ApiPublicMetricsIngestRoute
 }
 export interface FileRoutesByTo {
@@ -145,6 +167,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/facilities': typeof FacilitiesRouteWithChildren
   '/faq': typeof FaqRoute
+  '/feedback': typeof FeedbackRoute
   '/impact': typeof ImpactRoute
   '/insights': typeof InsightsRoute
   '/near-me': typeof NearMeRoute
@@ -154,8 +177,10 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
+  '/admin/feedback': typeof AuthenticatedAdminFeedbackRoute
   '/admin/insights': typeof AuthenticatedAdminInsightsRoute
   '/admin/stories': typeof AuthenticatedAdminStoriesRoute
+  '/api/public/feedback': typeof ApiPublicFeedbackRoute
   '/api/public/metrics/ingest': typeof ApiPublicMetricsIngestRoute
 }
 export interface FileRoutesById {
@@ -166,6 +191,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/facilities': typeof FacilitiesRouteWithChildren
   '/faq': typeof FaqRoute
+  '/feedback': typeof FeedbackRoute
   '/impact': typeof ImpactRoute
   '/insights': typeof InsightsRoute
   '/near-me': typeof NearMeRoute
@@ -175,8 +201,10 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
+  '/_authenticated/admin/feedback': typeof AuthenticatedAdminFeedbackRoute
   '/_authenticated/admin/insights': typeof AuthenticatedAdminInsightsRoute
   '/_authenticated/admin/stories': typeof AuthenticatedAdminStoriesRoute
+  '/api/public/feedback': typeof ApiPublicFeedbackRoute
   '/api/public/metrics/ingest': typeof ApiPublicMetricsIngestRoute
 }
 export interface FileRouteTypes {
@@ -187,6 +215,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/facilities'
     | '/faq'
+    | '/feedback'
     | '/impact'
     | '/insights'
     | '/near-me'
@@ -196,8 +225,10 @@ export interface FileRouteTypes {
     | '/terms'
     | '/api/og'
     | '/facilities/$id'
+    | '/admin/feedback'
     | '/admin/insights'
     | '/admin/stories'
+    | '/api/public/feedback'
     | '/api/public/metrics/ingest'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -206,6 +237,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/facilities'
     | '/faq'
+    | '/feedback'
     | '/impact'
     | '/insights'
     | '/near-me'
@@ -215,8 +247,10 @@ export interface FileRouteTypes {
     | '/terms'
     | '/api/og'
     | '/facilities/$id'
+    | '/admin/feedback'
     | '/admin/insights'
     | '/admin/stories'
+    | '/api/public/feedback'
     | '/api/public/metrics/ingest'
   id:
     | '__root__'
@@ -226,6 +260,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/facilities'
     | '/faq'
+    | '/feedback'
     | '/impact'
     | '/insights'
     | '/near-me'
@@ -235,8 +270,10 @@ export interface FileRouteTypes {
     | '/terms'
     | '/api/og'
     | '/facilities/$id'
+    | '/_authenticated/admin/feedback'
     | '/_authenticated/admin/insights'
     | '/_authenticated/admin/stories'
+    | '/api/public/feedback'
     | '/api/public/metrics/ingest'
   fileRoutesById: FileRoutesById
 }
@@ -247,6 +284,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   FacilitiesRoute: typeof FacilitiesRouteWithChildren
   FaqRoute: typeof FaqRoute
+  FeedbackRoute: typeof FeedbackRoute
   ImpactRoute: typeof ImpactRoute
   InsightsRoute: typeof InsightsRoute
   NearMeRoute: typeof NearMeRoute
@@ -255,6 +293,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   ApiOgRoute: typeof ApiOgRoute
+  ApiPublicFeedbackRoute: typeof ApiPublicFeedbackRoute
   ApiPublicMetricsIngestRoute: typeof ApiPublicMetricsIngestRoute
 }
 
@@ -307,6 +346,13 @@ declare module '@tanstack/react-router' {
       path: '/impact'
       fullPath: '/impact'
       preLoaderRoute: typeof ImpactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feedback': {
+      id: '/feedback'
+      path: '/feedback'
+      fullPath: '/feedback'
+      preLoaderRoute: typeof FeedbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -365,6 +411,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiOgRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/feedback': {
+      id: '/api/public/feedback'
+      path: '/api/public/feedback'
+      fullPath: '/api/public/feedback'
+      preLoaderRoute: typeof ApiPublicFeedbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin/stories': {
       id: '/_authenticated/admin/stories'
       path: '/admin/stories'
@@ -379,6 +432,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminInsightsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/feedback': {
+      id: '/_authenticated/admin/feedback'
+      path: '/admin/feedback'
+      fullPath: '/admin/feedback'
+      preLoaderRoute: typeof AuthenticatedAdminFeedbackRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/metrics/ingest': {
       id: '/api/public/metrics/ingest'
       path: '/api/public/metrics/ingest'
@@ -390,11 +450,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminFeedbackRoute: typeof AuthenticatedAdminFeedbackRoute
   AuthenticatedAdminInsightsRoute: typeof AuthenticatedAdminInsightsRoute
   AuthenticatedAdminStoriesRoute: typeof AuthenticatedAdminStoriesRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminFeedbackRoute: AuthenticatedAdminFeedbackRoute,
   AuthenticatedAdminInsightsRoute: AuthenticatedAdminInsightsRoute,
   AuthenticatedAdminStoriesRoute: AuthenticatedAdminStoriesRoute,
 }
@@ -421,6 +483,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   FacilitiesRoute: FacilitiesRouteWithChildren,
   FaqRoute: FaqRoute,
+  FeedbackRoute: FeedbackRoute,
   ImpactRoute: ImpactRoute,
   InsightsRoute: InsightsRoute,
   NearMeRoute: NearMeRoute,
@@ -429,6 +492,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   ApiOgRoute: ApiOgRoute,
+  ApiPublicFeedbackRoute: ApiPublicFeedbackRoute,
   ApiPublicMetricsIngestRoute: ApiPublicMetricsIngestRoute,
 }
 export const routeTree = rootRouteImport
