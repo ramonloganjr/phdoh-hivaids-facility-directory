@@ -304,6 +304,7 @@ function TrendCard() {
             strokeWidth={2.5}
             fill="url(#trendFill)"
             activeDot={{ r: 5, strokeWidth: 0 }}
+            isAnimationActive={false}
           />
         </AreaChart>
       </ResponsiveContainer>
@@ -348,7 +349,7 @@ function TransmissionCard() {
               />
             )}
           />
-          <Bar dataKey="count" radius={[0, 8, 8, 0]} fill={COLORS.primary} />
+          <Bar dataKey="count" radius={[0, 8, 8, 0]} fill={COLORS.primary} isAnimationActive={false} />
         </BarChart>
       </ResponsiveContainer>
     </ChartCard>
@@ -380,7 +381,7 @@ function AgeCard() {
               />
             )}
           />
-          <Bar dataKey="pct" radius={[8, 8, 0, 0]}>
+          <Bar dataKey="pct" radius={[8, 8, 0, 0]} isAnimationActive={false}>
             {ageDistribution.map((_, i) => (
               <Cell
                 key={i}
@@ -411,6 +412,7 @@ function SexCard() {
             paddingAngle={3}
             stroke="var(--color-surface-container)"
             strokeWidth={4}
+            isAnimationActive={false}
           >
             <Cell fill={COLORS.primary} />
             <Cell fill={COLORS.tertiary} />
