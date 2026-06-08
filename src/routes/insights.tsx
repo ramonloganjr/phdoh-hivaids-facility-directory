@@ -381,7 +381,7 @@ function AgeCard() {
               />
             )}
           />
-          <Bar dataKey="pct" radius={[8, 8, 0, 0]}>
+          <Bar dataKey="pct" radius={[8, 8, 0, 0]} isAnimationActive={false}>
             {ageDistribution.map((_, i) => (
               <Cell
                 key={i}
