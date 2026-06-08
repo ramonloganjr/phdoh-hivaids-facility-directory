@@ -2,6 +2,21 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { getPublicImpact, type PublicImpact } from "@/lib/impact.functions";
 
+const nf = new Intl.NumberFormat("en-US");
+const dtf = new Intl.DateTimeFormat("en-PH", {
+  dateStyle: "medium",
+  timeStyle: "short",
+  timeZone: "Asia/Manila",
+});
+const fmtNum = (n: number) => nf.format(n);
+const fmtDate = (iso: string) => {
+  try {
+    return dtf.format(new Date(iso));
+  } catch {
+    return iso;
+  }
+};
+
 const impactQuery = queryOptions({
   queryKey: ["public-impact"],
   queryFn: () => getPublicImpact(),
