@@ -174,13 +174,13 @@ function FacilitiesPage() {
     <div className="mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6 sm:pt-10">
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-semibold tracking-tight text-on-surface sm:text-4xl">
-          Facility directory
+          Browse HIV care facilities
         </h1>
         <p className="text-sm text-on-surface-muted">
-          {filtered.length.toLocaleString()} of {FACILITIES.length.toLocaleString()} facilities
+          Showing {filtered.length.toLocaleString()} of {FACILITIES.length.toLocaleString()} facilities
           {search.region ? ` in ${REGION_LABELS[search.region]}` : ""}
           {search.service ? ` · ${SERVICE_MAP[search.service]}s` : ""}
-          {search.inpatient ? ` · with inpatient services` : ""}
+          {search.inpatient ? ` · with inpatient services` : ""}.
         </p>
       </div>
 
