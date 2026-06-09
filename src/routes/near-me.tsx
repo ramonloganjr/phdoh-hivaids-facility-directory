@@ -467,10 +467,12 @@ function RecommendationCard({
   facility,
   distanceKm,
   outsideRange,
+  precision,
 }: {
   facility: (typeof FACILITIES)[number];
   distanceKm: number;
   outsideRange: boolean;
+  precision: "precise" | "approx";
 }) {
   return (
     <section
@@ -500,10 +502,20 @@ function RecommendationCard({
               <span className="line-clamp-1">{facility.address}</span>
             </p>
             <p className="mt-2 text-sm text-on-surface">
-              <span className="font-semibold tabular-nums">{formatKm(distanceKm)}</span>{" "}
+              <span className="font-semibold tabular-nums">
+                {precision === "approx" ? "~" : ""}{formatKm(distanceKm)}
+              </span>{" "}
               <span className="text-on-surface-muted">
                 away · about {driveMinutes(distanceKm)} min by car
               </span>
+              {precision === "approx" && (
+                <span
+                  className="ml-1 inline-flex items-center rounded-full bg-surface px-2 py-0.5 text-[10px] font-medium text-on-surface-muted"
+                  title="Distance is approximate (city-level coordinate). Tap Directions for precise routing."
+                >
+                  Approximate
+                </span>
+              )}
               {outsideRange && (
                 <span className="ml-1 inline-flex items-center rounded-full bg-primary-container px-2 py-0.5 text-[10px] font-medium text-on-primary-container">
                   Beyond your selected range
