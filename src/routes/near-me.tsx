@@ -258,6 +258,7 @@ function NearMePage() {
             <RecommendationCard
               facility={recommendation.f}
               distanceKm={recommendation.km}
+              precision={recommendation.precision}
               outsideRange={recommendation.km > (PROXIMITY_RANGES.find((r) => r.id === range)?.maxKm ?? Infinity)}
             />
           )}
