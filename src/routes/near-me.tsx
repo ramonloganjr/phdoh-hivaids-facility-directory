@@ -18,6 +18,7 @@ import { FacilityCard } from "@/components/facility-card";
 import {
   haversineKm,
   bandFor,
+  isInPhilippines,
   PROXIMITY_BANDS,
   PROXIMITY_RANGES,
   formatKm,
