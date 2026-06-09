@@ -28,8 +28,7 @@ export const Route = createFileRoute("/")({
   },
   head: ({ loaderData }) => {
     const origin = loaderData?.origin ?? "";
-    const ogPath = `/api/og?eyebrow=${encodeURIComponent("DOH PHILIPPINES")}&title=${encodeURIComponent("HIV Care Philippines")}&subtitle=${encodeURIComponent("All 338 DOH-designated treatment hubs and primary care facilities, in one searchable directory.")}`;
-    const ogImage = origin ? `${origin}${ogPath}` : ogPath;
+    const ogImage = origin ? `${origin}/open-graph.png` : "/open-graph.png";
     return {
       meta: [
         { title: "HIV Care Philippines — DOH-Designated Facilities" },
@@ -48,7 +47,7 @@ export const Route = createFileRoute("/")({
         { property: "og:image", content: ogImage },
         { property: "og:image:width", content: "1200" },
         { property: "og:image:height", content: "630" },
-        { property: "og:image:type", content: "image/svg+xml" },
+        { property: "og:image:type", content: "image/png" },
         { name: "twitter:image", content: ogImage },
       ],
       links: [{ rel: "canonical", href: "/" }],
