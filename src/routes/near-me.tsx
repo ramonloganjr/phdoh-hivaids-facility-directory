@@ -113,7 +113,9 @@ function NearMePage() {
                 : "We couldn't read your location. Try again, or browse the full directory instead.";
         setGeo({ status: "error", message, code: err.code });
       },
-      { enableHighAccuracy: true, maximumAge: 60_000, timeout: 12_000 },
+      // Force a fresh fix (no cached position) and prefer GPS/Wi-Fi triangulation
+      // so distance rankings reflect the user's actual current location.
+      { enableHighAccuracy: true, maximumAge: 0, timeout: 15_000 },
     );
   };
 
