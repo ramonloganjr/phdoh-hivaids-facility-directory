@@ -342,7 +342,7 @@ function NearMePage() {
 
 type GroupedBand = {
   band: ProximityBand;
-  items: ((typeof FACILITIES)[number] & { distanceKm: number; band: ProximityBand })[];
+  items: ((typeof FACILITIES)[number] & { distanceKm: number; band: ProximityBand; precision: "precise" | "approx" })[];
 };
 
 function LocationCta({ geo, onRequest }: { geo: GeoState; onRequest: () => void }) {
