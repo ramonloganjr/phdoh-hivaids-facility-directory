@@ -254,6 +254,29 @@ The project targets **WCAG 2.1 Level AA**.
 
 ## Changelog
 
+### June 2026 (later) — Five-module audit: correctness, security, realtime
+
+End-to-end pass across **Near Me**, **Impact**, **Sign-In**, **Admin Dashboard**, and **Feedback**. Priority order: correctness & security first, then realtime, then UX gaps.
+
+**Auth & session hygiene**
+- New `signOutCleanly` helper (`src/lib/sign-out.ts`) cancels in-flight queries and clears the TanStack Query cache before `supabase.auth.signOut()` — eliminates the 401 storm and prevents the back button from rendering a protected shell hydrated from stale cache.
+- Global `onAuthStateChange` listener in `src/routes/__root.tsx` keeps multi-tab sessions in sync.
+- `/auth` now accepts a Zod-validated `redirect` search param (same-site paths only) so users return to their previous page after sign-in.
+
+**Realtime synchronization**
+- New `useRealtimeInvalidate` hook (`src/hooks/use-realtime-invalidate.ts`) — debounced (800 ms) postgres_changes subscription that invalidates a React Query key on any insert/update/delete. Channels are per-page and torn down on unmount.
+- Migration: `REPLICA IDENTITY FULL` on `testimonials` and `metric_events`, both added to the `supabase_realtime` publication. **`feedback` deliberately excluded** — anonymous subscribers could otherwise tail the moderation queue.
+- Wired live updates + a "Live" status badge into `/impact` (published testimonials) and `/admin/insights` (metric events).
+
+**Feedback reliability**
+- `Turnstile` widget now accepts a `resetSignal` prop and auto-resets after submission failure (Cloudflare tokens are single-use), so users can retry without a page refresh.
+- Feedback form trims input and guards against double-submit.
+
+**Verified clean**
+- Supabase linter: no new warnings.
+- Security scan: no new findings; deferred items unchanged.
+- Realtime publication audited — no sensitive tables exposed.
+
 ### June 2026 — Branding, theming, and enterprise audit pass
 
 **Branding and metadata**
