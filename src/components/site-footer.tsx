@@ -57,7 +57,21 @@ export function SiteFooter() {
 
           </nav>
         </div>
-        <div className="mt-10 flex flex-col items-start gap-2 border-t border-outline-variant pt-6 text-xs leading-relaxed text-on-surface-muted">
+        <div className="mt-8 flex flex-wrap items-center gap-2">
+          {SOCIAL_LINKS.map(({ name, href, Icon }) => (
+            <a
+              key={name}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Follow HIV Care Philippines on ${name} (opens in a new tab)`}
+              className="state-layer press inline-flex h-11 w-11 items-center justify-center rounded-full bg-surface-container-high text-on-surface hover:text-primary"
+            >
+              <Icon className="h-5 w-5" aria-hidden="true" />
+            </a>
+          ))}
+        </div>
+        <div className="mt-6 flex flex-col items-start gap-2 border-t border-outline-variant pt-6 text-xs leading-relaxed text-on-surface-muted">
           <p className="w-full">
             An independent public-information mirror. Not affiliated with the Department of Health,
             and not a substitute for medical advice. ©{" "}
