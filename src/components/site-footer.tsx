@@ -1,5 +1,19 @@
 import { Link } from "@tanstack/react-router";
+import { Facebook, Linkedin } from "lucide-react";
 import logoFooter from "@/assets/logo-footer.svg.asset.json";
+
+const SOCIAL_LINKS = [
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/company/hivcareph.org/",
+    Icon: Linkedin,
+  },
+  {
+    name: "Facebook",
+    href: "https://www.facebook.com/hivcareph.org",
+    Icon: Facebook,
+  },
+] as const;
 
 export function SiteFooter() {
   return (
