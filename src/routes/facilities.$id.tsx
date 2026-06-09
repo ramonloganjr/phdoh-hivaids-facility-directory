@@ -41,10 +41,7 @@ export const Route = createFileRoute("/facilities/$id")({
     const desc = f
       ? `${f.serviceType} in ${REGION_LABELS[f.region]}. ${f.address}`
       : "DOH-designated HIV facility details.";
-    const ogPath = f
-      ? `/api/og?eyebrow=${encodeURIComponent(REGION_LABELS[f.region])}&title=${encodeURIComponent(f.name)}&subtitle=${encodeURIComponent(`${f.serviceType} · ${f.address}`)}`
-      : `/api/og?title=${encodeURIComponent(title)}`;
-    const ogImage = origin ? `${origin}${ogPath}` : ogPath;
+    const ogImage = origin ? `${origin}/open-graph.png` : "/open-graph.png";
     return {
       meta: [
         { title },
@@ -55,7 +52,7 @@ export const Route = createFileRoute("/facilities/$id")({
         { property: "og:image", content: ogImage },
         { property: "og:image:width", content: "1200" },
         { property: "og:image:height", content: "630" },
-        { property: "og:image:type", content: "image/svg+xml" },
+        { property: "og:image:type", content: "image/png" },
         { name: "twitter:image", content: ogImage },
         ...(f ? [{ property: "og:url", content: `/facilities/${f.id}` }] : []),
       ],
