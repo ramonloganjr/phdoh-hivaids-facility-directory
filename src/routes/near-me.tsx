@@ -241,6 +241,14 @@ function NearMePage() {
         )}
       </p>
 
+      {/* Honesty disclosure: how distances are measured + precision caveat */}
+      <p className="mt-1 text-xs text-on-surface-muted">
+        Distances are straight-line (as-the-crow-flies) from your device. Entries marked{" "}
+        <span className="font-medium text-on-surface">~</span> use a city-level coordinate and are
+        approximate — tap <span className="font-medium text-on-surface">Get directions</span> for
+        precise routing in your maps app.
+      </p>
+
 
 
       {geo.status === "ready" && (
