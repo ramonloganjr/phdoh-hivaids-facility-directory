@@ -96,10 +96,20 @@ function AdminInsightsPage() {
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
-            <Activity className="h-3.5 w-3.5" aria-hidden="true" />
-            Admin · Insights
-          </p>
+          <div className="flex flex-wrap items-center gap-2">
+            <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+              <Activity className="h-3.5 w-3.5" aria-hidden="true" />
+              Admin · Insights
+            </p>
+            <span
+              className="inline-flex items-center gap-1.5 rounded-full bg-primary-container px-2.5 py-0.5 text-[10px] font-medium text-on-primary-container"
+              title="Counts update automatically as new activity arrives"
+            >
+              <Radio className="h-2.5 w-2.5 animate-pulse" aria-hidden="true" />
+              Live
+            </span>
+          </div>
+
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-on-surface sm:text-4xl">
             How the directory is being used
           </h1>
