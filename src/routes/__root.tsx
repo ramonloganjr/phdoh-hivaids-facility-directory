@@ -80,7 +80,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   },
   head: ({ loaderData }) => {
     const origin = loaderData?.origin ?? "";
-    const ogImageUrl = origin ? `${origin}${ogImageAsset.url}` : ogImageAsset.url;
+    // Use the static /open-graph.png served from public/ — the CDN asset URL
+    // (/__l5e/assets-v1/...) is preview-only infrastructure and not reachable
+    // by Facebook / LinkedIn crawlers on production deployments.
+    const ogImagePath = "/open-graph.png";
+    const ogImageUrl = origin ? `${origin}${ogImagePath}` : ogImagePath;
     return ({
     meta: [
       { charSet: "utf-8" },
