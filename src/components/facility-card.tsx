@@ -11,10 +11,13 @@ import { cn } from "@/lib/utils";
 export const FacilityCard = memo(function FacilityCard({
   facility,
   distanceKm,
+  distancePrecision = "precise",
 }: {
   facility: Facility;
   /** Optional distance from the user in km. When supplied, a proximity chip is shown. */
   distanceKm?: number;
+  /** Whether the underlying coordinate is exact ("precise") or city-centroid ("approx"). */
+  distancePrecision?: "precise" | "approx";
 }) {
 
   const isHub = facility.serviceType === "Treatment Hub";
