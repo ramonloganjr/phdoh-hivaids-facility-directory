@@ -40,6 +40,11 @@ function AdminFeedbackPage() {
     queryFn: () => listFn({ data: { status: filter } as never }),
   });
 
+  // Live updates: new visitor feedback appears without manual refresh.
+  useRealtimeInvalidate({ table: "feedback", queryKey: ["admin-feedback"], debounceMs: 600 });
+
+
+
   const invalidate = () => qc.invalidateQueries({ queryKey: ["admin-feedback"] });
 
   const moderate = useMutation({
