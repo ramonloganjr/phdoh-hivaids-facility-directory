@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { ArrowLeft, CheckCircle2, XCircle, Trash2, Loader2, Sparkles, Radio } from "lucide-react";
+import { ArrowLeft, CheckCircle2, XCircle, Trash2, Loader2, Sparkles } from "lucide-react";
 import {
   listFeedback,
   moderateFeedback,
@@ -10,7 +10,7 @@ import {
   promoteFeedbackToStory,
   type FeedbackRow,
 } from "@/lib/feedback.functions";
-import { useRealtimeInvalidate } from "@/hooks/use-realtime-invalidate";
+
 
 
 export const Route = createFileRoute("/_authenticated/admin/feedback")({
@@ -40,8 +40,8 @@ function AdminFeedbackPage() {
     queryFn: () => listFn({ data: { status: filter } as never }),
   });
 
-  // Live updates: new visitor feedback appears without manual refresh.
-  useRealtimeInvalidate({ table: "feedback", queryKey: ["admin-feedback"], debounceMs: 600 });
+
+
 
 
 
@@ -83,22 +83,14 @@ function AdminFeedbackPage() {
         <ArrowLeft className="h-4 w-4" aria-hidden="true" />
         Back to insights
       </Link>
-      <div className="mt-4 flex flex-wrap items-center gap-3">
-        <h1 className="text-3xl font-semibold tracking-tight text-on-surface sm:text-4xl">
-          Feedback queue
-        </h1>
-        <span
-          className="inline-flex items-center gap-1.5 rounded-full bg-primary-container px-2.5 py-1 text-[11px] font-medium text-on-primary-container"
-          title="Updates appear automatically as new feedback arrives"
-        >
-          <Radio className="h-3 w-3 animate-pulse" aria-hidden="true" />
-          Live
-        </span>
-      </div>
+      <h1 className="mt-4 text-3xl font-semibold tracking-tight text-on-surface sm:text-4xl">
+        Feedback queue
+      </h1>
       <p className="mt-2 text-sm text-on-surface-muted">
         Anonymous messages from visitors. Approve to mark reviewed, reject to set aside, or delete
-        if it's spam. New submissions appear here automatically.
+        if it's spam.
       </p>
+
 
 
       <div className="mt-6 flex flex-wrap gap-2">
