@@ -330,7 +330,7 @@ function NearMePage() {
                     <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
                       {items.map((f) => (
                         <li key={f.id}>
-                          <FacilityCard facility={f} distanceKm={f.distanceKm} />
+                          <FacilityCard facility={f} distanceKm={f.distanceKm} distancePrecision={f.precision} />
                         </li>
                       ))}
                     </ul>
