@@ -18,6 +18,7 @@ import { FacilityCard } from "@/components/facility-card";
 import {
   haversineKm,
   bandFor,
+  isInPhilippines,
   PROXIMITY_BANDS,
   PROXIMITY_RANGES,
   formatKm,
@@ -112,14 +113,22 @@ function NearMePage() {
                 : "We couldn't read your location. Try again, or browse the full directory instead.";
         setGeo({ status: "error", message, code: err.code });
       },
-      { enableHighAccuracy: true, maximumAge: 60_000, timeout: 12_000 },
+      // Force a fresh fix (no cached position) and prefer GPS/Wi-Fi triangulation
+      // so distance rankings reflect the user's actual current location.
+      { enableHighAccuracy: true, maximumAge: 0, timeout: 15_000 },
     );
   };
 
   // Compute distance-annotated, filtered, sorted, and banded results.
   const result = useMemo(() => {
     const total = FACILITIES.length;
-    const mapped = FACILITIES.filter((f) => COORDS[f.id]);
+    // Drop facilities whose cached coords are missing or fall outside the
+    // Philippines bounding box (mis-geocoded entries would otherwise corrupt
+    // distance rankings).
+    const mapped = FACILITIES.filter((f) => {
+      const c = COORDS[f.id];
+      return c && isInPhilippines({ lat: c.lat, lon: c.lon });
+    });
     const unmapped = total - mapped.length;
 
     if (geo.status !== "ready") {
@@ -128,7 +137,11 @@ function NearMePage() {
     const user = geo.coords;
     const maxKm = PROXIMITY_RANGES.find((r) => r.id === range)?.maxKm ?? Infinity;
 
-    type Item = (typeof FACILITIES)[number] & { distanceKm: number; band: ProximityBand };
+    type Item = (typeof FACILITIES)[number] & {
+      distanceKm: number;
+      band: ProximityBand;
+      precision: "precise" | "approx";
+    };
     const items: Item[] = [];
     for (const f of mapped) {
       const c = COORDS[f.id]!;
@@ -137,7 +150,12 @@ function NearMePage() {
       if (service === "hub" && f.serviceType !== "Treatment Hub") continue;
       if (service === "primary" && f.serviceType !== "Primary HIV Care Facility") continue;
       if (inpatientOnly && !f.inpatient) continue;
-      items.push({ ...f, distanceKm: km, band: bandFor(km) });
+      items.push({
+        ...f,
+        distanceKm: km,
+        band: bandFor(km),
+        precision: c.source === "city" ? "approx" : "precise",
+      });
     }
     items.sort((a, b) => a.distanceKm - b.distanceKm);
 
@@ -149,18 +167,26 @@ function NearMePage() {
     return { total, mapped: mapped.length, unmapped, items, grouped };
   }, [geo, range, service, inpatientOnly]);
 
-  // Smart recommendation: closest treatment hub overall, regardless of range filter.
+  // Smart recommendation: closest treatment hub overall.
+  // Prefer facilities with precise (street-level) coords so we don't surface a
+  // misleading suggestion based on a city-centroid match. Fall back to the
+  // closest hub regardless of precision if no precise hub is available.
   const recommendation = useMemo(() => {
     if (geo.status !== "ready") return null;
-    let best: { f: (typeof FACILITIES)[number]; km: number } | null = null;
+    let bestPrecise: { f: (typeof FACILITIES)[number]; km: number; precision: "precise" | "approx" } | null = null;
+    let bestAny: { f: (typeof FACILITIES)[number]; km: number; precision: "precise" | "approx" } | null = null;
     for (const f of FACILITIES) {
       if (f.serviceType !== "Treatment Hub") continue;
       const c = COORDS[f.id];
-      if (!c) continue;
+      if (!c || !isInPhilippines({ lat: c.lat, lon: c.lon })) continue;
       const km = haversineKm(geo.coords, { lat: c.lat, lon: c.lon });
-      if (!best || km < best.km) best = { f, km };
+      const precision: "precise" | "approx" = c.source === "city" ? "approx" : "precise";
+      if (!bestAny || km < bestAny.km) bestAny = { f, km, precision };
+      if (precision === "precise" && (!bestPrecise || km < bestPrecise.km)) {
+        bestPrecise = { f, km, precision };
+      }
     }
-    return best;
+    return bestPrecise ?? bestAny;
   }, [geo]);
 
   return (
@@ -215,6 +241,14 @@ function NearMePage() {
         )}
       </p>
 
+      {/* Honesty disclosure: how distances are measured + precision caveat */}
+      <p className="mt-1 text-xs text-on-surface-muted">
+        Distances are straight-line (as-the-crow-flies) from your device. Entries marked{" "}
+        <span className="font-medium text-on-surface">~</span> use a city-level coordinate and are
+        approximate — tap <span className="font-medium text-on-surface">Get directions</span> for
+        precise routing in your maps app.
+      </p>
+
 
 
       {geo.status === "ready" && (
@@ -224,6 +258,7 @@ function NearMePage() {
             <RecommendationCard
               facility={recommendation.f}
               distanceKm={recommendation.km}
+              precision={recommendation.precision}
               outsideRange={recommendation.km > (PROXIMITY_RANGES.find((r) => r.id === range)?.maxKm ?? Infinity)}
             />
           )}
@@ -295,7 +330,7 @@ function NearMePage() {
                     <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
                       {items.map((f) => (
                         <li key={f.id}>
-                          <FacilityCard facility={f} distanceKm={f.distanceKm} />
+                          <FacilityCard facility={f} distanceKm={f.distanceKm} distancePrecision={f.precision} />
                         </li>
                       ))}
                     </ul>
@@ -316,7 +351,7 @@ function NearMePage() {
 
 type GroupedBand = {
   band: ProximityBand;
-  items: ((typeof FACILITIES)[number] & { distanceKm: number; band: ProximityBand })[];
+  items: ((typeof FACILITIES)[number] & { distanceKm: number; band: ProximityBand; precision: "precise" | "approx" })[];
 };
 
 function LocationCta({ geo, onRequest }: { geo: GeoState; onRequest: () => void }) {
@@ -432,10 +467,12 @@ function RecommendationCard({
   facility,
   distanceKm,
   outsideRange,
+  precision,
 }: {
   facility: (typeof FACILITIES)[number];
   distanceKm: number;
   outsideRange: boolean;
+  precision: "precise" | "approx";
 }) {
   return (
     <section
@@ -465,10 +502,20 @@ function RecommendationCard({
               <span className="line-clamp-1">{facility.address}</span>
             </p>
             <p className="mt-2 text-sm text-on-surface">
-              <span className="font-semibold tabular-nums">{formatKm(distanceKm)}</span>{" "}
+              <span className="font-semibold tabular-nums">
+                {precision === "approx" ? "~" : ""}{formatKm(distanceKm)}
+              </span>{" "}
               <span className="text-on-surface-muted">
                 away · about {driveMinutes(distanceKm)} min by car
               </span>
+              {precision === "approx" && (
+                <span
+                  className="ml-1 inline-flex items-center rounded-full bg-surface px-2 py-0.5 text-[10px] font-medium text-on-surface-muted"
+                  title="Distance is approximate (city-level coordinate). Tap Directions for precise routing."
+                >
+                  Approximate
+                </span>
+              )}
               {outsideRange && (
                 <span className="ml-1 inline-flex items-center rounded-full bg-primary-container px-2 py-0.5 text-[10px] font-medium text-on-primary-container">
                   Beyond your selected range
