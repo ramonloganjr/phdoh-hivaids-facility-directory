@@ -166,20 +166,32 @@ function NearMePage() {
   return (
     <div className="mx-auto max-w-6xl px-4 pb-20 pt-8 sm:px-6 sm:pt-10">
       {/* Hero */}
-      <header className="rounded-[2rem] bg-gradient-to-br from-primary-container via-surface-container-high to-surface-container p-6 sm:p-10 elev-1">
+      <header
+        className={cn(
+          "rounded-[2rem] bg-gradient-to-br from-primary-container via-surface-container-high to-surface-container elev-1 transition-all",
+          geo.status === "ready" ? "p-4 sm:p-5" : "p-6 sm:p-10",
+        )}
+      >
         <div className="flex flex-col items-start gap-4">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary-foreground">
-            <Sparkles className="h-3 w-3" aria-hidden="true" />
-            Care close to you
-          </span>
-          <h1 className="text-3xl font-semibold tracking-tight text-on-surface sm:text-5xl">
-            Find HIV care near you
-          </h1>
-          <p className="max-w-2xl text-sm text-on-surface-muted sm:text-base">
-            Share your location once and we'll show the closest DOH-designated treatment hubs and primary
-            care facilities, ranked by real distance with one-tap directions. Your location stays on your
-            device — nothing is sent to a server, and we don't track you.
-          </p>
+          {geo.status !== "ready" && (
+            <>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary-foreground">
+                <Sparkles className="h-3 w-3" aria-hidden="true" />
+                Care close to you
+              </span>
+              <h1 className="text-3xl font-semibold tracking-tight text-on-surface sm:text-5xl">
+                Find HIV care near you
+              </h1>
+              <p className="max-w-2xl text-sm text-on-surface-muted sm:text-base">
+                Share your location once and we'll show the closest DOH-designated treatment hubs and
+                primary care facilities, ranked by real distance with one-tap directions. Your location
+                stays on your device — nothing is sent to a server, and we don't track you.
+              </p>
+            </>
+          )}
+          {geo.status === "ready" && (
+            <h1 className="sr-only">Find HIV care near you</h1>
+          )}
           <LocationCta geo={geo} onRequest={requestLocation} />
         </div>
       </header>
