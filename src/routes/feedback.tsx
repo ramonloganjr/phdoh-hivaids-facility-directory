@@ -35,8 +35,10 @@ function FeedbackPage() {
   const [website, setWebsite] = useState(""); // honeypot
   const [turnstileToken, setTurnstileToken] = useState("");
   const [turnstileError, setTurnstileError] = useState(false);
+  const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
   const startedAtRef = useRef<number>(Date.now());
   const [state, setState] = useState<SubmitState>({ kind: "idle" });
+
 
   useEffect(() => {
     startedAtRef.current = Date.now();
@@ -64,6 +66,10 @@ function FeedbackPage() {
       });
       const json = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
       if (!res.ok || !json.ok) {
+        // Turnstile tokens are single-use — refresh the widget so the user can retry.
+        setTurnstileToken("");
+        setTurnstileResetSignal((n) => n + 1);
+        startedAtRef.current = Date.now();
         setState({
           kind: "error",
           message: json.error ?? "Could not send right now. Please try again.",
@@ -74,9 +80,12 @@ function FeedbackPage() {
       setMessage("");
       setRegion("");
     } catch {
+      setTurnstileToken("");
+      setTurnstileResetSignal((n) => n + 1);
       setState({ kind: "error", message: "Network error. Check your connection and retry." });
     }
   };
+
 
   if (state.kind === "ok") {
     return (
@@ -168,12 +177,14 @@ function FeedbackPage() {
 
         <div className="pt-1">
           <Turnstile
+            resetSignal={turnstileResetSignal}
             onToken={(t) => {
               setTurnstileToken(t);
               setTurnstileError(false);
             }}
             onError={() => setTurnstileError(true)}
           />
+
           {turnstileError && (
             <p className="mt-2 text-center text-xs text-on-surface-muted">
               Verification couldn't load. Refresh the page and try again.

@@ -49,9 +49,12 @@ function loadScript(): Promise<void> {
 export function Turnstile({
   onToken,
   onError,
+  resetSignal,
 }: {
   onToken: (token: string) => void;
   onError?: () => void;
+  /** Bump this number to force the widget to reset (e.g. after a failed submit). */
+  resetSignal?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
@@ -84,5 +87,21 @@ export function Turnstile({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Reset on demand. Cloudflare tokens are single-use, so after a failed
+  // submit the caller bumps resetSignal to get a fresh challenge.
+  useEffect(() => {
+    if (resetSignal == null) return;
+    if (widgetIdRef.current && window.turnstile) {
+      try {
+        window.turnstile.reset(widgetIdRef.current);
+        onToken("");
+      } catch {
+        /* noop */
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetSignal]);
+
   return <div ref={ref} className="flex justify-center" />;
 }
+
