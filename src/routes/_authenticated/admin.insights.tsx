@@ -1,12 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { Activity, Download, Loader2, RefreshCw, BookOpen, LogOut, Rocket } from "lucide-react";
+import { Activity, Download, Loader2, RefreshCw, BookOpen, LogOut, Rocket, Radio } from "lucide-react";
 import { getAdminInsights, exportMonthlyImpact } from "@/lib/admin.functions";
 import { triggerVercelRedeploy } from "@/lib/deploy.functions";
-import { supabase } from "@/integrations/supabase/client";
+import { signOutCleanly } from "@/lib/sign-out";
+import { useRealtimeInvalidate } from "@/hooks/use-realtime-invalidate";
 import { useNavigate } from "@tanstack/react-router";
+
 
 export const Route = createFileRoute("/_authenticated/admin/insights")({
   head: () => ({
@@ -20,6 +22,7 @@ export const Route = createFileRoute("/_authenticated/admin/insights")({
 
 function AdminInsightsPage() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const insightsFn = useServerFn(getAdminInsights);
   const exportFn = useServerFn(exportMonthlyImpact);
   const deployFn = useServerFn(triggerVercelRedeploy);
@@ -31,7 +34,16 @@ function AdminInsightsPage() {
   const { data, isLoading, error, refetch, isRefetching } = useQuery({
     queryKey: ["admin-insights", windowDays],
     queryFn: () => insightsFn({ data: { windowDays } }),
+    staleTime: 30_000,
   });
+
+  // Live counters — debounced to one refresh every 4s even under heavy traffic.
+  useRealtimeInvalidate({
+    table: "metric_events",
+    queryKey: ["admin-insights"],
+    debounceMs: 4000,
+  });
+
 
   const downloadMonth = async () => {
     setExporting(true);
@@ -54,9 +66,10 @@ function AdminInsightsPage() {
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
-    navigate({ to: "/auth" });
+    await signOutCleanly(queryClient);
+    navigate({ to: "/auth", replace: true });
   };
+
 
   const redeploy = async () => {
     if (deploying) return;
