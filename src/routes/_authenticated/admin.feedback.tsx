@@ -11,6 +11,8 @@ import {
   type FeedbackRow,
 } from "@/lib/feedback.functions";
 
+
+
 export const Route = createFileRoute("/_authenticated/admin/feedback")({
   head: () => ({
     meta: [
@@ -37,6 +39,11 @@ function AdminFeedbackPage() {
     queryKey: ["admin-feedback", filter],
     queryFn: () => listFn({ data: { status: filter } as never }),
   });
+
+
+
+
+
 
   const invalidate = () => qc.invalidateQueries({ queryKey: ["admin-feedback"] });
 
@@ -83,6 +90,8 @@ function AdminFeedbackPage() {
         Anonymous messages from visitors. Approve to mark reviewed, reject to set aside, or delete
         if it's spam.
       </p>
+
+
 
       <div className="mt-6 flex flex-wrap gap-2">
         {(["pending", "approved", "rejected", "all"] as Filter[]).map((f) => (

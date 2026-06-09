@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { getPublicImpact, type PublicImpact } from "@/lib/impact.functions";
+import { useRealtimeInvalidate } from "@/hooks/use-realtime-invalidate";
+
 
 const nf = new Intl.NumberFormat("en-US");
 const dtf = new Intl.DateTimeFormat("en-PH", {
@@ -63,6 +65,11 @@ export const Route = createFileRoute("/impact")({
 
 function ImpactPage() {
   const { data } = useSuspenseQuery(impactQuery);
+  // Refresh when a story is published / edited / removed.
+  useRealtimeInvalidate({ table: "testimonials", queryKey: ["public-impact"], debounceMs: 1500 });
+  // Refresh as new activity comes in (debounced — events can be high-volume).
+  useRealtimeInvalidate({ table: "metric_events", queryKey: ["public-impact"], debounceMs: 5000 });
+
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
       <Hero data={data} />

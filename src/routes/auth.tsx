@@ -1,11 +1,24 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2, ShieldCheck } from "lucide-react";
 import logoLight from "@/assets/logo-light.svg.asset.json";
 import logoDark from "@/assets/logo-dark.svg.asset.json";
 
+// Validate the optional ?redirect= param. Only allow same-site paths
+// (must start with a single "/") to prevent open-redirect attacks.
+const safePath = z
+  .string()
+  .max(512)
+  .regex(/^\/(?!\/)/, "Must be a same-site path")
+  .optional()
+  .catch(undefined);
+
+const AuthSearch = z.object({ redirect: safePath });
+
 export const Route = createFileRoute("/auth")({
+  validateSearch: (search) => AuthSearch.parse(search),
   head: () => ({
     meta: [
       { title: "Sign in — HIV Care Philippines" },
@@ -29,6 +42,8 @@ async function userHasAdminRole(userId: string): Promise<boolean> {
 
 function AuthPage() {
   const navigate = useNavigate();
+  const { redirect } = Route.useSearch();
+  const destination = redirect ?? "/admin/insights";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -41,7 +56,7 @@ function AuthPage() {
       if (cancelled || !data.user) return;
       try {
         if (await userHasAdminRole(data.user.id)) {
-          if (!cancelled) navigate({ to: "/admin/insights" });
+          if (!cancelled) navigate({ to: destination, replace: true });
         }
       } catch {
         /* stay on sign-in */
@@ -50,14 +65,14 @@ function AuthPage() {
     return () => {
       cancelled = true;
     };
-  }, [navigate]);
+  }, [navigate, destination]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
     const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-      email,
+      email: email.trim(),
       password,
     });
     if (signInError || !signInData.user) {
@@ -81,7 +96,7 @@ function AuthPage() {
       return;
     }
     setLoading(false);
-    navigate({ to: "/admin/insights" });
+    navigate({ to: destination, replace: true });
   };
 
   return (
@@ -104,16 +119,20 @@ function AuthPage() {
         This area is for the team that maintains the directory. Public pages stay open to everyone — no
         account needed.
       </p>
-      <form onSubmit={onSubmit} className="space-y-4 rounded-3xl bg-surface-container p-6 elev-1">
+      <form onSubmit={onSubmit} className="space-y-4 rounded-3xl bg-surface-container p-6 elev-1" noValidate>
         <label className="block text-sm">
           <span className="mb-1 block font-medium text-on-surface">Email</span>
           <input
             type="email"
             required
+            inputMode="email"
             autoComplete="email"
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck={false}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="h-11 w-full rounded-full border border-outline-variant bg-surface px-4 text-sm text-on-surface focus:border-primary focus:outline-none"
+            className="h-12 w-full rounded-full border border-outline-variant bg-surface px-4 text-sm text-on-surface focus:border-primary focus:outline-none"
           />
         </label>
         <label className="block text-sm">
@@ -124,7 +143,7 @@ function AuthPage() {
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="h-11 w-full rounded-full border border-outline-variant bg-surface px-4 text-sm text-on-surface focus:border-primary focus:outline-none"
+            className="h-12 w-full rounded-full border border-outline-variant bg-surface px-4 text-sm text-on-surface focus:border-primary focus:outline-none"
           />
         </label>
         {error && (
@@ -134,8 +153,8 @@ function AuthPage() {
         )}
         <button
           type="submit"
-          disabled={loading}
-          className="state-layer press inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-primary text-sm font-semibold text-primary-foreground disabled:opacity-70"
+          disabled={loading || !email || !password}
+          className="state-layer press inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary text-sm font-semibold text-primary-foreground disabled:opacity-70"
         >
           {loading ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
           Sign in

@@ -1,12 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { Activity, Download, Loader2, RefreshCw, BookOpen, LogOut, Rocket } from "lucide-react";
+import { Activity, Download, Loader2, RefreshCw, BookOpen, LogOut, Rocket, Radio } from "lucide-react";
 import { getAdminInsights, exportMonthlyImpact } from "@/lib/admin.functions";
 import { triggerVercelRedeploy } from "@/lib/deploy.functions";
-import { supabase } from "@/integrations/supabase/client";
+import { signOutCleanly } from "@/lib/sign-out";
+import { useRealtimeInvalidate } from "@/hooks/use-realtime-invalidate";
 import { useNavigate } from "@tanstack/react-router";
+
 
 export const Route = createFileRoute("/_authenticated/admin/insights")({
   head: () => ({
@@ -20,6 +22,7 @@ export const Route = createFileRoute("/_authenticated/admin/insights")({
 
 function AdminInsightsPage() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const insightsFn = useServerFn(getAdminInsights);
   const exportFn = useServerFn(exportMonthlyImpact);
   const deployFn = useServerFn(triggerVercelRedeploy);
@@ -31,7 +34,16 @@ function AdminInsightsPage() {
   const { data, isLoading, error, refetch, isRefetching } = useQuery({
     queryKey: ["admin-insights", windowDays],
     queryFn: () => insightsFn({ data: { windowDays } }),
+    staleTime: 30_000,
   });
+
+  // Live counters — debounced to one refresh every 4s even under heavy traffic.
+  useRealtimeInvalidate({
+    table: "metric_events",
+    queryKey: ["admin-insights"],
+    debounceMs: 4000,
+  });
+
 
   const downloadMonth = async () => {
     setExporting(true);
@@ -54,9 +66,10 @@ function AdminInsightsPage() {
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
-    navigate({ to: "/auth" });
+    await signOutCleanly(queryClient);
+    navigate({ to: "/auth", replace: true });
   };
+
 
   const redeploy = async () => {
     if (deploying) return;
@@ -83,10 +96,20 @@ function AdminInsightsPage() {
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
-            <Activity className="h-3.5 w-3.5" aria-hidden="true" />
-            Admin · Insights
-          </p>
+          <div className="flex flex-wrap items-center gap-2">
+            <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+              <Activity className="h-3.5 w-3.5" aria-hidden="true" />
+              Admin · Insights
+            </p>
+            <span
+              className="inline-flex items-center gap-1.5 rounded-full bg-primary-container px-2.5 py-0.5 text-[10px] font-medium text-on-primary-container"
+              title="Counts update automatically as new activity arrives"
+            >
+              <Radio className="h-2.5 w-2.5 animate-pulse" aria-hidden="true" />
+              Live
+            </span>
+          </div>
+
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-on-surface sm:text-4xl">
             How the directory is being used
           </h1>
