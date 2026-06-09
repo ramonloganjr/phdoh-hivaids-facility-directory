@@ -122,7 +122,13 @@ function NearMePage() {
   // Compute distance-annotated, filtered, sorted, and banded results.
   const result = useMemo(() => {
     const total = FACILITIES.length;
-    const mapped = FACILITIES.filter((f) => COORDS[f.id]);
+    // Drop facilities whose cached coords are missing or fall outside the
+    // Philippines bounding box (mis-geocoded entries would otherwise corrupt
+    // distance rankings).
+    const mapped = FACILITIES.filter((f) => {
+      const c = COORDS[f.id];
+      return c && isInPhilippines({ lat: c.lat, lon: c.lon });
+    });
     const unmapped = total - mapped.length;
 
     if (geo.status !== "ready") {
@@ -131,7 +137,11 @@ function NearMePage() {
     const user = geo.coords;
     const maxKm = PROXIMITY_RANGES.find((r) => r.id === range)?.maxKm ?? Infinity;
 
-    type Item = (typeof FACILITIES)[number] & { distanceKm: number; band: ProximityBand };
+    type Item = (typeof FACILITIES)[number] & {
+      distanceKm: number;
+      band: ProximityBand;
+      precision: "precise" | "approx";
+    };
     const items: Item[] = [];
     for (const f of mapped) {
       const c = COORDS[f.id]!;
@@ -140,7 +150,12 @@ function NearMePage() {
       if (service === "hub" && f.serviceType !== "Treatment Hub") continue;
       if (service === "primary" && f.serviceType !== "Primary HIV Care Facility") continue;
       if (inpatientOnly && !f.inpatient) continue;
-      items.push({ ...f, distanceKm: km, band: bandFor(km) });
+      items.push({
+        ...f,
+        distanceKm: km,
+        band: bandFor(km),
+        precision: c.source === "city" ? "approx" : "precise",
+      });
     }
     items.sort((a, b) => a.distanceKm - b.distanceKm);
 
@@ -152,18 +167,26 @@ function NearMePage() {
     return { total, mapped: mapped.length, unmapped, items, grouped };
   }, [geo, range, service, inpatientOnly]);
 
-  // Smart recommendation: closest treatment hub overall, regardless of range filter.
+  // Smart recommendation: closest treatment hub overall.
+  // Prefer facilities with precise (street-level) coords so we don't surface a
+  // misleading suggestion based on a city-centroid match. Fall back to the
+  // closest hub regardless of precision if no precise hub is available.
   const recommendation = useMemo(() => {
     if (geo.status !== "ready") return null;
-    let best: { f: (typeof FACILITIES)[number]; km: number } | null = null;
+    let bestPrecise: { f: (typeof FACILITIES)[number]; km: number; precision: "precise" | "approx" } | null = null;
+    let bestAny: { f: (typeof FACILITIES)[number]; km: number; precision: "precise" | "approx" } | null = null;
     for (const f of FACILITIES) {
       if (f.serviceType !== "Treatment Hub") continue;
       const c = COORDS[f.id];
-      if (!c) continue;
+      if (!c || !isInPhilippines({ lat: c.lat, lon: c.lon })) continue;
       const km = haversineKm(geo.coords, { lat: c.lat, lon: c.lon });
-      if (!best || km < best.km) best = { f, km };
+      const precision: "precise" | "approx" = c.source === "city" ? "approx" : "precise";
+      if (!bestAny || km < bestAny.km) bestAny = { f, km, precision };
+      if (precision === "precise" && (!bestPrecise || km < bestPrecise.km)) {
+        bestPrecise = { f, km, precision };
+      }
     }
-    return best;
+    return bestPrecise ?? bestAny;
   }, [geo]);
 
   return (
