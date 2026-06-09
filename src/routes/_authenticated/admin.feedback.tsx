@@ -83,13 +83,23 @@ function AdminFeedbackPage() {
         <ArrowLeft className="h-4 w-4" aria-hidden="true" />
         Back to insights
       </Link>
-      <h1 className="mt-4 text-3xl font-semibold tracking-tight text-on-surface sm:text-4xl">
-        Feedback queue
-      </h1>
+      <div className="mt-4 flex flex-wrap items-center gap-3">
+        <h1 className="text-3xl font-semibold tracking-tight text-on-surface sm:text-4xl">
+          Feedback queue
+        </h1>
+        <span
+          className="inline-flex items-center gap-1.5 rounded-full bg-primary-container px-2.5 py-1 text-[11px] font-medium text-on-primary-container"
+          title="Updates appear automatically as new feedback arrives"
+        >
+          <Radio className="h-3 w-3 animate-pulse" aria-hidden="true" />
+          Live
+        </span>
+      </div>
       <p className="mt-2 text-sm text-on-surface-muted">
         Anonymous messages from visitors. Approve to mark reviewed, reject to set aside, or delete
-        if it's spam.
+        if it's spam. New submissions appear here automatically.
       </p>
+
 
       <div className="mt-6 flex flex-wrap gap-2">
         {(["pending", "approved", "rejected", "all"] as Filter[]).map((f) => (
