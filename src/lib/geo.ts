@@ -67,3 +67,12 @@ export const PROXIMITY_RANGES: { id: "5" | "10" | "25" | "75" | "all"; label: st
   { id: "75",  label: "Within 75 km", maxKm: 75 },
   { id: "all", label: "Any distance", maxKm: Infinity },
 ];
+
+/**
+ * Rough bounding box for the Philippines archipelago. Used to validate cached
+ * facility coordinates so corrupt or mis-geocoded entries can't poison results.
+ * Covers Batanes (N), Tawi-Tawi (S), Palawan (W), and Eastern Samar (E) with margin.
+ */
+export function isInPhilippines(p: LatLng): boolean {
+  return p.lat >= 4 && p.lat <= 22 && p.lon >= 116 && p.lon <= 127;
+}
