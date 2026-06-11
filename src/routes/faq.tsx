@@ -82,8 +82,12 @@ function FaqPage() {
         </p>
       </header>
 
+      <h2 className="mt-10 text-lg font-semibold tracking-tight text-on-surface">
+        Browse questions
+      </h2>
+
       {/* Search */}
-      <div className="mt-8 flex items-center gap-2 rounded-full border border-outline-variant bg-surface-container px-4 py-2.5 transition-colors focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30">
+      <div className="mt-4 flex items-center gap-2 rounded-full border border-outline-variant bg-surface-container px-4 py-2.5 transition-colors focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30">
         <Search className="h-4 w-4 text-on-surface-muted" aria-hidden="true" />
         <input
           type="search"
