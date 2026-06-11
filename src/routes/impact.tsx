@@ -95,14 +95,27 @@ function Hero({ data }: { data: PublicImpact }) {
         where you live &mdash; only that something useful happened. Numbers cover the last{" "}
         {data.windowDays} days and are rounded to the nearest 10.
       </p>
-      <div className="mt-8 flex flex-wrap items-baseline gap-4">
-        <span className="text-5xl font-semibold text-primary sm:text-6xl">
-          {fmtNum(helped)}+
-        </span>
-        <span className="text-base text-on-surface-muted">
-          times the directory helped someone take a next step toward care
-        </span>
-      </div>
+      {helped > 0 ? (
+        <div className="mt-8 flex flex-wrap items-baseline gap-4">
+          <span className="text-5xl font-semibold text-primary sm:text-6xl">
+            {fmtNum(helped)}+
+          </span>
+          <span className="text-base text-on-surface-muted">
+            times the directory helped someone take a next step toward care
+          </span>
+        </div>
+      ) : (
+        <div className="mt-8 rounded-2xl bg-surface-container p-5">
+          <p className="text-sm font-medium text-on-surface">
+            We&rsquo;re just getting started.
+          </p>
+          <p className="mt-1 text-sm text-on-surface-muted">
+            This page updates the moment people start using the directory. Numbers appear once
+            we&rsquo;ve recorded at least a handful of events, so individual visits can&rsquo;t be
+            inferred.
+          </p>
+        </div>
+      )}
     </header>
   );
 }
