@@ -91,6 +91,7 @@ function TestingGuide() {
             ["what-to-expect", "What to expect at a visit"],
             ["find-care", "Find a facility near you"],
             ["after-positive", "If your result is positive"],
+            ["self-test-kits", "Self-test kits & pricing"],
             ["privacy", "Privacy and your rights"],
           ].map(([id, label]) => (
             <li key={id}>
@@ -294,6 +295,43 @@ function TestingGuide() {
           across the country.
         </p>
       </section>
+      <section id="self-test-kits" className="mt-10 scroll-mt-24">
+        <h2 className="text-xl font-semibold tracking-tight text-on-surface">
+          Self-test kits &amp; pricing
+        </h2>
+        <div className="mt-4 rounded-2xl border border-dashed border-outline-variant bg-surface-container-high p-5">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-primary">
+            Awaiting verified source
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-on-surface-muted">
+            This section will cover HIV self-test kits available in the
+            Philippines and what facility-based testing typically costs. We
+            have not published it yet because we do not have a current,
+            verified source — kit availability, FDA-registered brands, and
+            facility pricing change often, and publishing anything
+            second-hand here could send you to the wrong place or the wrong
+            price.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-on-surface-muted">
+            In the meantime: testing at every DOH-designated facility listed
+            in this directory is free and confidential. If you need a
+            confirmed answer today, that is the most reliable route.
+          </p>
+          <p className="mt-3 text-xs text-on-surface-muted">
+            Have a citable source (DOH, FDA Philippines, RITM, Philippine
+            Red Cross, or a partner clinic's published price list)? Send it
+            through{" "}
+            <a
+              href="/feedback"
+              className="underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
+            >
+              feedback
+            </a>{" "}
+            and we will fill this section in with attribution.
+          </p>
+        </div>
+      </section>
+
 
       <section id="privacy" className="mt-10 scroll-mt-24">
         <h2 className="text-xl font-semibold tracking-tight text-on-surface">
