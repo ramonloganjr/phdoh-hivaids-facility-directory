@@ -151,6 +151,11 @@ function Tiles({ data }: { data: PublicImpact }) {
       value: fmtTile(data.totals.shares),
       hint: "The directory reaching one more person",
     },
+    {
+      label: "Feedback received",
+      value: fmtTile(data.totals.feedbackReceived),
+      hint: "Anonymous notes from visitors, reviewed by a volunteer",
+    },
   ];
   return (
     <section className="mt-12" aria-label="Engagement and outcomes">
