@@ -23,6 +23,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GuidesTestingRouteImport } from './routes/guides.testing'
 import { Route as FacilitiesIdRouteImport } from './routes/facilities.$id'
 import { Route as ApiOgRouteImport } from './routes/api.og'
 import { Route as ApiPublicFeedbackRouteImport } from './routes/api/public/feedback'
@@ -100,6 +101,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesTestingRoute = GuidesTestingRouteImport.update({
+  id: '/guides/testing',
+  path: '/guides/testing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FacilitiesIdRoute = FacilitiesIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -155,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
+  '/guides/testing': typeof GuidesTestingRoute
   '/admin/feedback': typeof AuthenticatedAdminFeedbackRoute
   '/admin/insights': typeof AuthenticatedAdminInsightsRoute
   '/admin/stories': typeof AuthenticatedAdminStoriesRoute
@@ -177,6 +184,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
+  '/guides/testing': typeof GuidesTestingRoute
   '/admin/feedback': typeof AuthenticatedAdminFeedbackRoute
   '/admin/insights': typeof AuthenticatedAdminInsightsRoute
   '/admin/stories': typeof AuthenticatedAdminStoriesRoute
@@ -201,6 +209,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/api/og': typeof ApiOgRoute
   '/facilities/$id': typeof FacilitiesIdRoute
+  '/guides/testing': typeof GuidesTestingRoute
   '/_authenticated/admin/feedback': typeof AuthenticatedAdminFeedbackRoute
   '/_authenticated/admin/insights': typeof AuthenticatedAdminInsightsRoute
   '/_authenticated/admin/stories': typeof AuthenticatedAdminStoriesRoute
@@ -225,6 +234,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/api/og'
     | '/facilities/$id'
+    | '/guides/testing'
     | '/admin/feedback'
     | '/admin/insights'
     | '/admin/stories'
@@ -247,6 +257,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/api/og'
     | '/facilities/$id'
+    | '/guides/testing'
     | '/admin/feedback'
     | '/admin/insights'
     | '/admin/stories'
@@ -270,6 +281,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/api/og'
     | '/facilities/$id'
+    | '/guides/testing'
     | '/_authenticated/admin/feedback'
     | '/_authenticated/admin/insights'
     | '/_authenticated/admin/stories'
@@ -293,6 +305,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   ApiOgRoute: typeof ApiOgRoute
+  GuidesTestingRoute: typeof GuidesTestingRoute
   ApiPublicFeedbackRoute: typeof ApiPublicFeedbackRoute
   ApiPublicMetricsIngestRoute: typeof ApiPublicMetricsIngestRoute
 }
@@ -397,6 +410,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guides/testing': {
+      id: '/guides/testing'
+      path: '/guides/testing'
+      fullPath: '/guides/testing'
+      preLoaderRoute: typeof GuidesTestingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/facilities/$id': {
       id: '/facilities/$id'
       path: '/$id'
@@ -492,6 +512,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   ApiOgRoute: ApiOgRoute,
+  GuidesTestingRoute: GuidesTestingRoute,
   ApiPublicFeedbackRoute: ApiPublicFeedbackRoute,
   ApiPublicMetricsIngestRoute: ApiPublicMetricsIngestRoute,
 }
