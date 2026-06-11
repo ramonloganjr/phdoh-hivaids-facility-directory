@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2, ShieldCheck } from "lucide-react";
-import logoLight from "@/assets/logo-light.svg.asset.json";
-import logoDark from "@/assets/logo-dark.svg.asset.json";
+const logoLight = { url: "/brand/logo-light.svg" };
+const logoDark = { url: "/brand/logo-dark.svg" };
 
 // Validate the optional ?redirect= param. Only allow same-site paths
 // (must start with a single "/") to prevent open-redirect attacks.

@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Linkedin } from "lucide-react";
-import logoFooter from "@/assets/logo-footer.svg.asset.json";
+const logoFooter = { url: "/brand/logo-footer.svg" };
 
 const SOCIAL_LINKS = [
   {
