@@ -182,6 +182,7 @@ export const getPublicImpact = createServerFn({ method: "GET" }).handler(
         nearMeActivations: roundTo10(nearMeActivations),
         shares: roundTo10(shares),
         peopleHelped: roundTo10(peopleHelped),
+        feedbackReceived: feedbackCount >= AGGREGATION_FLOOR ? roundTo10(feedbackCount) : 0,
       },
       searchSuccessRate,
       topRegions,
