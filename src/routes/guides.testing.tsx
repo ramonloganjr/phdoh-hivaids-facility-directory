@@ -91,6 +91,7 @@ function TestingGuide() {
             ["what-to-expect", "What to expect at a visit"],
             ["find-care", "Find a facility near you"],
             ["after-positive", "If your result is positive"],
+            ["self-test-kits", "Self-test kits & pricing"],
             ["privacy", "Privacy and your rights"],
           ].map(([id, label]) => (
             <li key={id}>
