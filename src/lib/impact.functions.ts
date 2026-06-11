@@ -38,6 +38,7 @@ export type PublicImpact = {
     nearMeActivations: number;
     shares: number;
     peopleHelped: number; // North Star: high-intent events
+    feedbackReceived: number; // approved anonymous feedback in window
   };
   searchSuccessRate: number | null; // 0..1
   topRegions: Array<{ region: string; count: number }>;
@@ -60,6 +61,7 @@ function emptyImpact(): PublicImpact {
       nearMeActivations: 0,
       shares: 0,
       peopleHelped: 0,
+      feedbackReceived: 0,
     },
     searchSuccessRate: null,
     topRegions: [],
