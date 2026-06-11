@@ -88,8 +88,10 @@ export const getPublicImpact = createServerFn({ method: "GET" }).handler(
 
     let events: MetricEventRow[] | null = null;
     let stories: Testimonial[] | null = null;
+    let feedbackCount = 0;
     try {
-      const [eventsRes, storiesRes] = await Promise.all([
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      const [eventsRes, storiesRes, feedbackRes] = await Promise.all([
         supabase
           .from("metric_events")
           .select("event,dimension_key,dimension_value,occurred_at")
@@ -102,11 +104,18 @@ export const getPublicImpact = createServerFn({ method: "GET" }).handler(
           .not("consent_verified_at", "is", null)
           .order("sort_order", { ascending: true })
           .limit(12),
+        supabaseAdmin
+          .from("feedback")
+          .select("id", { count: "exact", head: true })
+          .eq("status", "approved")
+          .gte("created_at", since),
       ]);
       if (eventsRes.error) console.error("[impact] events", eventsRes.error);
       if (storiesRes.error) console.error("[impact] stories", storiesRes.error);
+      if (feedbackRes.error) console.error("[impact] feedback", feedbackRes.error);
       events = eventsRes.error ? null : eventsRes.data;
       stories = storiesRes.error ? null : storiesRes.data;
+      feedbackCount = feedbackRes.error ? 0 : (feedbackRes.count ?? 0);
     } catch (err) {
       console.error("[impact] database query unavailable", err);
       return emptyImpact();
