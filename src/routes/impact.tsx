@@ -66,9 +66,9 @@ export const Route = createFileRoute("/impact")({
 function ImpactPage() {
   const { data } = useSuspenseQuery(impactQuery);
   // Refresh when a story is published / edited / removed.
+  // metric_events is server-only (no client read access), so realtime is not
+  // subscribed for it — the server-side query refreshes on the 5-minute staleTime.
   useRealtimeInvalidate({ table: "testimonials", queryKey: ["public-impact"], debounceMs: 1500 });
-  // Refresh as new activity comes in (debounced — events can be high-volume).
-  useRealtimeInvalidate({ table: "metric_events", queryKey: ["public-impact"], debounceMs: 5000 });
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
