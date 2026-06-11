@@ -121,33 +121,34 @@ function Hero({ data }: { data: PublicImpact }) {
 }
 
 function Tiles({ data }: { data: PublicImpact }) {
+  const fmtTile = (n: number) => (n > 0 ? `${fmtNum(n)}+` : "—");
   const tiles: Array<{ label: string; value: string; hint: string }> = [
     {
       label: "Searches run",
-      value: `${fmtNum(data.totals.searches)}+`,
+      value: fmtTile(data.totals.searches),
       hint:
-        data.searchSuccessRate !== null
+        data.totals.searches > 0 && data.searchSuccessRate !== null
           ? `${Math.round(data.searchSuccessRate * 100)}% returned a real facility`
           : "Every search returns the closest matches",
     },
     {
       label: "Facilities opened",
-      value: `${fmtNum(data.totals.facilitiesViewed)}+`,
+      value: fmtTile(data.totals.facilitiesViewed),
       hint: "People learning hours, services, and contact details",
     },
     {
       label: "Directions tapped",
-      value: `${fmtNum(data.totals.directionsTapped)}+`,
+      value: fmtTile(data.totals.directionsTapped),
       hint: "Likely a real visit on the way",
     },
     {
       label: "Near Me activations",
-      value: `${fmtNum(data.totals.nearMeActivations)}+`,
+      value: fmtTile(data.totals.nearMeActivations),
       hint: "People asking for care close to them",
     },
     {
       label: "Shares with friends",
-      value: `${fmtNum(data.totals.shares)}+`,
+      value: fmtTile(data.totals.shares),
       hint: "The directory reaching one more person",
     },
   ];
