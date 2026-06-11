@@ -3,8 +3,8 @@ import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 import { cn } from "@/lib/utils";
-import logoLight from "@/assets/logo-light.svg.asset.json";
-import logoDark from "@/assets/logo-dark.svg.asset.json";
+const logoLight = { url: "/brand/logo-light.svg" };
+const logoDark = { url: "/brand/logo-dark.svg" };
 
 type NavTo = "/" | "/facilities" | "/near-me" | "/insights" | "/faq" | "/about";
 
