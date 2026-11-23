@@ -57,6 +57,7 @@ For larger changes (new features, refactors, design overhauls), open a discussio
 - **Server logic.** Use `createServerFn` for internal RPC, `createFileRoute` under `src/routes/api/` for public endpoints.
 - **No emojis** in source code, copy, or documentation unless explicitly part of facility data.
 - **No em dashes** in user-facing copy.
+- **Voice and tone.** Write user-facing copy to the [voice and tone guide](./docs/voice-and-tone.md).
 
 ### Commit Messages
 
