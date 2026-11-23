@@ -65,7 +65,6 @@ export default defineConfig({
         navigateFallback: "/",
         navigateFallbackDenylist: [
           /^\/api\//,
-          /^\/~oauth/,
           /^\/sitemap\.xml/,
           /^\/robots\.txt/,
         ],

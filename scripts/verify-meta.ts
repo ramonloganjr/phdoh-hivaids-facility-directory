@@ -7,7 +7,7 @@
  * served as image/*. Designed to be run locally, against staging, or
  * against production CI.
  *
- *   bun run verify:meta                          # local + preview
+ *   bun run verify:meta                          # local (+ $SITE_ORIGIN if set)
  *   bun run verify:meta -- https://example.com   # custom origin(s)
  *   bun run verify:meta -- --paths=/,/facilities,/about
  *
@@ -19,6 +19,7 @@ type Report = { url: string; checks: Check[]; failed: number };
 
 const DEFAULT_ORIGINS = [
   process.env.LOCAL_ORIGIN || "http://localhost:3000",
+  ...(process.env.SITE_ORIGIN ? [process.env.SITE_ORIGIN.replace(/\/$/, "")] : []),
 ];
 
 const DEFAULT_PATHS = ["/", "/facilities", "/near-me", "/insights", "/faq", "/about", "/sitemap"];

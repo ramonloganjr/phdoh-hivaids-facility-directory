@@ -63,7 +63,7 @@ In cPanel → **Setup Node.js App** → your app → **Environment variables**, 
 | `NODE_ENV` | `production` |
 | `PORT` | (leave blank — cPanel assigns one) |
 
-If you later enable Supabase / AI features, add their public + secret keys here too.
+Also add the Supabase public + secret keys (and any other service keys) your deployment uses.
 
 ---
 
