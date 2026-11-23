@@ -28,7 +28,7 @@ export const triggerVercelRedeploy = createServerFn({ method: "POST" })
     const hookUrl = process.env.VERCEL_DEPLOY_HOOK_URL;
     if (!hookUrl) {
       throw new Error(
-        "Deploy hook isn't configured. Add VERCEL_DEPLOY_HOOK_URL in Cloud → Secrets."
+        "Deploy hook isn't configured. Set VERCEL_DEPLOY_HOOK_URL in the Vercel project's environment variables."
       );
     }
 
