@@ -130,7 +130,9 @@ export const Route = createFileRoute("/facilities/$id")({
       <p className="mt-2 text-sm text-on-surface-muted">
         Your connection may have dropped. Reload to try again, or browse the full directory.
       </p>
-      <p className="mt-3 text-xs text-on-surface-muted/70">{error.message}</p>
+      {error instanceof Error && error.message ? (
+        <p className="mt-3 text-xs text-on-surface-muted/70">{error.message}</p>
+      ) : null}
       <Link
         to="/facilities"
         className="state-layer mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground"
