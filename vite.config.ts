@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
@@ -8,6 +8,16 @@ import { VitePWA } from "vite-plugin-pwa";
 
 const nitroPreset = process.env.NITRO_PRESET ?? (process.env.VERCEL ? "vercel" : "node-server");
 const usesVercelBuildOutput = nitroPreset === "vercel" || nitroPreset === "vercel-static";
+
+// vite-plugin-pwa predates the Vite environment API and would regenerate the
+// service worker after every environment build (client, ssr, nitro). Run its
+// build step only after the client build: the precache manifest then lists the
+// client assets, and sw.js exists before Nitro builds the server, so the
+// node-server preset includes it in the public assets it serves.
+function pwaBuildForClientOnly(plugin: Plugin): Plugin {
+  if (plugin.name !== "vite-plugin-pwa:build") return plugin;
+  return { ...plugin, applyToEnvironment: (environment) => environment.name === "client" };
+}
 
 export default defineConfig({
   server: {
@@ -58,20 +68,38 @@ export default defineConfig({
       filename: "sw.js",
       manifest: false,
       devOptions: { enabled: false },
+      // Write sw.js and the workbox runtime into the directory Nitro serves
+      // static files from (.vercel/output/static on Vercel, dist/client for
+      // node-server) instead of the top-level build.outDir ("dist").
+      integration: {
+        configureOptions(viteConfig, options) {
+          options.outDir = viteConfig.environments.client?.build.outDir ?? options.outDir;
+        },
+      },
+      // Nitro copies public/ into the static output only after the client
+      // build, so the workbox glob never sees these; precache them from public/.
+      includeAssets: [
+        "favicon.ico",
+        "favicon*.png",
+        "apple-touch-icon.png",
+        "manifest.webmanifest",
+        "brand/*.svg",
+      ],
       workbox: {
         cleanupOutdatedCaches: true,
         clientsClaim: true,
         skipWaiting: true,
-        navigateFallback: "/",
-        navigateFallbackDenylist: [
-          /^\/api\//,
-          /^\/sitemap\.xml/,
-          /^\/robots\.txt/,
-        ],
+        // SSR app: there is no prebuilt app-shell HTML to precache, and Workbox
+        // throws while evaluating the service worker if the fallback URL is not
+        // precached. Navigations go through the NetworkFirst "html-pages" rule
+        // below instead, which serves visited pages from cache when offline.
+        navigateFallback: null,
         globPatterns: ["**/*.{js,css,html,ico,png,svg,webp,woff2}"],
         runtimeCaching: [
           {
-            urlPattern: ({ request }) => request.mode === "navigate",
+            urlPattern: ({ request, url }) =>
+              request.mode === "navigate" &&
+              !/^\/(?:api\/|sitemap\.xml|robots\.txt)/.test(url.pathname),
             handler: "NetworkFirst",
             options: {
               cacheName: "html-pages",
@@ -112,6 +140,6 @@ export default defineConfig({
           },
         ],
       },
-    }),
+    }).map(pwaBuildForClientOnly),
   ],
 });
