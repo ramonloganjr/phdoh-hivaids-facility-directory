@@ -1,79 +1,78 @@
 # Contributing
 
-Thank you for considering a contribution to the Philippine HIV Care Directory. This project exists to make accurate, official HIV care information easier to find for Filipinos, and contributions of all kinds are welcome.
+Thank you for considering a contribution to the Philippine HIV Care Directory, which makes accurate, official HIV care information easier to find for Filipinos. Contributions are welcome, particularly bug fixes, accessibility and performance improvements, documentation, and facility data corrections backed by an official source. Because people rely on this directory to find HIV care, accuracy and privacy take priority over new features.
 
 ## Code of Conduct
 
 Be respectful, constructive, and patient. Harassment, discrimination, or stigmatizing language about HIV, gender, sexuality, or any group will not be tolerated. Maintainers reserve the right to remove comments, commits, issues, or pull requests that violate this principle.
 
-## How to Contribute
+## Reporting Issues
 
-### Reporting Issues
+Search [existing issues](https://github.com/ramonloganjr/phdoh-hivaids-facility-directory/issues) first, then open a new one with the details below.
 
-1. Search [existing issues](../../issues) to avoid duplicates.
-2. Open a new issue using a clear, descriptive title.
-3. Include:
-   - A summary of the problem or proposal.
-   - Steps to reproduce (for bugs).
-   - Expected vs. actual behavior.
-   - Screenshots, console errors, or network traces when relevant.
-   - Browser, OS, and device information.
+- **Bugs:** steps to reproduce, expected and actual behavior, the affected URL, your browser, OS, and device, and any screenshots or console errors.
+- **Data corrections:** the facility, the incorrect field, and the official DOH issuance (department circular, memorandum, or LGU advisory) that supports the change. Facility data is never changed without a verifiable source.
+- **Security vulnerabilities:** do not open a public issue. Report them privately as described in [SECURITY.md](./SECURITY.md).
 
-### Reporting Inaccurate Facility Data
+## Proposing Enhancements
 
-If a facility detail (address, services offered, contact information) is incorrect, please open an issue labeled `data-correction` and reference the official DOH source (Department Circular, memorandum, or LGU advisory) that supports the correction. The project is a faithful mirror of official data and will not deviate from it without a verifiable source.
+Open an issue before writing code for a new feature, refactor, or design change. Describe the problem, who it helps, and the proposed approach, and note any effect on accessibility, offline (PWA) behavior, SEO metadata, the Supabase schema, or the [mobile app](./README.md#mobile-app), which consumes this repository's data and API.
 
-### Proposing Changes
+## Development Setup
 
-For larger changes (new features, refactors, design overhauls), open a discussion or issue **before** writing code. This avoids wasted effort and ensures the change aligns with the project's direction.
+Requires Node.js 24 (pinned in `package.json` to match production) and Bun 1.3 or newer.
 
-### Pull Requests
+```bash
+bun install    # Installs from the committed bun.lock
+bun run dev    # Starts the dev server at http://localhost:8080
+```
 
-1. Fork the repository and create a topic branch from `main`:
-   ```bash
-   git checkout -b feature/your-change
-   ```
-2. Install dependencies and verify the project runs:
-   ```bash
-   bun install
-   bun run dev
-   ```
-3. Make your changes. Keep PRs focused — one logical change per PR.
-4. Run linting and formatting before committing:
-   ```bash
-   bun run lint
-   bun run format
-   ```
-5. Commit using clear, imperative messages (e.g., `Add region filter to facilities page`).
-6. Push and open a pull request against `main`.
-7. Fill out the PR template, link related issues, and describe testing performed.
+- The committed `.env` contains only the public Supabase URL and publishable key. Server-only secrets (`SUPABASE_SERVICE_ROLE_KEY`, `TURNSTILE_SECRET_KEY`, `VERCEL_DEPLOY_HOOK_URL`) belong in your local environment or the Vercel project settings, never in the repository or a `VITE_*` variable.
+- `bunfig.toml` skips package versions published less than 24 hours ago. Add dependencies with `bun add` and commit the updated `bun.lock`.
 
-### Coding Standards
+## Where Changes Belong
 
-- **TypeScript strict mode.** No `any` unless absolutely justified.
-- **Design tokens only.** Use semantic Tailwind tokens (`bg-surface`, `text-on-surface`) — never raw color classes like `bg-white`.
-- **Accessibility.** All new UI must be keyboard-navigable and meet WCAG 2.1 AA contrast.
-- **Routing.** File-based routes under `src/routes/`. Do not edit `routeTree.gen.ts`.
-- **Server logic.** Use `createServerFn` for internal RPC, `createFileRoute` under `src/routes/api/` for public endpoints.
-- **No emojis** in source code, copy, or documentation unless explicitly part of facility data.
-- **No em dashes** in user-facing copy.
-- **Voice and tone.** Write user-facing copy to the [voice and tone guide](./docs/voice-and-tone.md).
+| Change                               | Location                               | Convention                                                                                                                              |
+| ------------------------------------ | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Pages and URLs                       | `src/routes/`                          | File-based routing; `__root.tsx` is the only app shell. `src/routeTree.gen.ts` is generated: commit it, never edit it.                  |
+| Admin pages                          | `src/routes/_authenticated/`           | Protected by the layout route, which redirects signed-out users to `/auth`.                                                             |
+| Server logic called from the UI      | `src/lib/*.functions.ts`               | `createServerFn`, with every input checked by `.inputValidator()`.                                                                      |
+| Server-only modules                  | `*.server.ts`                          | Never imported by client code; the build's import protection enforces this.                                                             |
+| HTTP endpoints                       | `src/routes/api/`                      | Server route handlers. Keep `/api/public/*` responses backward compatible for the mobile app.                                           |
+| Facility, FAQ, and surveillance data | `src/data/`                            | Typed datasets. Refresh coordinates with `bun run scripts/geocode-facilities.ts`.                                                       |
+| Database schema                      | `supabase/migrations/`                 | Add a new timestamped migration, enable Row Level Security with explicit policies, and regenerate `src/integrations/supabase/types.ts`. |
+| UI primitives and theme              | `src/components/ui/`, `src/styles.css` | shadcn/ui on Radix. Extend the semantic tokens rather than adding raw colors.                                                           |
 
-### Commit Messages
+## Coding Standards
 
-Use imperative mood:
+- **TypeScript:** strict mode; avoid `any`.
+- **Styling:** semantic Tailwind tokens (`bg-surface`, `text-on-surface`), never raw color classes such as `bg-white`.
+- **Accessibility:** WCAG 2.1 AA, including keyboard access with visible focus, labeled controls, 4.5:1 text contrast, `prefers-reduced-motion` support, and touch targets of at least 44×44 px.
+- **Metadata:** every route sets its own title (under 60 characters), description (under 160 characters), and absolute Open Graph image URL.
+- **Copy:** user-facing text follows the [voice and tone guide](./docs/voice-and-tone.md), with no emojis or em dashes. Emojis are also kept out of source code and documentation unless they are part of facility data.
+- **Privacy:** never log, store, or send personal or health information to third parties.
 
-- Good: `Fix broken facility filter on iOS Safari`
-- Avoid: `Fixed bug` or `Bug fixes`
+## Quality Checks
 
-### Testing
+Run these before opening a pull request:
 
-Manually verify your change on:
+```bash
+bun run lint            # ESLint, including Prettier formatting
+bunx tsc --noEmit       # Type check
+bun run build           # Production build (Node server preset locally)
+bun run start:cpanel    # Serves the build at http://localhost:3000
+bun run verify:meta     # In a second terminal: titles, Open Graph tags, canonical URLs, JSON-LD
+```
 
-- Desktop Chrome and Safari.
-- Mobile Safari (iOS) and Chrome (Android).
-- Light and dark theme.
-- Keyboard-only navigation.
+There is no automated test suite yet, so also check your change in desktop Chrome and Safari, iOS Safari, and Android Chrome, in light and dark themes, and using only the keyboard.
+
+## Submitting Pull Requests
+
+1. Branch from `main` (for example, `fix/near-me-location-prompt`) and limit each pull request to one logical change.
+2. Write commit messages in the imperative mood, such as `Add region filter to facilities page`.
+3. In the description, explain what changed and why, link the related issue, list the checks you ran, and include light and dark screenshots for UI changes.
+4. Vercel builds a preview deployment for each pull request; builds for pull requests from forks wait for maintainer approval. Review the preview before requesting a review.
+5. Every merge to `main` deploys to production at [hivcareph.org](https://hivcareph.org), so `main` must always be releasable.
 
 ## License of Contributions
 
@@ -81,4 +80,4 @@ By submitting a pull request, you agree that your contribution will be licensed 
 
 ## Questions
 
-Open a discussion in the repository, or reach the author through <https://www.ramonloganjr.com>.
+Open an [issue](https://github.com/ramonloganjr/phdoh-hivaids-facility-directory/issues), or contact the maintainer, [Ramon Logan Jr.](https://ramonloganjr.com)
