@@ -194,7 +194,8 @@ bun run start:cpanel
 
 1. Import the repository in the Vercel dashboard.
 2. Framework preset: **Other**. Build command: `bun run build` (or leave default). Output: managed by Nitro.
-3. Trigger a deploy. Subsequent pushes deploy automatically.
+3. Under **Settings → Environment Variables**, add the server-only secrets: `SUPABASE_SERVICE_ROLE_KEY`, `TURNSTILE_SECRET_KEY` and `VERCEL_DEPLOY_HOOK_URL`. The public Supabase URL and publishable key come from the committed `.env`. Don't set `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` or `VITE_SUPABASE_*` in Vercel unless a deployment should use a different project, because Vercel's values override `.env`.
+4. Trigger a deploy. Subsequent pushes deploy automatically.
 
 ### cPanel / Node VPS
 
