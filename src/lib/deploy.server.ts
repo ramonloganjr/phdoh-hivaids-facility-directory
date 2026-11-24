@@ -42,8 +42,8 @@ export async function triggerDeployHook() {
  * `assertAdmin`). Throws `DeployError` with 401/403 otherwise.
  */
 export async function assertAdminBearer(authorization: string | null) {
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_PUBLISHABLE_KEY;
+  const url = import.meta.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
+  const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_PUBLISHABLE_KEY;
   if (!url || !key) throw new DeployError("Server is missing Supabase configuration.", 500);
 
   if (!authorization?.startsWith("Bearer ")) throw new DeployError("Sign in to continue.", 401);

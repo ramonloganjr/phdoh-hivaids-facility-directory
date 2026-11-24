@@ -38,7 +38,7 @@ const Schema = z.object({
 type Body = z.infer<typeof Schema>;
 
 function hashSignal(ip: string, ua: string) {
-  const salt = process.env.SUPABASE_URL ?? "feedback-salt";
+  const salt = import.meta.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || "feedback-salt";
   return createHash("sha256").update(`${ip}::${ua}::${salt}`).digest("hex");
 }
 
