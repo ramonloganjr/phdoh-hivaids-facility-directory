@@ -18,29 +18,13 @@ async function assertAdmin(supabase: SupabaseClient<Database>, userId: string) {
 
 /**
  * Triggers a Vercel redeploy via the configured Deploy Hook.
- * Admin-only. Returns the Vercel job info on success.
+ * Admin-only. Returns the Vercel job info on success. The mobile app uses the
+ * same hook through POST /api/admin/redeploy.
  */
 export const triggerVercelRedeploy = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     await assertAdmin(context.supabase, context.userId);
-
-    const hookUrl = process.env.VERCEL_DEPLOY_HOOK_URL;
-    if (!hookUrl) {
-      throw new Error(
-        "Deploy hook isn't configured. Set VERCEL_DEPLOY_HOOK_URL in the Vercel project's environment variables."
-      );
-    }
-
-    const res = await fetch(hookUrl, { method: "POST" });
-    const text = await res.text();
-    if (!res.ok) {
-      throw new Error(`Vercel responded ${res.status}: ${text.slice(0, 200)}`);
-    }
-
-    return {
-      ok: true as const,
-      triggeredAt: new Date().toISOString(),
-      response: text.slice(0, 500),
-    };
+    const { triggerDeployHook } = await import("./deploy.server");
+    return triggerDeployHook();
   });

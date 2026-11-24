@@ -81,6 +81,12 @@ The platform exists to reduce friction between people living with or at risk of 
 
 ---
 
+## Mobile App
+
+Native Android and iOS apps are maintained in a separate repository, [phdoh-hivaids-mobile](https://github.com/ramonloganjr/phdoh-hivaids-mobile) (Flutter). They mirror every public page and the admin area, work offline for the directory, and are generated from this repository's data, logo and icons. Two endpoints exist for them: `GET /api/public/impact` and `POST /api/admin/redeploy`.
+
+---
+
 ## Architecture Overview
 
 ```text

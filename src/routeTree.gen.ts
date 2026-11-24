@@ -26,7 +26,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as GuidesTestingRouteImport } from './routes/guides.testing'
 import { Route as FacilitiesIdRouteImport } from './routes/facilities.$id'
 import { Route as ApiOgRouteImport } from './routes/api.og'
+import { Route as ApiPublicImpactRouteImport } from './routes/api/public/impact'
 import { Route as ApiPublicFeedbackRouteImport } from './routes/api/public/feedback'
+import { Route as ApiAdminRedeployRouteImport } from './routes/api/admin/redeploy'
 import { Route as AuthenticatedAdminStoriesRouteImport } from './routes/_authenticated/admin.stories'
 import { Route as AuthenticatedAdminInsightsRouteImport } from './routes/_authenticated/admin.insights'
 import { Route as AuthenticatedAdminFeedbackRouteImport } from './routes/_authenticated/admin.feedback'
@@ -116,9 +118,19 @@ const ApiOgRoute = ApiOgRouteImport.update({
   path: '/api/og',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicImpactRoute = ApiPublicImpactRouteImport.update({
+  id: '/api/public/impact',
+  path: '/api/public/impact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicFeedbackRoute = ApiPublicFeedbackRouteImport.update({
   id: '/api/public/feedback',
   path: '/api/public/feedback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminRedeployRoute = ApiAdminRedeployRouteImport.update({
+  id: '/api/admin/redeploy',
+  path: '/api/admin/redeploy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminStoriesRoute =
@@ -165,7 +177,9 @@ export interface FileRoutesByFullPath {
   '/admin/feedback': typeof AuthenticatedAdminFeedbackRoute
   '/admin/insights': typeof AuthenticatedAdminInsightsRoute
   '/admin/stories': typeof AuthenticatedAdminStoriesRoute
+  '/api/admin/redeploy': typeof ApiAdminRedeployRoute
   '/api/public/feedback': typeof ApiPublicFeedbackRoute
+  '/api/public/impact': typeof ApiPublicImpactRoute
   '/api/public/metrics/ingest': typeof ApiPublicMetricsIngestRoute
 }
 export interface FileRoutesByTo {
@@ -188,7 +202,9 @@ export interface FileRoutesByTo {
   '/admin/feedback': typeof AuthenticatedAdminFeedbackRoute
   '/admin/insights': typeof AuthenticatedAdminInsightsRoute
   '/admin/stories': typeof AuthenticatedAdminStoriesRoute
+  '/api/admin/redeploy': typeof ApiAdminRedeployRoute
   '/api/public/feedback': typeof ApiPublicFeedbackRoute
+  '/api/public/impact': typeof ApiPublicImpactRoute
   '/api/public/metrics/ingest': typeof ApiPublicMetricsIngestRoute
 }
 export interface FileRoutesById {
@@ -213,7 +229,9 @@ export interface FileRoutesById {
   '/_authenticated/admin/feedback': typeof AuthenticatedAdminFeedbackRoute
   '/_authenticated/admin/insights': typeof AuthenticatedAdminInsightsRoute
   '/_authenticated/admin/stories': typeof AuthenticatedAdminStoriesRoute
+  '/api/admin/redeploy': typeof ApiAdminRedeployRoute
   '/api/public/feedback': typeof ApiPublicFeedbackRoute
+  '/api/public/impact': typeof ApiPublicImpactRoute
   '/api/public/metrics/ingest': typeof ApiPublicMetricsIngestRoute
 }
 export interface FileRouteTypes {
@@ -238,7 +256,9 @@ export interface FileRouteTypes {
     | '/admin/feedback'
     | '/admin/insights'
     | '/admin/stories'
+    | '/api/admin/redeploy'
     | '/api/public/feedback'
+    | '/api/public/impact'
     | '/api/public/metrics/ingest'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -261,7 +281,9 @@ export interface FileRouteTypes {
     | '/admin/feedback'
     | '/admin/insights'
     | '/admin/stories'
+    | '/api/admin/redeploy'
     | '/api/public/feedback'
+    | '/api/public/impact'
     | '/api/public/metrics/ingest'
   id:
     | '__root__'
@@ -285,7 +307,9 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/feedback'
     | '/_authenticated/admin/insights'
     | '/_authenticated/admin/stories'
+    | '/api/admin/redeploy'
     | '/api/public/feedback'
+    | '/api/public/impact'
     | '/api/public/metrics/ingest'
   fileRoutesById: FileRoutesById
 }
@@ -306,7 +330,9 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   ApiOgRoute: typeof ApiOgRoute
   GuidesTestingRoute: typeof GuidesTestingRoute
+  ApiAdminRedeployRoute: typeof ApiAdminRedeployRoute
   ApiPublicFeedbackRoute: typeof ApiPublicFeedbackRoute
+  ApiPublicImpactRoute: typeof ApiPublicImpactRoute
   ApiPublicMetricsIngestRoute: typeof ApiPublicMetricsIngestRoute
 }
 
@@ -431,11 +457,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiOgRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/impact': {
+      id: '/api/public/impact'
+      path: '/api/public/impact'
+      fullPath: '/api/public/impact'
+      preLoaderRoute: typeof ApiPublicImpactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/feedback': {
       id: '/api/public/feedback'
       path: '/api/public/feedback'
       fullPath: '/api/public/feedback'
       preLoaderRoute: typeof ApiPublicFeedbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/redeploy': {
+      id: '/api/admin/redeploy'
+      path: '/api/admin/redeploy'
+      fullPath: '/api/admin/redeploy'
+      preLoaderRoute: typeof ApiAdminRedeployRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin/stories': {
@@ -513,7 +553,9 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   ApiOgRoute: ApiOgRoute,
   GuidesTestingRoute: GuidesTestingRoute,
+  ApiAdminRedeployRoute: ApiAdminRedeployRoute,
   ApiPublicFeedbackRoute: ApiPublicFeedbackRoute,
+  ApiPublicImpactRoute: ApiPublicImpactRoute,
   ApiPublicMetricsIngestRoute: ApiPublicMetricsIngestRoute,
 }
 export const routeTree = rootRouteImport
